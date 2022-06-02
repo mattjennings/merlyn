@@ -51,14 +51,15 @@ function generateClientManifest(manifestData: ManifestData, dir: string) {
     files: { 
       ${Object.entries(manifestData.scenes.files)
         .map(([name, scene]) => {
-          return `${JSON.stringify(scene.path)}: {
+          return `${JSON.stringify(scene.scene)}: {
           name: ${JSON.stringify(name)},
-          path: ${JSON.stringify(scene.path)},
-          get: () => import(${JSON.stringify(path.relative(dir, scene.path))}),
-          getLoader: ${
-            scene.loader
+          scene: () => import(${JSON.stringify(
+            path.relative(dir, scene.scene)
+          )}),
+          loadingScene: ${
+            scene.loadingScene
               ? `() => import(${JSON.stringify(
-                  path.relative(dir, scene.loader)
+                  path.relative(dir, scene.loadingScene)
                 )})`
               : 'undefined'
           },

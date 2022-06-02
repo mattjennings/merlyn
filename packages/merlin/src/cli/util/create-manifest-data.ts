@@ -29,8 +29,8 @@ export default async function createManifestData({
         ...acc,
         [route]: {
           name: route,
-          loader: findLoader(filePath),
-          path: posixify(path.relative(cwd, filePath)),
+          loadingScene: findLoadingScene(filePath),
+          scene: posixify(path.relative(cwd, filePath)),
         },
       }
     }
@@ -61,14 +61,16 @@ function posixify(str: string) {
   return str.replace(/\\/g, '/')
 }
 
-function findLoader(filePath: string) {
+function findLoadingScene(filePath: string) {
   const split = filePath.split('/')
 
   for (let i = split.length - 1; i >= 0; i--) {
-    const base = split.slice(0, i).join('/') + '/_loader'
+    const base = split.slice(0, i).join('/') + '/_loading'
 
     if (fs.existsSync(base + '.js') || fs.existsSync(base + '.ts')) {
       return base
     }
   }
+
+  return undefined
 }

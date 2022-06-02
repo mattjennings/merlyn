@@ -1,5 +1,5 @@
-import { Engine, Loader } from 'excalibur'
-import { Scene } from '../../Scene'
+import { Engine, Loader, Scene } from 'excalibur'
+import { LoadingScene } from '../../LoadingScene'
 
 export type Module<T> = {
   default: T
@@ -10,18 +10,16 @@ export type ModuleLoader<T, E = Record<string, never>> = () => Promise<
 >
 
 export interface SceneData<Loaded extends boolean = false> {
-  get: Loaded extends true
+  scene: Loaded extends true
     ? ModuleLoader<
         typeof Scene,
         {
           resources?: any[]
         }
       >
-    : never
-  getLoader?: Loaded extends true ? ModuleLoader<typeof Loader> : never
-  loader?: string
+    : string
+  loadingScene: Loaded extends true ? ModuleLoader<typeof LoadingScene> : string
   name: string
-  path: string
 }
 
 // when Loaded = false, it is the data used to generate manifest.js

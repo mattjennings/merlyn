@@ -1,23 +1,45 @@
-import type { Manifest } from '../cli/util/types'
-import type { Loader as ExLoader } from 'excalibur'
+import type { Manifest, SceneData } from '../cli/util/types'
+import type { Loadable, Loader as ExLoader, Loader } from 'excalibur'
 
 export async function start({ game, loader, scenes }: Manifest) {
+  const resourcesByScene = new Map<string, Loadable<any>[]>()
+
   for (const [, scene] of Object.entries(scenes.files)) {
-    let Loader: typeof ExLoader | undefined
+    const { default: Scene, resources = [] } = await scene.scene()
+    resourcesByScene.set(scene.name, resources)
 
-    if (scene.getLoader) {
-      const mod = await scene.getLoader()
-      Loader = mod.default
+    if (scene.scene) {
+      game.add(scene.name, new Scene())
     }
-    const mod = await scene.get()
 
-    game.add(
-      scene.name,
-      new mod.default({
-        loader: Loader ? new Loader(mod.resources ?? []) : undefined,
-      })
-    )
+    if (scene.loadingScene) {
+      const { default: LoadingScene } = await scene.loadingScene()
+
+      game.add(
+        `${scene.name}/_loading`,
+        new LoadingScene({
+          next: scene.name,
+          resources,
+        })
+      )
+    }
   }
+
+  // patch goToScene to allow _loading scenes
+  const origGoToScene = game.goToScene.bind(game)
+
+  game.goToScene = (key: string) => {
+    const resourcesForScene = resourcesByScene.get(key)
+    const needsLoading =
+      resourcesForScene?.length && resourcesForScene.some((r) => !r.isLoaded())
+
+    if (needsLoading && game.scenes[`${key}/_loading`]) {
+      origGoToScene(`${key}/_loading`)
+    } else {
+      origGoToScene(key)
+    }
+  }
+
   game.start(loader).then(() => {
     game.goToScene(scenes.boot)
   })
