@@ -1,0 +1,46 @@
+{
+  "name": "merlin",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "types": "index.d.ts",
+  "bin": {
+    "merlin": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "app.d.ts"
+  ],
+  "scripts": {
+    "merlin": "node bin/index.js",
+    "dev": "NODE_ENV=development node scripts/build/index.mjs",
+    "build": "NODE_ENV=production node scripts/build/index.mjs"
+  },
+  "keywords": [],
+  "author": "mattjennings",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "deepmerge": "^4.2.2",
+    "del": "^6.1.1",
+    "kleur": "^4.1.4",
+    "sade": "^1.8.1",
+    "source-map-support": "^0.5.21",
+    "vite": "^2.9.9",
+    "prettier": "^2.6.2",
+    "fs-extra": "^10.1.0",
+    "mkdirp": "^1.0.4"
+  },
+  "peerDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.46",
+    "svelte": "^3.48.0",
+    "svelte-preprocess": "^4.10.6",
+    "excalibur": "^0.26.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.38",
+    "tslib": "^2.4.0"
+  }
+}
