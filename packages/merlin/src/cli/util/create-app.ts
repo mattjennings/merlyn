@@ -55,6 +55,13 @@ function generateClientManifest(manifestData: ManifestData, dir: string) {
           name: ${JSON.stringify(name)},
           path: ${JSON.stringify(scene.path)},
           get: () => import(${JSON.stringify(path.relative(dir, scene.path))}),
+          getLoader: ${
+            scene.loader
+              ? `() => import(${JSON.stringify(
+                  path.relative(dir, scene.loader)
+                )})`
+              : 'undefined'
+          },
         }`
         })
         .join(',')}
@@ -62,10 +69,11 @@ function generateClientManifest(manifestData: ManifestData, dir: string) {
   }`
 
   return format(`
-		import game from ${JSON.stringify(path.relative(dir, manifestData.game))};
+		import * as _game from ${JSON.stringify(path.relative(dir, manifestData.game))};
 
 		export const scenes = ${scenes};
-    export { game }
+    export const game = _game.default;
+    export const loader = _game.loader;
 	`)
 }
 

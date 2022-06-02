@@ -13,12 +13,12 @@ export default async function build({ cwd = process.cwd() } = {}) {
 
   const config = await getMerlinConfig({ cwd })
 
-  // const manifestData = await createManifestData({ cwd, config })
-  // createApp({
-  //   manifestData,
-  //   dir,
-  //   cwd,
-  // })
+  const manifestData = await createManifestData({ cwd, config })
+  createApp({
+    manifestData,
+    dir,
+    cwd,
+  })
   await vite.build(
     await getViteConfig({ production: true, config, buildDir: dir, outDir })
   )

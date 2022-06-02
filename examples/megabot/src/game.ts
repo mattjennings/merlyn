@@ -2,7 +2,7 @@ import './app.css'
 import * as ex from 'excalibur'
 import { Color, WebAudio, Input } from 'excalibur'
 
-// const scenes = import.meta.globEager('./scenes/**/*.ts')
+// export const loader = new ex.Loader()
 
 const game = new ex.Engine({
   canvasElementId: 'game',

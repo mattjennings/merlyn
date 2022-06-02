@@ -1,6 +1,6 @@
 import { Loader } from 'excalibur'
 
-export default class SimpleLoader extends Loader {
+export class SimpleLoader extends Loader {
   private loadables: any[]
   private numLoaded = 0
 
@@ -12,7 +12,7 @@ export default class SimpleLoader extends Loader {
   }
 
   async load() {
-    return Promise.all(
+    const res = await Promise.all(
       this.loadables.map((r) =>
         r.load().finally(() => {
           this.numLoaded++
@@ -20,6 +20,8 @@ export default class SimpleLoader extends Loader {
         })
       )
     )
+    this.emit('complete', void 0)
+    return res
   }
 
   isLoaded(): boolean {

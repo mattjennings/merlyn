@@ -1,7 +1,6 @@
 import {
   createServer as createViteServer,
   InlineConfig,
-  UserConfig,
   ViteDevServer,
 } from 'vite'
 import path from 'path'
@@ -67,8 +66,10 @@ async function watcher({
   update()
 
   chokidar
-    .watch(dirs)
-    .on('add', async () => {
+    .watch(dirs, {
+      ignoreInitial: true,
+    })
+    .on('add', async (f) => {
       await update()
     })
     .on('change', async (filePath) => {

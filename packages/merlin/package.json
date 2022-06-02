@@ -2,8 +2,8 @@
   "name": "merlin",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/merlin.umd.js",
-  "module": "dist/merlin.esm.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "bin": {
     "merlin": "bin/index.js"
   },
@@ -19,7 +19,7 @@
   },
   "exports": {
     "./package.json": "./package.json",
-    ".": "./dist/merlin.es.js",
+    ".": "./dist/index.js",
     "./runtime": "./dist/runtime.js"
   },
   "keywords": [],
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.38",
-    "tslib": "^2.4.0"
+    "tslib": "^2.4.0",
+    "vite-plugin-dts": "^1.2.0"
   }
 }

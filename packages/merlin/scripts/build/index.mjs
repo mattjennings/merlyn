@@ -3,6 +3,8 @@ import path from 'path'
 import del from 'del'
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
+import dts from 'vite-plugin-dts'
+
 const require = createRequire(import.meta.url)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -66,10 +68,12 @@ await vite.build({
     lib: {
       entry: path.resolve(__dirname, '../../src/index.ts'),
       name: 'merlin',
-      formats: ['es', 'umd'],
+      fileName: (format) => `index.js`,
+      formats: ['es'],
     },
     rollupOptions: {
       external,
     },
   },
+  plugins: [dts()],
 })

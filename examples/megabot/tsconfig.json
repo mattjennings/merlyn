@@ -20,7 +20,8 @@
     "baseUrl": "./",
     "paths": {
       "$lib/*": ["./src/lib/*"],
-      "$assets/*": ["./src/assets/*"]
+      "$assets/*": ["./src/assets/*"],
+      "$scenes/*": ["./src/scenes/*"]
     }
   }
 }

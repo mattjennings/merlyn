@@ -1,13 +1,25 @@
-import { Engine, Scene } from 'excalibur'
+import { Engine, Loader } from 'excalibur'
+import { Scene } from '../../Scene'
 
 export type Module<T> = {
   default: T
 }
 
-export type ModuleLoader<T> = () => Promise<Module<T>>
+export type ModuleLoader<T, E = Record<string, never>> = () => Promise<
+  Module<T> & E
+>
 
 export interface SceneData<Loaded extends boolean = false> {
-  get: Loaded extends true ? ModuleLoader<typeof Scene> : never
+  get: Loaded extends true
+    ? ModuleLoader<
+        typeof Scene,
+        {
+          resources?: any[]
+        }
+      >
+    : never
+  getLoader?: Loaded extends true ? ModuleLoader<typeof Loader> : never
+  loader?: string
   name: string
   path: string
 }
@@ -18,6 +30,7 @@ export interface SceneData<Loaded extends boolean = false> {
 // confusing and they export the same named properties anyway)
 export type ManifestData<Loaded extends boolean = false> = {
   game: Loaded extends true ? Engine : string
+  loader?: Loaded extends true ? Loader : never
   scenes: {
     files: Record<string, SceneData<Loaded>>
     boot: string

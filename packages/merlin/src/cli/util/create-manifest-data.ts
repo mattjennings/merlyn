@@ -14,7 +14,7 @@ export default async function createManifestData({
   const files = getFiles(sceneDir)
 
   const scenes: Record<string, SceneData> = files.reduce((acc, filePath) => {
-    const baseName = filePath.split('/').pop()
+    const baseName = path.parse(filePath).base
 
     let route = posixify(
       filePath.replace(`${sceneDir}/`, '').replace(/.(j|t)s/, '')
@@ -29,6 +29,7 @@ export default async function createManifestData({
         ...acc,
         [route]: {
           name: route,
+          loader: findLoader(filePath),
           path: posixify(path.relative(cwd, filePath)),
         },
       }
@@ -60,23 +61,14 @@ function posixify(str: string) {
   return str.replace(/\\/g, '/')
 }
 
-/**
- * Recursively looks up until it finds a $loading in the templates matching its route
- */
-// function findLoadingPath(
-//   templates: Record<string, TemplateComponentData>,
-//   filePath: string
-// ): string {
-//   const split = filePath.split('/')
+function findLoader(filePath: string) {
+  const split = filePath.split('/')
 
-//   for (let i = split.length - 1; i >= 0; i--) {
-//     const templatePath =
-//       i === 0 ? '$loading' : split.slice(0, i).join('/') + '/$loading'
+  for (let i = split.length - 1; i >= 0; i--) {
+    const base = split.slice(0, i).join('/') + '/_loader'
 
-//     if (templates[templatePath]) {
-//       return templates[templatePath].path
-//     }
-//   }
-
-//   throw Error('$loading not found')
-// }
+    if (fs.existsSync(base + '.js') || fs.existsSync(base + '.ts')) {
+      return base
+    }
+  }
+}
