@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <!-- Define a wrapping element, in case you want to customize positions -->
+    <div id="root">
+      <!-- Provide your own canvas to Excalibur -->
+      <canvas id="game"></canvas>
+
+      <!-- The UI will automatically be drawn above the game due to z-indexing -->
+      <div id="ui">
+        <!-- This is where your game UI will go, dynamically created per scene -->
+      </div>
+    </div>
+    <script type="module" src="/.merlin/index.js"></script>
+  </body>
+</html>

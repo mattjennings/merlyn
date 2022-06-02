@@ -1,5 +1,6 @@
 import {
   createServer as createViteServer,
+  InlineConfig,
   UserConfig,
   ViteDevServer,
 } from 'vite'
@@ -19,7 +20,7 @@ export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
 
   const config = await getMerlinConfig({ cwd })
   const server = await createViteServer(
-    merge<UserConfig>(
+    merge<InlineConfig>(
       {
         root: cwd,
         server: {
@@ -32,6 +33,7 @@ export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
 
   watcher({ cwd, dir, server })
 
+  // await server.restart(true)
   await server.listen()
   server.printUrls()
 }

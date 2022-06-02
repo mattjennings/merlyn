@@ -1,0 +1,26 @@
+{
+  "name": "megabot",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "merlin dev"
+  },
+  "devDependencies": {
+    "@types/events": "^3.0.0",
+    "svelte-preprocess": "^4.10.5",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "postcss": "^8.4.12",
+    "postcss-load-config": "^3.1.4",
+    "autoprefixer": "^10.4.4",
+    "tailwindcss": "^3.0.23",
+    "merlin": "^0.0.1"
+  },
+  "dependencies": {
+    "@excaliburjs/plugin-tiled": "^0.26.2",
+    "@sveltejs/vite-plugin-svelte": "1.0.0-next.46",
+    "events": "^3.3.0",
+    "excalibur": "^0.26.0",
+    "svelte": "^3.48.0"
+  }
+}

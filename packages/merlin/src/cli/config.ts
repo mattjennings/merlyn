@@ -60,14 +60,11 @@ export async function getViteConfig({
   const defaultConfig: ViteConfig = {
     base: '', // keep paths to assets relative
     publicDir: 'public',
-    optimizeDeps: {
-      include: ['.merlin'],
-      // exclude: ['merlin'],
-    },
+    optimizeDeps: {},
     assetsInclude: ['**/*.tmx'],
     build: {
       minify: true,
-      // assetsDir: '',
+      assetsDir: '',
       outDir,
       brotliSize: false,
 
@@ -76,14 +73,28 @@ export async function getViteConfig({
       chunkSizeWarningLimit: 99999999,
     },
     resolve: {
-      // dedupe: ['excaliburjs'],
       alias: {
         $lib: '/src/lib',
         $assets: path.join('/', config.assets.dir),
         $scenes: path.join('/', config.scenes.dir),
-        // ex: 'excaliburjs',
       },
     },
+    plugins: [
+      {
+        name: 'vite-plugin-excalibur',
+        enforce: 'pre',
+        // todo?: convert ex.XYZ into `import { XYZ } from 'excalibur'`
+        transform(src, id) {
+          if (id.includes(path.join(cwd, 'src')) && id.match(/\.(t|j)s$/)) {
+            const code = `import * as ex from 'excalibur';\n${src}`
+            return {
+              code,
+              map: null,
+            }
+          }
+        },
+      },
+    ],
   }
 
   try {

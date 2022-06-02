@@ -1,0 +1,37 @@
+{ "frames": [
+   {
+    "filename": "0",
+    "frame": { "x": 0, "y": 0, "w": 22, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 24 },
+    "sourceSize": { "w": 22, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "1",
+    "frame": { "x": 22, "y": 0, "w": 21, "h": 22 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 21, "h": 22 },
+    "sourceSize": { "w": 22, "h": 24 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.25",
+  "image": "enemy.png",
+  "format": "RGBA8888",
+  "size": { "w": 43, "h": 24 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Fly", "from": 0, "to": 1, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

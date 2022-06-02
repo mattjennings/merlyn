@@ -1,0 +1,117 @@
+{ "frames": [
+   {
+    "filename": "0",
+    "frame": { "x": 48, "y": 27, "w": 22, "h": 24 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 6, "w": 20, "h": 22 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "1",
+    "frame": { "x": 25, "y": 52, "w": 16, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 5, "w": 14, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "2",
+    "frame": { "x": 78, "y": 1, "w": 21, "h": 24 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 6, "w": 19, "h": 22 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "3",
+    "frame": { "x": 42, "y": 52, "w": 16, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 5, "w": 14, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "4",
+    "frame": { "x": 1, "y": 1, "w": 25, "h": 24 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 6, "w": 23, "h": 22 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "5",
+    "frame": { "x": 25, "y": 26, "w": 22, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 5, "w": 20, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "6",
+    "frame": { "x": 27, "y": 1, "w": 25, "h": 24 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 6, "w": 23, "h": 22 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "7",
+    "frame": { "x": 25, "y": 26, "w": 22, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 5, "w": 20, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "8",
+    "frame": { "x": 78, "y": 26, "w": 20, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 4, "y": 5, "w": 18, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "9",
+    "frame": { "x": 53, "y": 1, "w": 24, "h": 25 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 4, "y": 5, "w": 22, "h": 23 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   },
+   {
+    "filename": "10",
+    "frame": { "x": 1, "y": 26, "w": 23, "h": 26 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 5, "y": 4, "w": 21, "h": 24 },
+    "sourceSize": { "w": 28, "h": 28 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.25",
+  "image": "player.png",
+  "format": "I8",
+  "size": { "w": 99, "h": 77 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Run", "from": 0, "to": 3, "direction": "forward" },
+   { "name": "RunShoot", "from": 4, "to": 7, "direction": "forward" },
+   { "name": "Idle", "from": 8, "to": 8, "direction": "forward" },
+   { "name": "Shot", "from": 9, "to": 9, "direction": "forward" },
+   { "name": "Jump", "from": 10, "to": 10, "direction": "forward" }
+  ]
+ }
+}

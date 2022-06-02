@@ -65,8 +65,8 @@ await vite.build({
     emptyOutDir: false,
     lib: {
       entry: path.resolve(__dirname, '../../src/index.ts'),
-      name: 'index',
-      formats: ['umd', 'esm'],
+      name: 'merlin',
+      formats: ['es', 'umd'],
     },
     rollupOptions: {
       external,

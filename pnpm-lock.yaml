@@ -51,6 +51,39 @@ importers:
       typescript: 4.7.2
       vite: 2.9.9
 
+  examples/megabot:
+    specifiers:
+      '@excaliburjs/plugin-tiled': ^0.26.2
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@types/events': ^3.0.0
+      autoprefixer: ^10.4.4
+      events: ^3.3.0
+      excalibur: ^0.26.0
+      merlin: ^0.0.1
+      postcss: ^8.4.12
+      postcss-load-config: ^3.1.4
+      svelte: ^3.48.0
+      svelte-preprocess: ^4.10.5
+      tailwindcss: ^3.0.23
+      typescript: ^4.5.4
+      vite: ^2.9.9
+    dependencies:
+      '@excaliburjs/plugin-tiled': 0.26.2
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      events: 3.3.0
+      excalibur: 0.26.0
+      svelte: 3.48.0
+    devDependencies:
+      '@types/events': 3.0.0
+      autoprefixer: 10.4.7
+      merlin: link:../../packages/merlin
+      postcss: 8.4.14
+      postcss-load-config: 3.1.4
+      svelte-preprocess: 4.10.6
+      tailwindcss: 3.0.24
+      typescript: 4.7.2
+      vite: 2.9.9
+
   packages/merlin:
     specifiers:
       '@sveltejs/vite-plugin-svelte': ^1.0.0-next.46
@@ -62,6 +95,7 @@ importers:
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       mkdirp: ^1.0.4
+      prettier: ^2.6.2
       sade: ^1.8.1
       source-map-support: ^0.5.21
       svelte: ^3.48.0
@@ -74,7 +108,10 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.26.0
+      fs-extra: 10.1.0
       kleur: 4.1.4
+      mkdirp: 1.0.4
+      prettier: 2.6.2
       sade: 1.8.1
       source-map-support: 0.5.21
       svelte: 3.48.0
@@ -82,8 +119,6 @@ importers:
       vite: 2.9.9
     devDependencies:
       '@types/node': 17.0.38
-      fs-extra: 10.1.0
-      mkdirp: 1.0.4
       tslib: 2.4.0
 
 packages:
@@ -1474,7 +1509,7 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
+    dev: false
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -1720,7 +1755,7 @@ packages:
       universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.10
-    dev: true
+    dev: false
 
   /jstransformer/1.0.0:
     resolution: {integrity: sha512-C9YK3Rf8q6VAPDCCU9fnqo3mAfOH6vUGnMcP4AQAYIEpWtfGLpwOTmZ+igtdK5y+VvI2n3CyYSzy4Qh34eq24A==}
@@ -2033,7 +2068,6 @@ packages:
     resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: true
 
   /promise/7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
@@ -2529,7 +2563,7 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
-    dev: true
+    dev: false
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
