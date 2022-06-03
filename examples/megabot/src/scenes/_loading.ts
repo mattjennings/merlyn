@@ -8,17 +8,22 @@ export default class Loading extends LoadingScene {
 
   public onLoadStart() {
     super.onLoadStart()
-    this.loadingUi = new LoadingScreen({
-      target: document.querySelector('#ui')!,
-      props: {
-        loader: this.loader,
-      },
-      intro: true,
-    })
+
+    if (import.meta.env.PROD) {
+      this.loadingUi = new LoadingScreen({
+        target: document.querySelector('#ui')!,
+        props: {
+          loader: this.loader,
+        },
+        intro: true,
+      })
+    }
   }
 
   public onLoadComplete() {
     super.onLoadComplete()
-    outroAndDestroy(this.loadingUi, 1000)
+    if (import.meta.env.PROD) {
+      outroAndDestroy(this.loadingUi, 1000)
+    }
   }
 }

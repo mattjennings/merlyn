@@ -1,6 +1,7 @@
 import './app.css'
 import * as ex from 'excalibur'
 import { Color, WebAudio, Input } from 'excalibur'
+import { DevTool } from '@excaliburjs/dev-tools'
 
 // export const loader = new ex.Loader()
 
@@ -12,8 +13,10 @@ const game = new ex.Engine({
   backgroundColor: Color.Black,
   pointerScope: Input.PointerScope.Canvas,
   viewport: { width: 400, height: 225 },
+  antialiasing: false,
 })
-
+const devtool = new DevTool(game)
+ex.Physics.acc = new ex.Vector(0, 800)
 window.addEventListener('pointerdown', () => {
   WebAudio.unlock()
 })

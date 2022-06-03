@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="96" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="14">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="96" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="16">
  <properties>
   <property name="deathY" type="int" value="290"/>
  </properties>
@@ -177,45 +177,18 @@
 38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38
 </data>
  </layer>
- <objectgroup id="4" name="spawns">
-  <object id="3" x="16" y="192">
-   <properties>
-    <property name="component" value="Player"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="9" x="202.348" y="143.875">
-   <properties>
-    <property name="component" value="EnemySpawner"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="10" x="387.16" y="129.464">
-   <properties>
-    <property name="component" value="EnemySpawner"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="11" x="593.071" y="68.6367">
-   <properties>
-    <property name="component" value="EnemySpawner"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="12" x="742.263" y="69.8697">
-   <properties>
-    <property name="component" value="EnemySpawner"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="13" x="749.661" y="123.71">
-   <properties>
-    <property name="component" value="EnemySpawner"/>
-   </properties>
+ <objectgroup id="4" name="objects">
+  <properties>
+   <property name="excalibur" type="bool" value="true"/>
+  </properties>
+  <object id="14" type="Camera" x="159.324" y="150.272">
    <point/>
   </object>
  </objectgroup>
  <layer id="1" name="ground" width="96" height="32">
+  <properties>
+   <property name="Solid" type="bool" value="true"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

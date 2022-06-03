@@ -53,6 +53,7 @@ importers:
 
   examples/megabot:
     specifiers:
+      '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       '@types/events': ^3.0.0
@@ -74,6 +75,7 @@ importers:
       excalibur: 0.26.0
       svelte: 3.48.0
     devDependencies:
+      '@excaliburjs/dev-tools': 0.25.3
       '@types/events': 3.0.0
       autoprefixer: 10.4.7
       merlin: link:../../packages/merlin
@@ -318,6 +320,14 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@excaliburjs/dev-tools/0.25.3:
+    resolution: {integrity: sha512-mrOzbW2cQbp9F6dj0K+BtfNhdcBeF3i9uupdnR9hn6bHK0KXSzRrZJJukqcE//vXa7vUXZ4AdC7FgJQWB4IC5A==}
+    dependencies:
+      '@tweakpane/core': 1.0.8
+      excalibur: 0.25.3
+      tweakpane: 3.0.7
     dev: true
 
   /@excaliburjs/plugin-tiled/0.26.2:
@@ -643,6 +653,10 @@ packages:
 
   /@tsconfig/node16/1.0.2:
     resolution: {integrity: sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==}
+
+  /@tweakpane/core/1.0.8:
+    resolution: {integrity: sha512-q7BQrqM4NYiaSoErRgRY0EBxxC8AzsZJoz52K8SNJ/IfYu9lTzfFTwW7ouYqgElSOx+3ybXBcMlkCPZdOBZg6Q==}
+    dev: true
 
   /@types/argparse/1.0.38:
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
@@ -1079,6 +1093,11 @@ packages:
     resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==}
     dependencies:
       is-what: 3.14.1
+
+  /core-js/3.21.0:
+    resolution: {integrity: sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==}
+    requiresBuild: true
+    dev: true
 
   /core-js/3.22.5:
     resolution: {integrity: sha512-VP/xYuvJ0MJWRAobcmQ8F2H6Bsn+s7zqAAjFaHGBMc5AQm7zaelhD1LGduFn2EehEcQcU+br6t+fwbpQ5d1ZWA==}
@@ -1549,6 +1568,12 @@ packages:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
     dev: false
+
+  /excalibur/0.25.3:
+    resolution: {integrity: sha512-BfhnOZJSkUEWFpZaKYPhmiivRYpXF6TykaUSJK3zzAwzUhNdTjT1XKSBFyN8CePkBtmza8cB/ufblG1bH91QjA==}
+    dependencies:
+      core-js: 3.21.0
+    dev: true
 
   /excalibur/0.26.0:
     resolution: {integrity: sha512-TbQ9K/RA99CJW8ksTpgxVbg3hECv3hk+tTgovltL0oba4WuoXlL0DY9hWuoID5G9wbpVJiXiE8dA0Wyfd8ksfg==}
@@ -2740,6 +2765,10 @@ packages:
     dependencies:
       tslib: 1.14.1
       typescript: 4.7.2
+    dev: true
+
+  /tweakpane/3.0.7:
+    resolution: {integrity: sha512-rgxqoo6T10atYoKHVif6aYlAMIAlHJ84hi5LXqi6ZgVEPcmnzPI34C88y6HquarBY0ZKE/ZCXVaZm8NibhQRtA==}
     dev: true
 
   /type-check/0.4.0:
