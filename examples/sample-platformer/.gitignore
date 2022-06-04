@@ -1,0 +1,5 @@
+node_modules
+src/*.js
+dist
+test/integration/images/actual-*.png
+.merlin
