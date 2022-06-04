@@ -1,9 +1,11 @@
 import './app.css'
 import * as ex from 'excalibur'
 import { Color, WebAudio, Input } from 'excalibur'
-import { DevTool } from '@excaliburjs/dev-tools'
+import { SimpleLoader } from 'merlin'
 
-// export const loader = new ex.Loader()
+export const loader = import.meta.env.PROD
+  ? new ex.Loader()
+  : new SimpleLoader()
 
 const game = new ex.Engine({
   canvasElementId: 'game',
@@ -15,7 +17,7 @@ const game = new ex.Engine({
   viewport: { width: 400, height: 225 },
   antialiasing: false,
 })
-const devtool = new DevTool(game)
+// const devtool = new DevTool(game as any)
 ex.Physics.acc = new ex.Vector(0, 800)
 window.addEventListener('pointerdown', () => {
   WebAudio.unlock()

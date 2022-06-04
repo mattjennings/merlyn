@@ -1,7 +1,5 @@
-import spritesheetUrl from '$assets/sprites/player.png'
+import image from '$res/sprites/player.png'
 import { Engine, ImageSource, SpriteSheet } from 'excalibur'
-
-const image = new ImageSource(spritesheetUrl)
 
 const spriteSheet = SpriteSheet.fromImageSource({
   image,

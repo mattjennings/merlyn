@@ -3,7 +3,7 @@ module.exports = {
     boot: 'index',
     dir: 'src/scenes',
   },
-  assets: {
-    dir: 'src/assets',
+  resources: {
+    dir: 'src/res',
   },
 }

@@ -1,22 +1,30 @@
 import { Loader } from 'excalibur'
 
+/**
+ * A loader that does not render anything. This can be used to render an HTML UI instead,
+ * by listening to its `on('progress')` and on('complete')` events.
+ */
 export class SimpleLoader extends Loader {
-  private loadables: any[]
-  private numLoaded = 0
-
   constructor(loadables?: any[]) {
     super()
-    this.loadables = loadables ?? []
+    this.addResources(loadables ?? [])
+    // @ts-ignore
     this.numLoaded =
       loadables?.reduce((acc, cur) => acc + (cur.isLoaded() ? 1 : 0), 0) ?? 0
   }
 
   async load() {
     const res = await Promise.all(
-      this.loadables.map((r) =>
+      // @ts-ignore
+      this._resourceList.map((r) =>
         r.load().finally(() => {
-          this.numLoaded++
-          this.emit('progress', (this.numLoaded / this.loadables.length) * 100)
+          // @ts-ignore
+          this._numLoaded++
+          this.emit(
+            'progress',
+            // @ts-ignore
+            (this._numLoaded / this._resourceList.length) * 100
+          )
         })
       )
     )
@@ -24,7 +32,6 @@ export class SimpleLoader extends Loader {
     return res
   }
 
-  isLoaded(): boolean {
-    return this.numLoaded === this.loadables.length
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  draw() {}
 }

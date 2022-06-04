@@ -1,6 +1,8 @@
 import { UserConfig as ViteConfig } from 'vite'
 import path from 'path'
 import deepmerge from 'deepmerge'
+import { provideExcalibur } from './plugins/provide-excalibur'
+import { importExcaliburResource } from './plugins/import-excalibur-resource'
 
 export interface MerlinConfig {
   game: string
@@ -8,7 +10,7 @@ export interface MerlinConfig {
     dir: string
     boot: string
   }
-  assets: {
+  resources: {
     dir: string
   }
 }
@@ -26,8 +28,8 @@ export async function getMerlinConfig({
       dir: 'src/scenes',
       boot: 'index',
     },
-    assets: {
-      dir: 'src/assets',
+    resources: {
+      dir: 'src/res',
     },
   }
 
@@ -61,7 +63,6 @@ export async function getViteConfig({
     base: '', // keep paths to assets relative
     publicDir: 'public',
     optimizeDeps: {},
-    assetsInclude: ['**/*.tmx'],
     build: {
       minify: true,
       assetsDir: '',
@@ -75,26 +76,12 @@ export async function getViteConfig({
     resolve: {
       alias: {
         $lib: '/src/lib',
-        $assets: path.join('/', config.assets.dir),
+        $res: path.join('/', config.resources.dir),
         $scenes: path.join('/', config.scenes.dir),
+        $game: path.join('/.merlin/runtime.js'),
       },
     },
-    plugins: [
-      {
-        name: 'vite-plugin-excalibur',
-        enforce: 'pre',
-        // todo?: convert ex.XYZ into `import { XYZ } from 'excalibur'`
-        transform(src, id) {
-          if (id.includes(path.join(cwd, 'src')) && id.match(/\.(t|j)s$/)) {
-            const code = `import * as ex from 'excalibur';\n${src}`
-            return {
-              code,
-              map: null,
-            }
-          }
-        },
-      },
-    ],
+    plugins: [provideExcalibur(cwd), importExcaliburResource(config)],
   }
 
   try {

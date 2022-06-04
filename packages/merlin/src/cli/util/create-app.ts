@@ -84,7 +84,7 @@ function generateApp(manifestData: ManifestData, base: string) {
     import * as manifest from './manifest.js' 
     import * as runtime from './runtime'
     
-    runtime.start(manifest)
+    runtime._start(manifest)
 	`
   )
 }

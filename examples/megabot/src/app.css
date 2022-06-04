@@ -3,27 +3,26 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  /* When this is relative, child elements positioned absolutely will
-     be relative to this element, not the document providing more accurate
-     positioning, since the canvas will be at (0, 0) */
-  position: relative;
-}
-
-#root #ui {
-  /* This will make the UI appear on top of the canvas */
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
 body {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   height: 100vh;
   background: black;
+}
+
+/* fix tailwind breaking play button style */
+#excalibur-play::before {
+  box-sizing: content-box;
+}
+
+#ui {
+  /* This will make the UI appear on top of the canvas */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

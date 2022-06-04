@@ -59,7 +59,7 @@ async function watcher({
   }
   const dirs = [
     config.scenes.dir,
-    config.assets.dir,
+    config.resources.dir,
     'merlin.config.js',
   ].filter(Boolean)
 
