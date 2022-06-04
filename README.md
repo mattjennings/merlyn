@@ -2,13 +2,13 @@
 
 A meta framework for creating [Excalibur.js games](https://excaliburjs.com). Like Next.js to React, or SvelteKit to Svelte.
 
-This is still in the very early stages. It is not published (and may not ever be published).
+This is still in the very early stages. It is not published yet and may not ever be published.
 
 ## Features
 
 - Built on Vite
 - File-based routing for scenes
-  - `src/scenes/level1.ts` => a scene named `level1`
+  - `src/scenes/level1.ts` -> a scene named `level1`
 - Resources are imported as Excalibur resources
 
   ```js
