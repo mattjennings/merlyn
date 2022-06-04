@@ -13,11 +13,11 @@ import merge from 'deepmerge'
 import { getMerlinConfig, getViteConfig } from '../config'
 
 export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
-  const dir = path.resolve(cwd, '.merlin')
-  await del(dir)
-  await del('./dist') // vite will read dist/index.html for some reason
-
   const config = await getMerlinConfig({ cwd })
+  const dir = path.resolve(cwd, '.merlin')
+  const outDir = path.resolve(cwd, config.build.outDir)
+  await del([dir, outDir])
+
   const server = await createViteServer(
     merge<InlineConfig>(
       {

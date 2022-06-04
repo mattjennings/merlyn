@@ -2,7 +2,7 @@ import './app.css'
 import * as ex from 'excalibur'
 import { Color, WebAudio, Input } from 'excalibur'
 import { SimpleLoader } from 'merlin'
-import { DevTool } from '@excaliburjs/dev-tools'
+
 export const loader = import.meta.env.PROD
   ? new ex.Loader()
   : new SimpleLoader()
@@ -17,7 +17,6 @@ const game = new ex.Engine({
   viewport: { width: 400, height: 225 },
   antialiasing: false,
 })
-// new DevTool(game as any)
 
 ex.Physics.acc = new ex.Vector(0, 800)
 window.addEventListener('pointerdown', () => {

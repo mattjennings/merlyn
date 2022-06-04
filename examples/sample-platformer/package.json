@@ -6,14 +6,13 @@
   "scripts": {
     "dev": "merlin dev",
     "build": "merlin build",
-    "start": "serve dist"
+    "preview": "merlin preview"
   },
   "devDependencies": {
     "@excaliburjs/testing": "^0.25.1",
     "merlin": "^0.0.1"
   },
   "dependencies": {
-    "excalibur": "^0.26.0",
-    "serve": "^1.0.0"
+    "excalibur": "^0.26.0"
   }
 }

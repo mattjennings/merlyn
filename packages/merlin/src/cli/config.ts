@@ -4,6 +4,12 @@ import deepmerge from 'deepmerge'
 import { provideExcalibur } from './plugins/provide-excalibur'
 import { importExcaliburResource } from './plugins/import-excalibur-resource'
 
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>
+    }
+  : T
+
 export interface MerlinConfig {
   game: string
   scenes: {
@@ -13,9 +19,12 @@ export interface MerlinConfig {
   devtool?: {
     enabled: boolean
   }
+  build: {
+    outDir: string
+  }
 }
 
-export type UserMerlinConfig = Partial<MerlinConfig>
+export type UserMerlinConfig = DeepPartial<MerlinConfig>
 
 export async function getMerlinConfig({
   cwd = process.cwd(),
@@ -27,6 +36,9 @@ export async function getMerlinConfig({
     scenes: {
       path: 'src/scenes',
       boot: 'index',
+    },
+    build: {
+      outDir: 'dist',
     },
   }
 
@@ -46,14 +58,10 @@ export async function getMerlinConfig({
 export async function getViteConfig({
   cwd = process.cwd(),
   config,
-  buildDir,
-  outDir,
-  production,
 }: {
   cwd?: string
   config: MerlinConfig
   buildDir: string
-  outDir?: string
   production?: boolean
 }): Promise<ViteConfig> {
   const defaultConfig: ViteConfig = {
@@ -63,7 +71,7 @@ export async function getViteConfig({
     build: {
       minify: true,
       assetsDir: '',
-      outDir,
+      outDir: config.build.outDir,
       brotliSize: false,
 
       // skip warnings about large chunks. games are going to be large.
