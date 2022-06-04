@@ -4,7 +4,8 @@ import qs from 'query-string'
 import { MerlinConfig } from '../config'
 
 /**
- * Globally provides "ex" object
+ * Parses the import as an excalibur resource and adds
+ * the resource to a cache to be automatically loaded
  */
 export function importExcaliburResource(config: MerlinConfig): Plugin {
   const isResource = (id) => {
