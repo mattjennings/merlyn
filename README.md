@@ -1,6 +1,6 @@
 # Merlin
 
-A meta framework for creating [Excalibur.js game](https://excaliburjs.com). Like a Next.js to your React, or a SvelteKit to your Svelte.
+A meta framework for creating [Excalibur.js games](https://excaliburjs.com). Like Next.js to React, or SvelteKit to Svelte.
 
 _This is not published yet_
 
