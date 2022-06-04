@@ -8,7 +8,7 @@ declare global {
   /*                          resource file extensions                          */
   /* -------------------------------------------------------------------------- */
   declare module '$res/*.tmx' {
-    const value: Excalibur.TiledMapResource
+    const value: TiledMapResource
     export default value
   }
   declare module '$res/*.png' {
