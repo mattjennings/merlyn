@@ -1,5 +1,5 @@
 import type { Manifest, SceneData } from '../cli/util/types'
-import type { Engine, Loadable, Loader as ExLoader, Loader } from 'excalibur'
+import { Engine, Loadable, Loader as ExLoader, Loader, Sound } from 'excalibur'
 import { ImageSource } from 'excalibur'
 import * as tiled from '@excaliburjs/plugin-tiled'
 
@@ -10,6 +10,8 @@ const resources: Loadable<any>[] = []
 const imgLoader = (url, options) =>
   new ImageSource(url, options.bustCache, options.filtering)
 
+const sndLoader = (url, options) => new Sound(url)
+
 const resourceLoaders = {
   tmx: (url, options) =>
     new tiled.TiledMapResource(url, {
@@ -19,11 +21,25 @@ const resourceLoaders = {
   png: imgLoader,
   jpeg: imgLoader,
   jpg: imgLoader,
+  gif: imgLoader,
+  mp3: sndLoader,
+  ogg: sndLoader,
+  wav: sndLoader,
 }
 
 export function addResource(url: string, options?: any) {
-  const ext = url.split('?')[0].split('.').pop()
-  const loader = resourceLoaders[ext]
+  let type
+  if (url.startsWith('data:')) {
+    const [, _type] = url.match(/^data:([^;]+);(base64)?,(.*)$/) || []
+    if (_type) {
+      type = _type.split('/')[1]
+    } else {
+      throw new Error(`Invalid data url: ${url}`)
+    }
+  } else {
+    type = url.split('?')[0].split('.').pop()
+  }
+  const loader = resourceLoaders[type]
 
   if (loader) {
     const resource = loader(url, options ?? {})
@@ -31,7 +47,7 @@ export function addResource(url: string, options?: any) {
     return resource
   }
 
-  throw new Error(`No loader found for .${ext} files`)
+  throw new Error(`No loader found for ${type}`)
 }
 
 export function addResourceLoaders(
