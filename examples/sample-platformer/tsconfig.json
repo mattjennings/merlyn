@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "scenes/**/*"],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "types": ["vite/client", "merlin/app"],
     "target": "ESNext",

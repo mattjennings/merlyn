@@ -18,15 +18,18 @@ export default class Player extends ex.Actor {
   WALK_SPEED = 75
   JUMP_SPEED = 300
 
-  onGround = false
+  onGround = true
   flipX = false
 
-  constructor(x: number, y: number) {
+  constructor(args: ex.ActorArgs) {
+    const collider = ex.Shape.Box(12, 28, new ex.Vector(0.5, 0.5))
     super({
-      pos: new ex.Vector(x, y),
       collisionType: ex.CollisionType.Active,
-      collisionGroup: ex.CollisionGroupManager.groupByName('player'),
-      collider: ex.Shape.Box(12, 28, ex.Vector.Half),
+      // collisionGroup: ex.CollisionGroupManager.groupByName('player'),
+      collider,
+      ...args,
+      // offset y to account for collider
+      y: args.y ? args.y - collider.bounds.height / 2 : 0,
     })
   }
 

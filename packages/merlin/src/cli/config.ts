@@ -10,9 +10,6 @@ export interface MerlinConfig {
     path: string
     boot: string
   }
-  resources: {
-    path: string
-  }
 }
 
 export type UserMerlinConfig = Partial<MerlinConfig>
@@ -27,9 +24,6 @@ export async function getMerlinConfig({
     scenes: {
       path: 'src/scenes',
       boot: 'index',
-    },
-    resources: {
-      path: 'res',
     },
   }
 
@@ -61,7 +55,7 @@ export async function getViteConfig({
 }): Promise<ViteConfig> {
   const defaultConfig: ViteConfig = {
     base: '', // keep paths to assets relative
-    publicDir: 'public',
+    publicDir: 'res',
     optimizeDeps: {},
     build: {
       minify: true,
@@ -76,7 +70,6 @@ export async function getViteConfig({
     resolve: {
       alias: {
         $lib: '/src/lib',
-        $res: path.join('/', config.resources.path),
         $game: path.join('/.merlin/runtime.js'),
       },
     },

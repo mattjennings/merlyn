@@ -13,11 +13,13 @@ const imgLoader = (url, options) =>
 const sndLoader = (url, options) => new Sound(url)
 
 const resourceLoaders = {
-  tmx: (url, options) =>
-    new tiled.TiledMapResource(url, {
+  tmx: (url, options) => {
+    const resource = new tiled.TiledMapResource(url, {
       mapFormatOverride: options.mapFormatOverride,
       startingLayerZIndex: options.startingLayerZIndex,
-    }),
+    })
+    return resource
+  },
   png: imgLoader,
   jpeg: imgLoader,
   jpg: imgLoader,

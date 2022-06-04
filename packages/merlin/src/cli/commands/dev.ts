@@ -57,11 +57,7 @@ async function watcher({
       cwd,
     })
   }
-  const paths = [
-    config.scenes.path,
-    config.resources.path,
-    'merlin.config.js',
-  ].filter(Boolean)
+  const paths = [config.scenes.path, 'merlin.config.js'].filter(Boolean)
 
   update()
 

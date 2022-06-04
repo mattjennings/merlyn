@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="96" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="16">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="96" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="20">
  <properties>
   <property name="deathY" type="int" value="290"/>
  </properties>
@@ -181,11 +181,17 @@
   <properties>
    <property name="excalibur" type="bool" value="true"/>
   </properties>
-  <object id="14" type="Camera" x="159.324" y="150.272">
+  <object id="14" type="Camera" x="135.728" y="138">
+   <point/>
+  </object>
+  <object id="19" x="96" y="192">
+   <properties>
+    <property name="name" value="Player"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>
- <layer id="1" name="ground" width="96" height="32">
+ <layer id="1" name="solid" width="96" height="32">
   <properties>
    <property name="Solid" type="bool" value="true"/>
   </properties>
