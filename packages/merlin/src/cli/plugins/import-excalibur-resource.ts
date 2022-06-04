@@ -26,13 +26,13 @@ export function importExcaliburResource(config: MerlinConfig): Plugin {
       const query = qs.parse('?' + params)
       if (isResource(id)) {
         return `
-        import { addResource } from '$game'
-        import url from "${base}?url"
-        
-        const resource = addResource(url, ${JSON.stringify(query)})
+import { addResource } from '$game'
+import url from "${base}?url"
 
-        export default resource
-        `
+const resource = addResource(url, ${JSON.stringify(query)})
+
+export default resource
+`
       }
     },
   }
