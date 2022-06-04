@@ -1,5 +1,5 @@
 import image from '$res/sprites/player.png'
-import { Engine, ImageSource, SpriteSheet } from 'excalibur'
+import { Engine, SpriteSheet } from 'excalibur'
 
 const spriteSheet = SpriteSheet.fromImageSource({
   image,
