@@ -7,10 +7,10 @@ import path from 'path'
 import del from 'del'
 import createManifestData from '../util/create-manifest-data'
 import { createApp } from '../util/create-app'
-import chokidar from 'chokidar'
 import kleur from 'kleur'
 import merge from 'deepmerge'
 import { getMerlinConfig, getViteConfig } from '../config'
+import FullReload from 'vite-plugin-full-reload'
 
 export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
   const config = await getMerlinConfig({ cwd })
@@ -18,17 +18,25 @@ export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
   const outDir = path.resolve(cwd, config.build.outDir)
   await del([dir, outDir])
 
-  const server = await createViteServer(
-    merge<InlineConfig>(
-      {
-        root: cwd,
-        server: {
-          port,
-        },
+  const viteConfig = merge<InlineConfig>(
+    {
+      root: cwd,
+      server: {
+        port,
       },
-      await getViteConfig({ config, buildDir: dir })
-    )
+    },
+    await getViteConfig({ config, buildDir: dir })
   )
+
+  const server = await createViteServer({
+    ...viteConfig,
+    plugins: [
+      ...viteConfig.plugins,
+
+      // reload on resource changes
+      FullReload([`${viteConfig.publicDir as string}/**/*`]),
+    ],
+  })
 
   watcher({ cwd, dir, server })
 
@@ -57,25 +65,33 @@ async function watcher({
       cwd,
     })
   }
-  const paths = [config.scenes.path, 'merlin.config.js'].filter(Boolean)
+  const paths = [
+    config.scenes.path,
+    server.config.publicDir,
+    'merlin.config.js',
+  ].filter(Boolean)
 
   update()
 
-  chokidar
-    .watch(paths, {
-      ignoreInitial: true,
-    })
-    .on('add', async (f) => {
-      await update()
-    })
-    .on('change', async (filePath) => {
-      await update()
+  server.watcher.add(paths)
+  server.watcher.on('add', async () => {
+    await update()
+  })
 
-      if (filePath.includes('merlin.config.js')) {
-        console.warn(
-          kleur.yellow('merlin.config.js was changed - restarting dev server')
-        )
-        await server.restart()
-      }
-    })
+  server.watcher.on('change', async (filePath) => {
+    await update()
+
+    if (filePath.includes(server.config.publicDir)) {
+      // await server.restart()
+      // server.moduleGraph.invalidateAll()
+      // server.
+    }
+
+    if (filePath.includes('merlin.config.js')) {
+      console.warn(
+        kleur.yellow('merlin.config.js was changed - restarting dev server')
+      )
+      await server.restart()
+    }
+  })
 }
