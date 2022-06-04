@@ -1,10 +1,9 @@
-import { Loader } from 'excalibur'
-
+import * as ex from 'excalibur'
 /**
  * A loader that does not render anything. This can be used to render an HTML UI instead,
  * by listening to its `on('progress')` and on('complete')` events.
  */
-export class SimpleLoader extends Loader {
+export class SimpleLoader extends ex.Loader {
   constructor(loadables?: any[]) {
     super()
     this.addResources(loadables ?? [])

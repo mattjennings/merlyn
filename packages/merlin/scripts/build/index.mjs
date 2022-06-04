@@ -15,6 +15,7 @@ const external = [
   ...Object.keys(pkg.peerDependencies),
   'path',
   'fs',
+  'url',
 ]
 
 const mode = process.env.NODE_ENV ?? 'production'
@@ -28,10 +29,11 @@ await vite.build({
     watch: mode === 'development' ? {} : null,
     sourcemap: true,
     emptyOutDir: false,
+    target: 'esnext',
     lib: {
       entry: path.resolve(__dirname, '../../src/cli/index.ts'),
       fileName: () => 'cli.js',
-      formats: ['cjs'],
+      formats: ['es'],
     },
     rollupOptions: {
       external,

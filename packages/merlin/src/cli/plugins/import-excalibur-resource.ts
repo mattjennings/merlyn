@@ -1,4 +1,3 @@
-import path from 'path'
 import { Plugin } from 'vite'
 import qs from 'query-string'
 import { MerlinConfig } from '../config'
@@ -12,7 +11,7 @@ export function importExcaliburResource(config: MerlinConfig): Plugin {
     const [, params] = id.split('?')
     const query = qs.parse('?' + params)
 
-    return !('url' in query) && id.includes(config.resources.dir)
+    return !('url' in query) && id.includes(config.resources.path)
   }
   return {
     name: 'vite-plugin-import-excalibur-resource',

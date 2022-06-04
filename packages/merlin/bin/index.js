@@ -1,3 +1,3 @@
 #! /usr/bin/env node
-require('source-map-support/register')
-require('../dist/cli.js')
+import 'source-map-support/register.js'
+import '../dist/cli.js'

@@ -8,7 +8,7 @@ import del from 'del'
 import createManifestData from '../util/create-manifest-data'
 import { createApp } from '../util/create-app'
 import chokidar from 'chokidar'
-import { yellow } from 'kleur'
+import kleur from 'kleur'
 import merge from 'deepmerge'
 import { getMerlinConfig, getViteConfig } from '../config'
 
@@ -57,16 +57,16 @@ async function watcher({
       cwd,
     })
   }
-  const dirs = [
-    config.scenes.dir,
-    config.resources.dir,
+  const paths = [
+    config.scenes.path,
+    config.resources.path,
     'merlin.config.js',
   ].filter(Boolean)
 
   update()
 
   chokidar
-    .watch(dirs, {
+    .watch(paths, {
       ignoreInitial: true,
     })
     .on('add', async (f) => {
@@ -75,7 +75,7 @@ async function watcher({
     .on('change', async (filePath) => {
       if (filePath.includes('merlin.config.js')) {
         console.warn(
-          yellow('merlin.config.js was changed - restarting dev server')
+          kleur.yellow('merlin.config.js was changed - restarting dev server')
         )
         await server.restart()
       } else {

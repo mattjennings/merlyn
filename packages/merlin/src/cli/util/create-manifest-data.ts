@@ -10,7 +10,7 @@ export default async function createManifestData({
   config: MerlinConfig
   cwd: string
 }): Promise<ManifestData> {
-  const sceneDir = path.resolve(cwd, config.scenes.dir)
+  const sceneDir = path.resolve(cwd, config.scenes.path)
   const files = getFiles(sceneDir)
 
   const scenes: Record<string, SceneData> = files.reduce((acc, filePath) => {

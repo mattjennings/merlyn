@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Loadable, Loader, Scene as ExScene } from 'excalibur'
+import * as ex from 'excalibur'
 import { SimpleLoader } from './SimpleLoader'
 
 export interface LoadingSceneArgs {
-  resources: Loadable<any>[]
+  resources: ex.Loadable<any>[]
   next: string
 }
 
-export class LoadingScene extends ExScene {
+export class LoadingScene extends ex.Scene {
   next: string
-  resources: Loadable<any>[]
-  loader: Loader
+  resources: ex.Loadable<any>[]
+  loader: ex.Loader
 
   constructor({ resources, next }: LoadingSceneArgs) {
     super()

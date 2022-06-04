@@ -1,7 +1,8 @@
 {
-  "name": "sample-platformer",
+  "name": "example-sample-platformer",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "merlin dev",
     "build": "merlin build",
@@ -13,7 +14,6 @@
   },
   "dependencies": {
     "excalibur": "^0.26.0",
-    "@excaliburjs/plugin-tiled": "^0.26.0",
     "serve": "^1.0.0"
   }
 }

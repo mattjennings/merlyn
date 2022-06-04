@@ -3,7 +3,9 @@ import path from 'path'
 import mkdirp from 'mkdirp'
 import { ManifestData } from './types'
 import prettier from 'prettier'
+import { fileURLToPath } from 'url'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const previousContents = new Map<string, string>()
 let isInitial = true
 

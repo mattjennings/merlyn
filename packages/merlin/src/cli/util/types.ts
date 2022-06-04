@@ -1,4 +1,4 @@
-import { Engine, Loader, Scene } from 'excalibur'
+import type { Engine, Loader, Scene } from 'excalibur'
 import { LoadingScene } from '../../LoadingScene'
 
 export type Module<T> = {

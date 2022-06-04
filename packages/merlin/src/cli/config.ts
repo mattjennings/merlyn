@@ -7,11 +7,11 @@ import { importExcaliburResource } from './plugins/import-excalibur-resource'
 export interface MerlinConfig {
   game: string
   scenes: {
-    dir: string
+    path: string
     boot: string
   }
   resources: {
-    dir: string
+    path: string
   }
 }
 
@@ -25,11 +25,11 @@ export async function getMerlinConfig({
   const defaultConfig: MerlinConfig = {
     game: 'src/game',
     scenes: {
-      dir: 'src/scenes',
+      path: 'src/scenes',
       boot: 'index',
     },
     resources: {
-      dir: 'src/res',
+      path: 'res',
     },
   }
 
@@ -38,7 +38,7 @@ export async function getMerlinConfig({
     const config = await import(configPath)
     return deepmerge<MerlinConfig>(defaultConfig, config.default)
   } catch (e) {
-    if (e?.code !== 'MODULE_NOT_FOUND') {
+    if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
       throw e
     }
   }
@@ -76,11 +76,11 @@ export async function getViteConfig({
     resolve: {
       alias: {
         $lib: '/src/lib',
-        $res: path.join('/', config.resources.dir),
-        $scenes: path.join('/', config.scenes.dir),
+        $res: path.join('/', config.resources.path),
         $game: path.join('/.merlin/runtime.js'),
       },
     },
+
     plugins: [provideExcalibur(cwd), importExcaliburResource(config)],
   }
 
@@ -91,7 +91,7 @@ export async function getViteConfig({
       return deepmerge<ViteConfig>(defaultConfig, config.default.vite)
     }
   } catch (e) {
-    if (e?.code !== 'MODULE_NOT_FOUND') {
+    if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
       throw e
     }
   }
