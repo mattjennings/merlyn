@@ -49,7 +49,7 @@ function format(str: string) {
 
 function generateClientManifest(manifestData: ManifestData, dir: string) {
   const scenes = `{
-    boot: '${manifestData.scenes.boot}',
+    boot: ${JSON.stringify(manifestData.scenes.boot)},
     files: { 
       ${Object.entries(manifestData.scenes.files)
         .map(([name, scene]) => {
@@ -71,10 +71,12 @@ function generateClientManifest(manifestData: ManifestData, dir: string) {
     }
   }`
 
+  const devtool = JSON.stringify(manifestData.devtool)
   return format(`
 		import * as _game from ${JSON.stringify(path.relative(dir, manifestData.game))};
 
 		export const scenes = ${scenes};
+    export const devtool = ${devtool};
     export const game = _game.default;
     export const loader = _game.loader;
 	`)

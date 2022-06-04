@@ -69,13 +69,13 @@ async function watcher({
       await update()
     })
     .on('change', async (filePath) => {
+      await update()
+
       if (filePath.includes('merlin.config.js')) {
         console.warn(
           kleur.yellow('merlin.config.js was changed - restarting dev server')
         )
         await server.restart()
-      } else {
-        await update()
       }
     })
 }

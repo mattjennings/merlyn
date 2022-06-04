@@ -47,6 +47,7 @@ importers:
       typescript: ^4.5.4
       vite: ^2.9.9
     dependencies:
+      '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-tiled': 0.26.2
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       chokidar: 3.5.3
@@ -64,7 +65,6 @@ importers:
       svelte: 3.48.0
       vite: 2.9.9
     devDependencies:
-      '@excaliburjs/dev-tools': 0.25.3
       '@types/events': 3.0.0
       autoprefixer: 10.4.7
       merlin: link:../../packages/merlin
@@ -77,6 +77,7 @@ importers:
 
   examples/sample-platformer:
     specifiers:
+      '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
       '@excaliburjs/testing': ^0.25.1
       chokidar: ^3.5.3
@@ -94,6 +95,7 @@ importers:
       source-map-support: ^0.5.21
       vite: ^2.9.9
     dependencies:
+      '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-tiled': 0.26.2
       chokidar: 3.5.3
       deepmerge: 4.2.2
@@ -114,6 +116,7 @@ importers:
 
   packages/merlin:
     specifiers:
+      '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
       '@types/node': ^17.0.38
       chokidar: ^3.5.3
@@ -131,6 +134,7 @@ importers:
       vite: ^2.9.9
       vite-plugin-dts: ^1.2.0
     dependencies:
+      '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-tiled': 0.26.2
       chokidar: 3.5.3
       deepmerge: 4.2.2
@@ -374,7 +378,7 @@ packages:
       '@tweakpane/core': 1.0.8
       excalibur: 0.25.3
       tweakpane: 3.0.7
-    dev: true
+    dev: false
 
   /@excaliburjs/plugin-tiled/0.26.2:
     resolution: {integrity: sha512-PcTbp327n+ZSqpd3D1Ls+WOJb+4dVnWiLzGBUBDLscBixLerjFkFj1ZiKIWnZ6LL0C5FGFnPB4L+sDZkJYKqHQ==}
@@ -746,7 +750,7 @@ packages:
 
   /@tweakpane/core/1.0.8:
     resolution: {integrity: sha512-q7BQrqM4NYiaSoErRgRY0EBxxC8AzsZJoz52K8SNJ/IfYu9lTzfFTwW7ouYqgElSOx+3ybXBcMlkCPZdOBZg6Q==}
-    dev: true
+    dev: false
 
   /@types/argparse/1.0.38:
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
@@ -1560,7 +1564,6 @@ packages:
   /core-js/3.21.0:
     resolution: {integrity: sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==}
     requiresBuild: true
-    dev: true
 
   /core-js/3.22.5:
     resolution: {integrity: sha512-VP/xYuvJ0MJWRAobcmQ8F2H6Bsn+s7zqAAjFaHGBMc5AQm7zaelhD1LGduFn2EehEcQcU+br6t+fwbpQ5d1ZWA==}
@@ -2141,7 +2144,7 @@ packages:
     resolution: {integrity: sha512-BfhnOZJSkUEWFpZaKYPhmiivRYpXF6TykaUSJK3zzAwzUhNdTjT1XKSBFyN8CePkBtmza8cB/ufblG1bH91QjA==}
     dependencies:
       core-js: 3.21.0
-    dev: true
+    dev: false
 
   /excalibur/0.26.0:
     resolution: {integrity: sha512-TbQ9K/RA99CJW8ksTpgxVbg3hECv3hk+tTgovltL0oba4WuoXlL0DY9hWuoID5G9wbpVJiXiE8dA0Wyfd8ksfg==}
@@ -4201,7 +4204,7 @@ packages:
 
   /tweakpane/3.0.7:
     resolution: {integrity: sha512-rgxqoo6T10atYoKHVif6aYlAMIAlHJ84hi5LXqi6ZgVEPcmnzPI34C88y6HquarBY0ZKE/ZCXVaZm8NibhQRtA==}
-    dev: true
+    dev: false
 
   /tweetnacl/0.14.5:
     resolution: {integrity: sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=}

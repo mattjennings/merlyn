@@ -1,5 +1,6 @@
 import type { Engine, Loader, Scene } from 'excalibur'
 import { LoadingScene } from '../../LoadingScene'
+import { MerlinConfig } from '../config'
 
 export type Module<T> = {
   default: T
@@ -33,6 +34,7 @@ export type ManifestData<Loaded extends boolean = false> = {
     files: Record<string, SceneData<Loaded>>
     boot: string
   }
+  devtool?: MerlinConfig['devtool']
 }
 
 export type Manifest = ManifestData<true>

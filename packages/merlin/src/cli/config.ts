@@ -10,6 +10,9 @@ export interface MerlinConfig {
     path: string
     boot: string
   }
+  devtool?: {
+    enabled: boolean
+  }
 }
 
 export type UserMerlinConfig = Partial<MerlinConfig>
@@ -29,7 +32,7 @@ export async function getMerlinConfig({
 
   try {
     const configPath = path.join(cwd, `merlin.config.js`)
-    const config = await import(configPath)
+    const config = await import(configPath + `?ts=${Date.now()}`)
     return deepmerge<MerlinConfig>(defaultConfig, config.default)
   } catch (e) {
     if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
@@ -75,18 +78,6 @@ export async function getViteConfig({
     },
 
     plugins: [provideExcalibur(cwd), importExcaliburResource(config)],
-  }
-
-  try {
-    const configPath = path.join(cwd, `merlin.config.js`)
-    const config = await import(configPath)
-    if (config.default.vite) {
-      return deepmerge<ViteConfig>(defaultConfig, config.default.vite)
-    }
-  } catch (e) {
-    if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
-      throw e
-    }
   }
 
   return defaultConfig

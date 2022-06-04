@@ -44,6 +44,7 @@ export default async function createManifestData({
       files: scenes,
       boot: config.scenes.boot,
     },
+    devtool: config.devtool,
   }
 }
 

@@ -28,6 +28,7 @@
   "license": "ISC",
   "dependencies": {
     "@excaliburjs/plugin-tiled": "^0.26.2",
+    "@excaliburjs/dev-tools": "^0.25.3",
     "chokidar": "^3.5.3",
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",

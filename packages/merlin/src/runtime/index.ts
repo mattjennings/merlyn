@@ -2,8 +2,10 @@ import type { Manifest, SceneData } from '../cli/util/types'
 import { Engine, Loadable, Loader as ExLoader, Loader, Sound } from 'excalibur'
 import { ImageSource } from 'excalibur'
 import * as tiled from '@excaliburjs/plugin-tiled'
+import { DevTool } from '@excaliburjs/dev-tools'
 
 export let engine: Engine
+export let devtool: DevTool
 
 const resources: Loadable<any>[] = []
 
@@ -58,7 +60,7 @@ export function addResourceLoaders(
   Object.assign(resourceLoaders, loaders)
 }
 
-export async function _start({ game, scenes, loader }: Manifest) {
+export async function _start({ game, scenes, loader, devtool }: Manifest) {
   const resourcesByScene = new Map<string, Loadable<any>[]>()
 
   engine = game
@@ -100,6 +102,10 @@ export async function _start({ game, scenes, loader }: Manifest) {
   }
 
   loader?.addResources(resources)
+
+  if (import.meta.env.DEV && devtool?.enabled) {
+    new DevTool(engine as any)
+  }
 
   game.start(loader).then(() => {
     game.goToScene(scenes.boot)
