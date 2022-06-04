@@ -48,7 +48,7 @@ await vite.build({
     watch: mode === 'development' ? {} : null,
     sourcemap: true,
     emptyOutDir: false,
-    target: 'es2015',
+    target: 'esnext',
     lib: {
       entry: path.resolve(__dirname, '../../src/runtime/index.ts'),
       fileName: () => 'runtime.js',
@@ -57,6 +57,9 @@ await vite.build({
     rollupOptions: {
       external,
     },
+  },
+  define: {
+    'process.env.NODE_ENV': 'process.env.NODE_ENV',
   },
 })
 

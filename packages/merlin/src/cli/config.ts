@@ -58,6 +58,7 @@ export async function getMerlinConfig({
 export async function getViteConfig({
   cwd = process.cwd(),
   config,
+  production,
 }: {
   cwd?: string
   config: MerlinConfig
@@ -68,6 +69,7 @@ export async function getViteConfig({
     base: '', // keep paths to assets relative
     publicDir: 'res',
     optimizeDeps: {},
+    mode: production ? 'production' : 'development',
     build: {
       minify: true,
       assetsDir: '',

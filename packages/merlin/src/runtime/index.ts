@@ -103,7 +103,7 @@ export async function _start({ game, scenes, loader, devtool }: Manifest) {
 
   loader?.addResources(resources)
 
-  if (import.meta.env.DEV && devtool?.enabled) {
+  if (process.env.NODE_ENV === 'development' && devtool?.enabled) {
     new DevTool(engine as any)
   }
 

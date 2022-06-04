@@ -1,5 +1,4 @@
-import './app.css'
-import * as ex from 'excalibur'
+import './styles.css'
 import { Color, WebAudio, Input } from 'excalibur'
 import { SimpleLoader } from 'merlin'
 
@@ -9,8 +8,6 @@ export const loader = import.meta.env.PROD
 
 const game = new ex.Engine({
   canvasElementId: 'game',
-  // width: 400,
-  // height: 225,
   displayMode: ex.DisplayMode.FitScreen,
   backgroundColor: Color.Black,
   pointerScope: Input.PointerScope.Canvas,
