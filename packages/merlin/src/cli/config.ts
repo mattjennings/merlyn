@@ -1,8 +1,8 @@
 import { UserConfig as ViteConfig, loadConfigFromFile } from 'vite'
 import path from 'path'
 import deepmerge from 'deepmerge'
-import { provideExcalibur } from './plugins/provide-excalibur'
 import { importExcaliburResource } from './plugins/import-excalibur-resource'
+import AutoImport from 'unplugin-auto-import/vite'
 
 type DeepPartial<T> = T extends object
   ? {
@@ -90,7 +90,17 @@ export async function getViteConfig({
       },
     },
 
-    plugins: [provideExcalibur(cwd), importExcaliburResource()],
+    plugins: [
+      AutoImport({
+        imports: [
+          {
+            excalibur: [['*', 'ex']],
+          },
+        ],
+        dts: false,
+      }),
+      importExcaliburResource(),
+    ],
   }
 
   const userConfig = await loadConfigFromFile({

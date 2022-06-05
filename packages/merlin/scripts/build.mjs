@@ -8,11 +8,12 @@ import dts from 'vite-plugin-dts'
 const require = createRequire(import.meta.url)
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const pkg = require('../../package.json')
+const pkg = require('../package.json')
 
 const external = [
   ...Object.keys(pkg.dependencies),
   ...Object.keys(pkg.peerDependencies),
+  'unplugin-auto-import/vite',
   'path',
   'fs',
   'url',
@@ -20,7 +21,7 @@ const external = [
 
 const mode = process.env.NODE_ENV ?? 'production'
 
-await del(path.join(__dirname, '../../dist'))
+await del(path.join(__dirname, '../dist'))
 
 // cli
 await vite.build({
@@ -31,7 +32,7 @@ await vite.build({
     emptyOutDir: false,
     target: 'esnext',
     lib: {
-      entry: path.resolve(__dirname, '../../src/cli/index.ts'),
+      entry: path.resolve(__dirname, '../src/cli/index.ts'),
       fileName: () => 'cli.js',
       formats: ['es'],
     },
@@ -50,7 +51,7 @@ await vite.build({
     emptyOutDir: false,
     target: 'esnext',
     lib: {
-      entry: path.resolve(__dirname, '../../src/runtime/index.ts'),
+      entry: path.resolve(__dirname, '../src/runtime/index.ts'),
       fileName: () => 'runtime.js',
       formats: ['esm'],
     },
@@ -71,7 +72,7 @@ await vite.build({
     sourcemap: true,
     emptyOutDir: false,
     lib: {
-      entry: path.resolve(__dirname, '../../src/index.ts'),
+      entry: path.resolve(__dirname, '../src/index.ts'),
       name: 'merlin',
       fileName: (format) => `index.js`,
       formats: ['es'],

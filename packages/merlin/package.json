@@ -16,8 +16,8 @@
   ],
   "scripts": {
     "merlin": "node bin/index.js",
-    "dev": "NODE_ENV=development node scripts/build/index.mjs",
-    "build": "NODE_ENV=production node scripts/build/index.mjs",
+    "dev": "NODE_ENV=development node scripts/build.mjs",
+    "build": "NODE_ENV=production node scripts/build.mjs",
     "release": "npm run build && npm publish --access public"
   },
   "exports": {
@@ -43,7 +43,8 @@
     "sirv": "^2.0.2",
     "source-map-support": "^0.5.21",
     "vite": "^2.9.9",
-    "vite-plugin-full-reload": "^1.0.0"
+    "vite-plugin-full-reload": "^1.0.0",
+    "unplugin-auto-import": "^0.8.7"
   },
   "peerDependencies": {
     "excalibur": "^0.26.0"
