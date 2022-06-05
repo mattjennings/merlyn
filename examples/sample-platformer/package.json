@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@excaliburjs/testing": "^0.25.1",
-    "merlin": "^0.0.1"
+    "@mattjennings/merlin": "^0.0.0-0"
   },
   "dependencies": {
     "excalibur": "^0.26.0"

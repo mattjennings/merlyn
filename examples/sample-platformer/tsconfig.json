@@ -1,7 +1,7 @@
 {
   "include": ["src/**/*"],
   "compilerOptions": {
-    "types": ["vite/client", "merlin/app"],
+    "types": ["vite/client", "@mattjennings/merlin/app"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",

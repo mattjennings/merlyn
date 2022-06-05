@@ -1,6 +1,6 @@
 {
-  "name": "merlin",
-  "version": "0.0.1",
+  "name": "@mattjennings/merlin",
+  "version": "0.0.0-0",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -11,12 +11,14 @@
   "files": [
     "bin",
     "dist",
-    "app.d.ts"
+    "app.d.ts",
+    "modules.d.ts"
   ],
   "scripts": {
     "merlin": "node bin/index.js",
     "dev": "NODE_ENV=development node scripts/build/index.mjs",
-    "build": "NODE_ENV=production node scripts/build/index.mjs"
+    "build": "NODE_ENV=production node scripts/build/index.mjs",
+    "release": "npm run build && npm publish --access public"
   },
   "exports": {
     "./package.json": "./package.json",

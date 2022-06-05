@@ -1,6 +1,6 @@
 import './styles.css'
 import { Color, WebAudio, Input } from 'excalibur'
-import { SimpleLoader } from 'merlin'
+import { SimpleLoader } from '@mattjennings/merlin'
 
 export const loader = import.meta.env.PROD
   ? new ex.Loader()

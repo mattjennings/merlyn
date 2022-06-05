@@ -22,6 +22,7 @@ importers:
     specifiers:
       '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
+      '@mattjennings/merlin': ^0.0.0-0
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       '@types/events': ^3.0.0
       autoprefixer: ^10.4.4
@@ -31,7 +32,6 @@ importers:
       excalibur: ^0.26.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
-      merlin: ^0.0.1
       mkdirp: ^1.0.4
       polka: ^0.5.2
       postcss: ^8.4.12
@@ -46,6 +46,7 @@ importers:
       tailwindcss: ^3.0.23
       typescript: ^4.5.4
       vite: ^2.9.9
+      vite-plugin-full-reload: ^1.0.0
     dependencies:
       '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-tiled': 0.26.2
@@ -65,10 +66,11 @@ importers:
       source-map-support: 0.5.21
       svelte: 3.48.0
       vite: 2.9.9
+      vite-plugin-full-reload: 1.0.0
     devDependencies:
+      '@mattjennings/merlin': link:../../packages/merlin
       '@types/events': 3.0.0
       autoprefixer: 10.4.7
-      merlin: link:../../packages/merlin
       postcss: 8.4.14
       postcss-load-config: 3.1.4
       svelte-preprocess: 4.10.6
@@ -80,12 +82,12 @@ importers:
       '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
       '@excaliburjs/testing': ^0.25.1
+      '@mattjennings/merlin': ^0.0.0-0
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.26.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
-      merlin: ^0.0.1
       mkdirp: ^1.0.4
       polka: ^0.5.2
       prettier: ^2.6.2
@@ -94,6 +96,7 @@ importers:
       sirv: ^2.0.2
       source-map-support: ^0.5.21
       vite: ^2.9.9
+      vite-plugin-full-reload: ^1.0.0
     dependencies:
       '@excaliburjs/dev-tools': 0.25.3
       '@excaliburjs/plugin-tiled': 0.26.2
@@ -110,9 +113,10 @@ importers:
       sirv: 2.0.2
       source-map-support: 0.5.21
       vite: 2.9.9
+      vite-plugin-full-reload: 1.0.0
     devDependencies:
       '@excaliburjs/testing': 0.25.1
-      merlin: link:../../packages/merlin
+      '@mattjennings/merlin': link:../../packages/merlin
 
   packages/merlin:
     specifiers:
