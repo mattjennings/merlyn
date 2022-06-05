@@ -1,6 +1,3 @@
-import { TiledMapResource } from '@excaliburjs/plugin-tiled'
-console.log(TiledMapResource)
-
 const engine = new ex.Engine({
   backgroundColor: ex.Color.fromHex('#5fcde4'),
   width: 600,
