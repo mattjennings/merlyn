@@ -79,19 +79,8 @@ async function watcher({
   })
 
   server.watcher.on('change', async (filePath) => {
-    await update()
-
-    if (filePath.includes(server.config.publicDir)) {
-      // await server.restart()
-      // server.moduleGraph.invalidateAll()
-      // server.
-    }
-
-    if (filePath.includes('merlin.config.js')) {
-      console.warn(
-        kleur.yellow('merlin.config.js was changed - restarting dev server')
-      )
-      await server.restart()
+    if (paths.some((p) => filePath.includes(p))) {
+      await update()
     }
   })
 }
