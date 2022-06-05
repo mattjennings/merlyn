@@ -27,8 +27,8 @@ export default class Level1 extends ex.Scene {
           {}
         )
 
-        if (props.name && this.objectMapping[props.name]) {
-          const instance = new this.objectMapping[props.name]({
+        if (props.class && this.objectMapping[props.class]) {
+          const instance = new this.objectMapping[props.class]({
             ...props,
             x: obj.x,
             y: obj.y,

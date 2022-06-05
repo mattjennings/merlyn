@@ -1,5 +1,5 @@
 export default {
   devtool: {
-    enabled: true,
+    // enabled: true,
   },
 }

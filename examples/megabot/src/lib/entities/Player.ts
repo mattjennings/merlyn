@@ -1,3 +1,4 @@
+import { engine } from '$game'
 import image from '$res/sprites/player.png'
 import { Engine, SpriteSheet } from 'excalibur'
 
@@ -14,11 +15,17 @@ const spriteSheet = SpriteSheet.fromImageSource({
 export default class Player extends ex.Actor {
   static resources = [image]
 
+  spawnPoint: ex.Vector
   ANIM_SPEED = 100
-  WALK_SPEED = 75
+  WALK_SPEED = 9
   JUMP_SPEED = 300
 
-  onGround = true
+  touching = {
+    left: false,
+    right: false,
+    top: false,
+    bottom: false,
+  }
   flipX = false
 
   constructor(args: ex.ActorArgs) {
@@ -29,11 +36,12 @@ export default class Player extends ex.Actor {
       collider,
       ...args,
       // offset y to account for collider
-      y: args.y ? args.y - collider.bounds.height / 2 : 0,
+      y: args.y ? args.y - 1 - collider.bounds.height / 2 : 0,
     })
+    this.spawnPoint = new ex.Vector(this.pos.x, this.pos.y)
   }
 
-  onInitialize(engine: ex.Engine) {
+  onInitialize() {
     this.graphics.add(
       'run',
       ex.Animation.fromSpriteSheet(spriteSheet, [0, 1, 2, 3], this.ANIM_SPEED)
@@ -59,20 +67,40 @@ export default class Player extends ex.Actor {
       ex.Animation.fromSpriteSheet(spriteSheet, [10], this.ANIM_SPEED)
     )
     this.graphics.use('idle')
-    this.on('postcollision', (evt) => this.onPostCollision(evt))
+
+    this.on('postcollision', (ev) => this.onPostCollision(ev))
+    this.on('precollision', (ev) => this.onPreCollision(ev))
+    this.on('collisionend', (ev) => this.onCollisionEnd(ev))
   }
 
-  onPostCollision(evt: ex.PostCollisionEvent) {
-    // Bot has collided with it's Top of another collider
-    // console.log(evt.other.name)
-    if (evt.side === ex.Side.Bottom) {
-      this.onGround = true
+  onCollisionEnd(ev: ex.CollisionEndEvent) {
+    if (ev.other?.name === 'solid') {
+      this.touching.bottom = false
+    }
+  }
+
+  onPreCollision(ev: ex.PreCollisionEvent) {}
+
+  onPostCollision(ev: ex.PostCollisionEvent) {
+    if (ev.side === ex.Side.Bottom) {
+      this.touching.bottom = true
+    } else if (ev.side === ex.Side.Left) {
+      this.touching.left = true
+    } else if (ev.side === ex.Side.Right) {
+      this.touching.right = true
+    } else if (ev.side === ex.Side.Top) {
+      this.touching.top = true
+    }
+
+    // died
+    if (ev.other.name === 'death') {
+      this.pos = this.spawnPoint.clone()
     }
 
     // Bot has collided on the side, display hurt animation
     // if (
-    //   (evt.side === ex.Side.Left || evt.side === ex.Side.Right) &&
-    //   evt.other instanceof Baddie
+    //   (ev.side === ex.Side.Left || ev.side === ex.Side.Right) &&
+    //   ev.other instanceof Baddie
     // ) {
     //   if (this.vel.x < 0 && !this.hurt) {
     //     this.graphics.use('hurtleft')
@@ -92,21 +120,25 @@ export default class Player extends ex.Actor {
 
     // Player input
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-      this.vel.x = -this.WALK_SPEED
+      this.vel.x = -this.WALK_SPEED * delta
       this.flipX = true
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-      this.vel.x = this.WALK_SPEED
+      this.vel.x = this.WALK_SPEED * delta
       this.flipX = false
     }
 
-    if (engine.input.keyboard.isHeld(ex.Input.Keys.Space) && this.onGround) {
+    if (
+      engine.input.keyboard.wasPressed(ex.Input.Keys.A) &&
+      this.touching.bottom &&
+      this.vel.y === 0
+    ) {
       this.vel.y = -this.JUMP_SPEED
-      this.onGround = false
+      this.touching.bottom = false
     } else if (
       engine.input.keyboard.wasReleased(ex.Input.Keys.Space) &&
-      !this.onGround &&
+      !this.touching.bottom &&
       this.vel.y < 0
     ) {
       this.vel.y = 0
@@ -114,7 +146,7 @@ export default class Player extends ex.Actor {
   }
 
   onPostUpdate(engine: Engine, delta: number): void {
-    if (!this.onGround) {
+    if (!this.touching.bottom) {
       this.graphics.use('jump')
     } else {
       if (this.vel.x !== 0) {
@@ -125,5 +157,11 @@ export default class Player extends ex.Actor {
     }
 
     this.graphics.current[0].graphic.flipHorizontal = this.flipX
+    this.touching = {
+      left: false,
+      right: false,
+      top: false,
+      bottom: false,
+    }
   }
 }

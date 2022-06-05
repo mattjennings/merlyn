@@ -15,7 +15,8 @@ const game = new ex.Engine({
   antialiasing: false,
 })
 
-ex.Physics.acc = new ex.Vector(0, 800)
+ex.Physics.acc = new ex.Vector(0, 1000)
+
 window.addEventListener('pointerdown', () => {
   WebAudio.unlock()
 })
