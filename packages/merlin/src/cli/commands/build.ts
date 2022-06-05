@@ -18,7 +18,12 @@ export default async function build({ cwd = process.cwd() } = {}) {
     dir,
     cwd,
   })
-  await vite.build(
-    await getViteConfig({ production: true, config, buildDir: dir })
-  )
+
+  const viteConfig = await getViteConfig({
+    production: true,
+    config,
+    buildDir: dir,
+  })
+
+  await vite.build(viteConfig)
 }

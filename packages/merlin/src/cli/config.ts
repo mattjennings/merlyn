@@ -1,4 +1,4 @@
-import { UserConfig as ViteConfig } from 'vite'
+import { UserConfig as ViteConfig, loadConfigFromFile } from 'vite'
 import path from 'path'
 import deepmerge from 'deepmerge'
 import { provideExcalibur } from './plugins/provide-excalibur'
@@ -68,10 +68,13 @@ export async function getViteConfig({
   const defaultConfig: ViteConfig = {
     base: '', // keep paths to assets relative
     publicDir: 'res',
-    optimizeDeps: {},
+    optimizeDeps: {
+      // include: ['@excaliburjs/plugin-tiled'],
+    },
     mode: production ? 'production' : 'development',
     build: {
-      minify: true,
+      minify: 'terser',
+      sourcemap: true,
       assetsDir: '',
       outDir: config.build.outDir,
       brotliSize: false,
@@ -87,8 +90,16 @@ export async function getViteConfig({
       },
     },
 
-    plugins: [provideExcalibur(cwd), importExcaliburResource(config)],
+    plugins: [provideExcalibur(cwd), importExcaliburResource()],
   }
 
+  const userConfig = await loadConfigFromFile({
+    command: production ? 'build' : 'serve',
+    mode: production ? 'production' : 'development',
+  })
+
+  if (userConfig?.config) {
+    return deepmerge(defaultConfig, userConfig.config)
+  }
   return defaultConfig
 }

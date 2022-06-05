@@ -22,6 +22,7 @@ function readPackage(pkg, context) {
     pkg.dependencies = {
       ...pkg.dependencies,
       ...merlinPkg.dependencies,
+      '@mattjennings/merlin': 'workspace:*',
     }
   }
 

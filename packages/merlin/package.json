@@ -1,6 +1,6 @@
 {
   "name": "@mattjennings/merlin",
-  "version": "0.0.0-0",
+  "version": "0.0.0-6",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -29,7 +29,6 @@
   "author": "mattjennings",
   "license": "ISC",
   "dependencies": {
-    "@excaliburjs/dev-tools": "^0.25.3",
     "@excaliburjs/plugin-tiled": "^0.26.2",
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
@@ -47,7 +46,6 @@
     "vite-plugin-full-reload": "^1.0.0"
   },
   "peerDependencies": {
-    "@excaliburjs/plugin-tiled": "^0.26.0",
     "excalibur": "^0.26.0"
   },
   "devDependencies": {

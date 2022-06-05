@@ -9,8 +9,7 @@
     "preview": "merlin preview"
   },
   "devDependencies": {
-    "@excaliburjs/testing": "^0.25.1",
-    "@mattjennings/merlin": "^0.0.0-0"
+    "@mattjennings/merlin": "latest"
   },
   "dependencies": {
     "excalibur": "^0.26.0"

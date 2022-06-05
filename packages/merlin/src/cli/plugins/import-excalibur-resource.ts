@@ -1,13 +1,11 @@
 import { Plugin } from 'vite'
 import qs from 'query-string'
-import { MerlinConfig } from '../config'
-import path from 'path'
 
 /**
  * Parses the import as an excalibur resource and adds
  * the resource to a cache to be automatically loaded
  */
-export function importExcaliburResource(config: MerlinConfig): Plugin {
+export function importExcaliburResource(): Plugin {
   const isResource = (id) => {
     const [, params] = id.split('?')
     const query = qs.parse('?' + params)

@@ -1,5 +1,5 @@
 declare module '$game' {
-  import type { Devtool } from '@excaliburjs/dev-tools'
+  // import type { Devtool } from '@excaliburjs/dev-tools'
   import type { Engine, Loadable } from 'excalibur'
 
   export function addResource<T extends Loadable>(url: string, options?: any): T
@@ -7,7 +7,7 @@ declare module '$game' {
     loaders: Record<string, (url: string) => Loadable<any>>
   )
   export const engine: Engine
-  export const devtool: Devtool
+  // export const devtool: Devtool
 }
 
 /* -------------------------------------------------------------------------- */

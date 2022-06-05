@@ -1,11 +1,11 @@
 import type { Manifest, SceneData } from '../cli/util/types'
 import { Engine, Loadable, Loader as ExLoader, Loader, Sound } from 'excalibur'
 import { ImageSource } from 'excalibur'
-import * as tiled from '@excaliburjs/plugin-tiled'
-import { DevTool } from '@excaliburjs/dev-tools'
+import { TiledMapResource } from '@excaliburjs/plugin-tiled'
+// import { DevTool } from '@excaliburjs/dev-tools'
 
 export let engine: Engine
-export let devtool: DevTool
+// export let devtool: DevTool
 
 const resources: Loadable<any>[] = []
 
@@ -16,7 +16,7 @@ const sndLoader = (url, options) => new Sound(url)
 
 const resourceLoaders = {
   tmx: (url, options) => {
-    const resource = new tiled.TiledMapResource(url, {
+    const resource = new TiledMapResource(url, {
       mapFormatOverride: options.mapFormatOverride,
       startingLayerZIndex: options.startingLayerZIndex,
     })
@@ -103,9 +103,9 @@ export async function _start({ game, scenes, loader, devtool }: Manifest) {
 
   loader?.addResources(resources)
 
-  if (process.env.NODE_ENV === 'development' && devtool?.enabled) {
-    new DevTool(engine as any)
-  }
+  // if (process.env.NODE_ENV === 'development' && devtool?.enabled) {
+  //   new DevTool(engine as any)
+  // }
 
   game.start(loader).then(() => {
     game.goToScene(scenes.boot)

@@ -30,6 +30,7 @@ export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
 
   const server = await createViteServer({
     ...viteConfig,
+
     plugins: [
       ...viteConfig.plugins,
 
