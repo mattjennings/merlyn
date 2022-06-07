@@ -1,0 +1,10 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "types": ["@mattjennings/merlin/app"],
+    "paths": {
+      "$lib/*": ["./src/lib/*"],
+      "$res/*": ["./res/*"]
+    }
+  }
+}

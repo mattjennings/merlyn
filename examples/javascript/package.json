@@ -1,0 +1,17 @@
+{
+  "name": "example-javascript",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "merlin dev",
+    "build": "merlin build",
+    "preview": "merlin preview"
+  },
+  "devDependencies": {
+    "@mattjennings/merlin": "latest"
+  },
+  "dependencies": {
+    "excalibur": "^0.26.0"
+  }
+}
