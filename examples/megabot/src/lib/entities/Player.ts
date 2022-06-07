@@ -17,8 +17,8 @@ export default class Player extends ex.Actor {
 
   spawnPoint: ex.Vector
   ANIM_SPEED = 100
-  WALK_SPEED = 9
-  JUMP_SPEED = 300
+  WALK_SPEED = 100
+  JUMP_SPEED = 200
 
   touching = {
     left: false,
@@ -29,14 +29,15 @@ export default class Player extends ex.Actor {
   flipX = false
 
   constructor(args: ex.ActorArgs) {
-    const collider = ex.Shape.Box(12, 28, new ex.Vector(0.5, 0.5))
+    const width = 12
+    const height = 28
     super({
       collisionType: ex.CollisionType.Active,
-      // collisionGroup: ex.CollisionGroupManager.groupByName('player'),
-      collider,
+      width,
+      height,
       ...args,
       // offset y to account for collider
-      y: args.y ? args.y - 1 - collider.bounds.height / 2 : 0,
+      y: args.y ? args.y - 1 - height / 2 : 0,
     })
     this.spawnPoint = new ex.Vector(this.pos.x, this.pos.y)
   }
@@ -84,12 +85,14 @@ export default class Player extends ex.Actor {
   onPostCollision(ev: ex.PostCollisionEvent) {
     if (ev.side === ex.Side.Bottom) {
       this.touching.bottom = true
+      this.vel.y = 0
     } else if (ev.side === ex.Side.Left) {
       this.touching.left = true
     } else if (ev.side === ex.Side.Right) {
       this.touching.right = true
     } else if (ev.side === ex.Side.Top) {
       this.touching.top = true
+      this.vel.y = 0
     }
 
     // died
@@ -118,14 +121,15 @@ export default class Player extends ex.Actor {
     // Reset x velocity
     this.vel.x = 0
 
+    console.log(delta)
     // Player input
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-      this.vel.x = -this.WALK_SPEED * delta
+      this.vel.x = -this.WALK_SPEED
       this.flipX = true
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-      this.vel.x = this.WALK_SPEED * delta
+      this.vel.x = this.WALK_SPEED
       this.flipX = false
     }
 
