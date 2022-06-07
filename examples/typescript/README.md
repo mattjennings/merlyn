@@ -1,3 +1,8 @@
-# Sample Platformer
+# Typescript Example
 
-The [Excalibur sample platformer](https://github.com/excaliburjs/sample-platformer) ported to use Merlin
+This is an example of using Merlin with Typescript.
+
+```
+npm install
+npm run dev
+```
