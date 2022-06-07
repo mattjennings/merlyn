@@ -19,31 +19,31 @@ declare module '$res/*.tmx' {
   export default value
 }
 declare module '$res/*.png' {
-  const value: Excalibur.ImageSource
+  const value: ex.ImageSource
   export default value
 }
 declare module '$res/*.jpeg' {
-  const value: Excalibur.ImageSource
+  const value: ex.ImageSource
   export default value
 }
 declare module '$res/*.jpg' {
-  const value: Excalibur.ImageSource
+  const value: ex.ImageSource
   export default value
 }
 declare module '$res/*.gif' {
-  const value: Excalibur.ImageSource
+  const value: ex.ImageSource
   export default value
 }
 declare module '$res/*.mp3' {
-  const value: Excalibur.Sound
+  const value: ex.Sound
   export default value
 }
 declare module '$res/*.ogg' {
-  const value: Excalibur.Sound
+  const value: ex.Sound
   export default value
 }
 declare module '$res/*.wav' {
-  const value: Excalibur.Sound
+  const value: ex.Sound
   export default value
 }
 
