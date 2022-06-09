@@ -2,10 +2,10 @@ export class Teleporter extends ex.Actor {
   goto: string
   constructor({ goto, ...args }: ex.ActorArgs & { goto: string }) {
     super({
-      ...args,
       width: 16,
-      height: 8,
+      height: 16,
       anchor: new ex.Vector(0, 0),
+      ...args,
       // color: ex.Color.Red,
       collisionType: ex.CollisionType.Passive,
     })

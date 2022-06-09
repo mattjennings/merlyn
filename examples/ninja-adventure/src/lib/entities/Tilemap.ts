@@ -97,6 +97,8 @@ export default class Tilemap extends ex.Entity {
           x: object.x,
           y: object.y,
           goto: object.name!,
+          width: object.width,
+          height: object.height,
         })
     }
   }
