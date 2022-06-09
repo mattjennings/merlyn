@@ -7,6 +7,7 @@ declare module '$game' {
     loaders: Record<string, (url: string) => Loadable<any>>
   )
   export const engine: Engine
+  export const resources: Loadable<any>[]
   // export const devtool: Devtool
 }
 

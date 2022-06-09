@@ -7,7 +7,7 @@ import { TiledMapResource } from '@excaliburjs/plugin-tiled'
 export let engine: Engine
 // export let devtool: DevTool
 
-const resources: Loadable<any>[] = []
+export const resources: Loadable<any>[] = []
 
 const imgLoader = (url, options) =>
   new ImageSource(url, options.bustCache, options.filtering)
@@ -69,20 +69,22 @@ export async function _start({ game, scenes, loader, devtool }: Manifest) {
     const { default: Scene, resources = [] } = await scene.scene()
     resourcesByScene.set(scene.name, resources)
 
-    if (scene.scene) {
-      game.add(scene.name, new Scene())
-    }
+    if (Scene) {
+      if (scene.scene) {
+        game.add(scene.name, new Scene())
+      }
 
-    if (scene.loadingScene) {
-      const { default: LoadingScene } = await scene.loadingScene()
+      if (scene.loadingScene) {
+        const { default: LoadingScene } = await scene.loadingScene()
 
-      game.add(
-        `${scene.name}/_loading`,
-        new LoadingScene({
-          next: scene.name,
-          resources,
-        })
-      )
+        game.add(
+          `${scene.name}/_loading`,
+          new LoadingScene({
+            next: scene.name,
+            resources,
+          })
+        )
+      }
     }
   }
 
