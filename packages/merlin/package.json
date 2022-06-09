@@ -42,9 +42,9 @@
     "sade": "^1.8.1",
     "sirv": "^2.0.2",
     "source-map-support": "^0.5.21",
+    "unplugin-auto-import": "^0.8.7",
     "vite": "^2.9.9",
-    "vite-plugin-full-reload": "^1.0.0",
-    "unplugin-auto-import": "^0.8.7"
+    "vite-plugin-full-reload": "^1.0.0"
   },
   "peerDependencies": {
     "excalibur": "^0.26.0"

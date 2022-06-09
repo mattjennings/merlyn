@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@excaliburjs/dev-tools': ^0.25.3
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
       eslint: ^8.16.0
@@ -11,6 +12,7 @@ importers:
       prettier-plugin-svelte: ^2.7.0
       typescript: ^4.7.2
     devDependencies:
+      '@excaliburjs/dev-tools': 0.25.3
       '@typescript-eslint/eslint-plugin': 5.27.0_typescript@4.7.3
       '@typescript-eslint/parser': 5.27.0_typescript@4.7.3
       eslint: 8.17.0
@@ -115,6 +117,47 @@ importers:
       postcss-load-config: 3.1.4
       svelte-preprocess: 4.10.6
       tailwindcss: 3.0.24
+      typescript: 4.7.3
+
+  examples/ninja-adventure:
+    specifiers:
+      '@excaliburjs/plugin-tiled': ^0.26.2
+      '@mattjennings/merlin': workspace:*
+      deepmerge: ^4.2.2
+      del: ^6.1.1
+      excalibur: ^0.26.0
+      fs-extra: ^10.1.0
+      kleur: ^4.1.4
+      mkdirp: ^1.0.4
+      polka: ^0.5.2
+      prettier: ^2.6.2
+      query-string: ^7.1.1
+      sade: ^1.8.1
+      sirv: ^2.0.2
+      source-map-support: ^0.5.21
+      typescript: ^4.7.3
+      unplugin-auto-import: ^0.8.7
+      vite: ^2.9.9
+      vite-plugin-full-reload: ^1.0.0
+    dependencies:
+      '@excaliburjs/plugin-tiled': 0.26.2
+      '@mattjennings/merlin': link:../../packages/merlin
+      deepmerge: 4.2.2
+      del: 6.1.1
+      excalibur: 0.26.0
+      fs-extra: 10.1.0
+      kleur: 4.1.4
+      mkdirp: 1.0.4
+      polka: 0.5.2
+      prettier: 2.6.2
+      query-string: 7.1.1
+      sade: 1.8.1
+      sirv: 2.0.2
+      source-map-support: 0.5.21
+      unplugin-auto-import: 0.8.7
+      vite: 2.9.9
+      vite-plugin-full-reload: 1.0.0
+    devDependencies:
       typescript: 4.7.3
 
   examples/sample-platformer:
