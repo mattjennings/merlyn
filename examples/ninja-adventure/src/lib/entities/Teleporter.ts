@@ -1,3 +1,5 @@
+import { goToScene } from '$game'
+
 export class Teleporter extends ex.Actor {
   goto: string
   constructor({ goto, ...args }: ex.ActorArgs & { goto: string }) {
@@ -7,7 +9,7 @@ export class Teleporter extends ex.Actor {
       anchor: new ex.Vector(0, 0),
       ...args,
       // color: ex.Color.Red,
-      collisionType: ex.CollisionType.Passive,
+      collisionType: ex.CollisionType.Fixed,
     })
     this.goto = goto
   }
@@ -16,7 +18,7 @@ export class Teleporter extends ex.Actor {
     super.onInitialize(engine)
     this.on('collisionstart', (ev) => {
       if (ev.other.name === 'player') {
-        engine.goToScene(this.goto)
+        goToScene(this.goto)
       }
     })
   }

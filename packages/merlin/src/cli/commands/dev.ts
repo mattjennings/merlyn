@@ -30,12 +30,11 @@ export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
 
   const server = await createViteServer({
     ...viteConfig,
-
     plugins: [
       ...viteConfig.plugins,
 
       // reload on resource changes
-      FullReload([`${viteConfig.publicDir as string}/**/*`]),
+      // FullReload([`${viteConfig.publicDir as string}/**/*`]),
     ],
   })
 
@@ -59,11 +58,9 @@ async function watcher({
 
   async function update() {
     config = await getMerlinConfig()
-    const manifestData = await createManifestData({ cwd, config })
     createApp({
-      manifestData,
+      config,
       dir,
-      cwd,
     })
   }
   const paths = [

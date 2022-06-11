@@ -1,5 +1,5 @@
-import type { Engine, Loader, Scene } from 'excalibur'
-import { LoadingScene } from '../../LoadingScene'
+import type { Engine, Loader } from 'excalibur'
+import { Scene } from '../../Scene'
 import { MerlinConfig } from '../config'
 
 export type Module<T> = {
@@ -11,15 +11,8 @@ export type ModuleLoader<T, E = Record<string, never>> = () => Promise<
 >
 
 export interface SceneData<Loaded extends boolean = false> {
-  scene: Loaded extends true
-    ? ModuleLoader<
-        typeof Scene,
-        {
-          resources?: any[]
-        }
-      >
-    : string
-  loadingScene: Loaded extends true ? ModuleLoader<typeof LoadingScene> : string
+  scene: Loaded extends true ? ModuleLoader<typeof Scene> : string
+  loadingScene: Loaded extends true ? ModuleLoader<typeof Scene> : string
   name: string
 }
 
@@ -37,4 +30,10 @@ export type ManifestData<Loaded extends boolean = false> = {
   devtool?: MerlinConfig['devtool']
 }
 
-export type Manifest = ManifestData<true>
+export type Manifest = {
+  game: Engine
+  bootScene: string
+  scenes: Record<string, () => { default: typeof Scene }>
+  loadingScenes: Record<string, { default: typeof Scene }>
+  devtool?: boolean
+}

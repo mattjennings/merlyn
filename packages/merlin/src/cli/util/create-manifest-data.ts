@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import { MerlinConfig } from '../config'
+import { getSceneName } from './get-scene-name'
+import { posixify } from './helpers'
 import { ManifestData, SceneData } from './types'
 
 export default async function createManifestData({
@@ -13,23 +15,42 @@ export default async function createManifestData({
   const sceneDir = path.resolve(cwd, config.scenes.path)
   const files = getFiles(sceneDir)
 
+  const loadingScenes: Record<string, SceneData> = files.reduce(
+    (acc, filePath) => {
+      const baseName = path.parse(filePath).base
+
+      const name = getSceneName(filePath, config.scenes.path)
+      if (!baseName.startsWith('_')) {
+        return {
+          ...acc,
+          [name]: {
+            name: name,
+            loadingScene: getSceneName(
+              findLoadingScene(filePath),
+              config.scenes.path
+            ),
+            scene: posixify(path.relative(cwd, filePath)),
+          },
+        }
+      }
+
+      return acc
+    },
+    {}
+  )
   const scenes: Record<string, SceneData> = files.reduce((acc, filePath) => {
     const baseName = path.parse(filePath).base
 
-    let route = posixify(
-      filePath.replace(`${sceneDir}/`, '').replace(/.(j|t)s/, '')
-    )
-
-    if (route.endsWith('/index')) {
-      route = route.split(/\/index$/)[0]
-    }
-
-    if (!baseName.startsWith('_') && !baseName.startsWith('$')) {
+    const name = getSceneName(filePath, config.scenes.path)
+    if (!baseName.startsWith('_')) {
       return {
         ...acc,
-        [route]: {
-          name: route,
-          loadingScene: findLoadingScene(filePath),
+        [name]: {
+          name: name,
+          // loadingScene: getSceneName(
+          //   findLoadingScene(filePath),
+          //   config.scenes.path
+          // ),
           scene: posixify(path.relative(cwd, filePath)),
         },
       }
@@ -56,10 +77,6 @@ function getFiles(dir: string): string[] {
   })
 
   return files.flat()
-}
-
-function posixify(str: string) {
-  return str.replace(/\\/g, '/')
 }
 
 function findLoadingScene(filePath: string) {

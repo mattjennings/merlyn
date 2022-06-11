@@ -4,6 +4,7 @@ import mkdirp from 'mkdirp'
 import { ManifestData } from './types'
 import prettier from 'prettier'
 import { fileURLToPath } from 'url'
+import { MerlinConfig } from '../config'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const previousContents = new Map<string, string>()
@@ -18,20 +19,14 @@ export function writeIfChanged(file: string, code: string) {
 }
 
 export function createApp({
-  manifestData,
   dir,
-  cwd,
+  config,
 }: {
-  manifestData: ManifestData
   dir: string
-  cwd?: string
+  config: MerlinConfig
 }) {
-  writeIfChanged(
-    `${dir}/manifest.js`,
-    generateClientManifest(manifestData, dir)
-  )
-
-  writeIfChanged(`${dir}/index.js`, generateApp(manifestData, dir))
+  writeIfChanged(`${dir}/manifest.js`, generateClientManifest(dir, config))
+  writeIfChanged(`${dir}/index.js`, generateApp())
 
   if (isInitial) {
     copyRuntime(`${dir}/runtime`)
@@ -47,42 +42,66 @@ function format(str: string) {
   })
 }
 
-function generateClientManifest(manifestData: ManifestData, dir: string) {
-  const scenes = `{
-    boot: ${JSON.stringify(manifestData.scenes.boot)},
-    files: { 
-      ${Object.entries(manifestData.scenes.files)
-        .map(([name, scene]) => {
-          return `${JSON.stringify(scene.scene)}: {
-          name: ${JSON.stringify(name)},
-          scene: () => import(${JSON.stringify(
-            path.relative(dir, scene.scene)
-          )}),
-          loadingScene: ${
-            scene.loadingScene
-              ? `() => import(${JSON.stringify(
-                  path.relative(dir, scene.loadingScene)
-                )})`
-              : 'undefined'
-          },
-        }`
-        })
-        .join(',')}
-    }
-  }`
+function generateClientManifest(dir: string, config: MerlinConfig) {
+  const devtool = JSON.stringify(config.devtool)
+  return format(/* js */ `
+		import * as _game from ${JSON.stringify(path.relative(dir, config.game))};
 
-  const devtool = JSON.stringify(manifestData.devtool)
-  return format(`
-		import * as _game from ${JSON.stringify(path.relative(dir, manifestData.game))};
+    export const bootScene = ${JSON.stringify(config.scenes.boot)};
 
-		export const scenes = ${scenes};
+    export const loadingScenes = reduceGlob(
+      import.meta.globEager(${JSON.stringify(
+        path.relative(dir, config.scenes.path) + '/**/_loading.*'
+      )}), 
+      (acc, path, value) => {
+        return {
+          ...acc,
+          [getSceneName(path)]: value
+        }
+      })
+    
+		export const scenes = reduceGlob(
+      import.meta.glob(${JSON.stringify(
+        path.relative(dir, config.scenes.path) + '/**/*'
+      )}),
+      (acc, path, value) => {
+        if (path.includes('_loading')) {
+          return acc
+        }
+
+        return {
+          ...acc,
+          [getSceneName(path)]: value
+        }
+      });
+    
     export const devtool = ${devtool};
     export const game = _game.default;
     export const loader = _game.loader;
+
+    function getSceneName(path) {
+      let name = path
+        .replace(${JSON.stringify(
+          path.relative(dir, config.scenes.path)
+        )} + '/', '')
+        .replace(/\\.(t|j)s$/, '')
+
+        if (name.endsWith('/index')) {
+          name = name.split(/\\/index$/)[0]
+        }
+
+      return name
+    }
+
+    function reduceGlob(glob, fn) {
+      return Object.entries(glob).reduce((acc, [key, value]) => {
+        return fn(acc, key, value)
+      }, {})
+    }
 	`)
 }
 
-function generateApp(manifestData: ManifestData, base: string) {
+function generateApp() {
   return format(
     `    
     import * as manifest from './manifest.js' 

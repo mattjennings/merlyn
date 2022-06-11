@@ -3,6 +3,7 @@ import path from 'path'
 import deepmerge from 'deepmerge'
 import { importExcaliburResource } from './plugins/import-excalibur-resource'
 import AutoImport from 'unplugin-auto-import/vite'
+import { sceneHmr } from './plugins/scene-hmr'
 
 type DeepPartial<T> = T extends object
   ? {
@@ -69,7 +70,7 @@ export async function getViteConfig({
     base: '', // keep paths to assets relative
     publicDir: 'res',
     optimizeDeps: {
-      // include: ['@excaliburjs/plugin-tiled'],
+      include: [path.resolve(process.cwd(), '.merlin/runtime')],
     },
     mode: production ? 'production' : 'development',
     build: {
@@ -100,6 +101,8 @@ export async function getViteConfig({
         dts: false,
       }),
       importExcaliburResource(),
+      // on hold
+      // sceneHmr(config),
     ],
   }
 

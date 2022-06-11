@@ -1,13 +1,23 @@
 declare module '$game' {
   // import type { Devtool } from '@excaliburjs/dev-tools'
   import type { Engine, Loadable } from 'excalibur'
+  import { Loader } from './src/runtime/resources'
 
-  export function addResource<T extends Loadable>(url: string, options?: any): T
+  export const engine: Engine
+  export const loader: Loader
+
+  export function addResource<T extends Loadable<any>>(
+    url: string,
+    options?: any
+  ): T
   export function addResourceLoaders(
     loaders: Record<string, (url: string) => Loadable<any>>
   )
-  export const engine: Engine
-  export const resources: Loadable<any>[]
+  export function getResources(): Loadable<any>[]
+
+  export function goToScene(key: string, params?: any): Promise<void>
+  export function getCurrentScene(): Promise<ex.Scene>
+  export function getScene(key: string): Promise<ex.Scene>
   // export const devtool: Devtool
 }
 
@@ -19,6 +29,7 @@ declare module '$res/*.tmx' {
   const value: TiledMapResource
   export default value
 }
+
 declare module '$res/*.png' {
   const value: ex.ImageSource
   export default value
