@@ -1,7 +1,7 @@
 declare module '$game' {
   // import type { Devtool } from '@excaliburjs/dev-tools'
   import type { Engine, Loadable } from 'excalibur'
-  import { Loader } from './src/runtime/resources'
+  import { Loader } from '@mattjennings/merlin'
 
   export const engine: Engine
   export const loader: Loader
@@ -15,9 +15,10 @@ declare module '$game' {
   )
   export function getResources(): Loadable<any>[]
 
-  export function goToScene(key: string, params?: any): Promise<void>
-  export function getCurrentScene(): Promise<ex.Scene>
-  export function getScene(key: string): Promise<ex.Scene>
+  export function goToScene(
+    key: string,
+    options?: { params?: any; transition?: (out: boolean) => Transition }
+  ): Promise<void>
   // export const devtool: Devtool
 }
 

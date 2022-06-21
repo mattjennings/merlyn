@@ -1,46 +1,36 @@
-import { loader } from '$game'
-import { Engine, Scene } from 'excalibur'
-import { LoadingScene } from '@mattjennings/merlin'
+import { FadeTransition, LoadingScene } from '@mattjennings/merlin'
 
 export default class Loading extends LoadingScene {
-  onInitialize(engine: Engine): void {
-    const center = new ex.Vector(engine.drawWidth / 2, engine.drawHeight / 2)
+  declare transition?: FadeTransition
+  el!: HTMLElement
 
-    engine.add(
-      new ex.Actor({
-        x: 0,
-        y: 0,
-        width: engine.canvasWidth,
-        height: engine.canvasHeight,
-        color: new ex.Color(50, 50, 50),
-      })
-    )
-
-    engine.add(
-      new ex.Label({
-        x: center.x,
-        y: center.y,
-        text: 'Loading...',
-        font: new ex.Font({
-          textAlign: ex.TextAlign.Center,
-          size: 32,
-          unit: ex.FontUnit.Px,
-          color: ex.Color.White,
-          quality: 2,
-        }),
-      })
-    )
+  getTransition(out: boolean) {
+    return new FadeTransition({ out })
   }
 
-  onLoadStart() {
-    console.log('start')
+  onActivate() {
+    this.el = document.createElement('div')
+    this.el.className = 'loader'
+    this.el.style.position = 'absolute'
+    this.el.style.bottom = '-50px'
+    this.el.style.right = '10px'
+
+    this.el.style.opacity = '0'
+    this.el.style.transition = 'opacity 0.3s'
+
+    document.querySelector('#ui')?.appendChild(this.el)
+    setTimeout(() => {
+      this.el.style.opacity = '1'
+    }, 500)
   }
 
-  onLoadProgress(progress: number) {
-    console.log('progress', progress)
+  onTransitionStart(out: boolean) {
+    if (out) {
+      this.el.style.opacity = '0'
+    }
   }
 
-  onLoadComplete() {
-    console.log('complete')
+  onDeactivate() {
+    this.el.remove()
   }
 }

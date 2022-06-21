@@ -386,7 +386,7 @@
    <property name="excalibur" type="bool" value="true"/>
    <property name="z" type="int" value="0"/>
   </properties>
-  <object id="1" name="Player" type="spawn" x="29.8644" y="128.264">
+  <object id="1" name="Player" type="spawn" x="74.2861" y="94.0686">
    <point/>
   </object>
   <object id="4" name="house1" type="teleporter" x="64" y="32" width="16" height="8"/>

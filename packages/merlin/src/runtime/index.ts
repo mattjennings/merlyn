@@ -23,7 +23,3 @@ export async function _start(manifest: Manifest) {
 export async function goToScene(key: string, params?: any) {
   return router.goToScene(key, params)
 }
-
-export async function getCurrentScene() {
-  return router.getCurrentScene()
-}

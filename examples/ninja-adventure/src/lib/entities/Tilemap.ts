@@ -88,7 +88,6 @@ export default class Tilemap extends ex.Entity {
 
           this.scene.engine.add(player)
           this.scene.camera.strategy.lockToActor(player)
-
           return player
         }
         break

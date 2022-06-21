@@ -1,4 +1,5 @@
 import { goToScene } from '$game'
+import { FadeTransition } from '@mattjennings/merlin'
 
 export class Teleporter extends ex.Actor {
   goto: string
@@ -18,7 +19,9 @@ export class Teleporter extends ex.Actor {
     super.onInitialize(engine)
     this.on('collisionstart', (ev) => {
       if (ev.other.name === 'player') {
-        goToScene(this.goto)
+        goToScene(this.goto, {
+          transition: (out) => new FadeTransition({ out }),
+        })
       }
     })
   }
