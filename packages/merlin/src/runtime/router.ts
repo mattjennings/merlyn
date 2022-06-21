@@ -15,7 +15,6 @@ export class Router {
     }
   >
   engine: ex.Engine
-  hasStarted = false
 
   constructor(manifest: Manifest) {
     this.engine = manifest.game
@@ -41,7 +40,9 @@ export class Router {
       this.engine.add(key, new mod.default())
     })
 
-    this.goToScene(manifest.bootScene)
+    this.engine.start(loader as any).then(() => {
+      this.goToScene(manifest.bootScene)
+    })
   }
 
   async goToScene(
@@ -52,16 +53,17 @@ export class Router {
     } = {}
   ) {
     const sceneData = this.scenes[name]
-    const isFirstScene = !this.hasStarted
+    const isFirstScene = !this.currentScene
+    let scene = this.engine.scenes[name] as Scene
+    let isOnLoadingScreen = false
 
+    // check if scene exists
     if (!sceneData) {
       throw new Error(`No scene named ${name}`)
     }
 
-    if (!this.hasStarted) {
-      await this.engine.start(loader as any)
-      this.hasStarted = true
-    } else {
+    // play outro transition on current scene
+    if (!isFirstScene) {
       await executeTransition({
         out: true,
         scene: this.engine.currentScene,
@@ -69,57 +71,27 @@ export class Router {
       })
     }
 
-    let scene = this.engine.scenes[name] as Scene
-    let isLoading = false
-
-    // add scene to game if not already added
+    // add scene to game if necessary
     if (!scene) {
-      this.goToLoadingForScene(name)
-      isLoading = true
+      isOnLoadingScreen = true
+      await this.goToLoadingForScene(name, {
+        skipIntroTransition: !isFirstScene,
+      })
+      scene = await this.loadSceneFile(name)
+    }
 
-      if (!isFirstScene) {
-        await executeTransition({
-          out: false,
-          scene: this.engine.currentScene,
-          transition: options.transition?.(false),
+    // process resource loading
+    const newResources = getResources().filter((r) => !r.isLoaded())
+    if (newResources.length > 0 || isOnLoadingScreen) {
+      loader.addResources(newResources)
+
+      // if we're not already on a loading screen, go to it
+      if (!isOnLoadingScreen) {
+        await this.goToLoadingForScene(name, {
+          skipIntroTransition: !isFirstScene,
         })
       }
 
-      const mod = await sceneData.import()
-      if (mod.default) {
-        scene = new mod.default() as any
-
-        // @ts-ignore - enforce scenes extend our Scene
-        if (!scene._merlin) {
-          throw new Error(
-            `"${name}" is not a Merlin Scene. Please import and extend Scene from "@mattjennings/merlin"\n\nimport { Scene } from "@mattjennings/merlin"\n`
-          )
-        }
-
-        // @ts-ignore
-        scene.name = name
-        // scene.params = params
-        this.engine.add(name, scene)
-      }
-    }
-
-    const newResources = getResources().filter((r) => !r.isLoaded())
-
-    if (newResources.length > 0 || isLoading) {
-      loader.addResources(newResources)
-
-      if (!isLoading) {
-        this.goToLoadingForScene(name)
-        isLoading = true
-
-        if (!isFirstScene) {
-          await executeTransition({
-            out: false,
-            scene: this.engine.currentScene,
-            transition: options.transition?.(false),
-          })
-        }
-      }
       const currentScene = this.engine.currentScene as LoadingScene
 
       currentScene.onLoadStart()
@@ -127,10 +99,10 @@ export class Router {
 
       await loader.load()
 
+      // play outro for loading scene
       await executeTransition({
         out: true,
         scene: this.engine.currentScene,
-        transition: options.transition?.(true),
       })
 
       currentScene.onLoadComplete()
@@ -140,6 +112,7 @@ export class Router {
     this.currentScene = scene
     this.engine.goToScene(name)
 
+    // play intro transition for new scene
     await executeTransition({
       out: false,
       scene,
@@ -147,12 +120,57 @@ export class Router {
     })
   }
 
-  goToLoadingForScene(name: string) {
+  /**
+   * Navigates to the loading scene for the given scene.
+   */
+  async goToLoadingForScene(
+    name: string,
+    options: {
+      /**
+       * Skips the intro transition from playing for the loading scene
+       */
+      skipIntroTransition?: boolean
+    } = {}
+  ) {
     this.engine.goToScene(this.scenes[name].loadingSceneKey)
+
+    if (!options.skipIntroTransition) {
+      await executeTransition({
+        out: false,
+        scene: this.engine.currentScene,
+      })
+    }
   }
 
   getSceneByName(key: string) {
     return this.engine.scenes[key]
+  }
+
+  /**
+   * Imports the scene file, instantiates the scene and adds it to the engine
+   */
+  private async loadSceneFile(name: string) {
+    const sceneData = this.scenes[name]
+
+    const mod = await sceneData.import()
+    if (mod.default) {
+      const scene = new mod.default() as Scene
+
+      // @ts-ignore - enforce scenes extend our Scene
+      if (!scene._merlin) {
+        throw new Error(
+          `"${name}" is not a Merlin Scene. Please import and extend Scene from "@mattjennings/merlin"\n\nimport { Scene } from "@mattjennings/merlin"\n`
+        )
+      }
+
+      // @ts-ignore
+      scene.name = name
+      // scene.params = params
+      this.engine.add(name, scene)
+      return scene
+    } else {
+      throw new Error(`"${name}" does not export default a Scene class`)
+    }
   }
 }
 
