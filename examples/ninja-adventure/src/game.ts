@@ -1,4 +1,7 @@
+import { FadeTransition } from '@mattjennings/merlin'
 import './styles.css'
+
+export const transition = new FadeTransition()
 
 const engine = new ex.Engine({
   canvasElementId: 'game',

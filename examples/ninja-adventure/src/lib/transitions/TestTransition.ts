@@ -45,28 +45,63 @@ export class TestTransition extends Transition {
     this.addChild(this.fade)
   }
 
-  updateTransition(progress: number, out: boolean) {
+  processFade(progress: number, out: boolean) {
     const pixelShader = this.pixel.getShader()
     const swirlShader = this.swirl.getShader()
 
-    pixelShader.use()
-    pixelShader.setUniformFloat('u_time', out ? progress : 1 - progress)
-    swirlShader.use()
-    swirlShader.setUniformFloat('u_time', (out ? progress : 1 - progress) * 2)
+    if (out && progress < 1) {
+      pixelShader.use()
+      pixelShader.setUniformFloat(
+        'u_time',
+        (out ? progress : 1 - progress) * 1.5
+      )
+    }
+
+    if (progress > 0.25) {
+      swirlShader.use()
+      if (out && progress < 1) {
+        const adjusted = progress * 1.25 - 0.25
+
+        swirlShader.setUniformFloat(
+          'u_time',
+          (out ? adjusted : 1 - adjusted) * 2
+        )
+      } else {
+        swirlShader.setUniformFloat('u_time', 0)
+      }
+    }
 
     if (out) {
-      this.fade.graphics.opacity = progress * 2 - 0.5
+      this.fade.graphics.opacity = progress
     } else {
-      this.fade.graphics.opacity = 1 - progress * 2
+      this.fade.graphics.opacity = 1 - progress
     }
   }
 
   onOutro(progress: number) {
-    this.updateTransition(progress, true)
+    const pixelShader = this.pixel.getShader()
+    const swirlShader = this.swirl.getShader()
+
+    pixelShader.use()
+    pixelShader.setUniformFloat('u_time', progress * 1.5)
+
+    if (progress > 0.25) {
+      swirlShader.use()
+      const adjusted = progress * 1.25 - 0.25
+
+      swirlShader.setUniformFloat('u_time', adjusted * 2)
+    }
+
+    this.fade.graphics.opacity = progress
+  }
+
+  onOutroComplete() {
+    this.scene.engine.graphicsContext.removePostProcessor(this.pixel)
+    this.scene.engine.graphicsContext.removePostProcessor(this.swirl)
   }
 
   onIntro(progress: number) {
-    this.updateTransition(progress, false)
+    this.fade.graphics.opacity = 1 - progress
   }
 
   onPreKill() {

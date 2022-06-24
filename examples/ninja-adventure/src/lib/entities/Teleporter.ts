@@ -1,5 +1,6 @@
 import { goToScene } from '$game'
 import { Player } from '$lib/Player'
+import { TestTransition } from '$lib/transitions/TestTransition'
 import { FadeTransition } from '@mattjennings/merlin'
 import { ActorArgs } from 'excalibur'
 
@@ -45,7 +46,7 @@ export class Teleporter extends ex.Actor {
           this.isNavigating = true
 
           goToScene(this._scene, {
-            onComplete: (scene) => {
+            onActivate: (scene) => {
               this.isNavigating = false
 
               let player = scene.actors.find(
@@ -67,7 +68,7 @@ export class Teleporter extends ex.Actor {
                 player.updateFacing(this.facing)
               }
             },
-            transition: new FadeTransition({
+            transition: new TestTransition({
               easing: (t: number) => {
                 // easeInOutCubic
                 return t < 0.5
