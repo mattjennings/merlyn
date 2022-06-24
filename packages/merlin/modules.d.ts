@@ -1,6 +1,6 @@
 declare module '$game' {
   // import type { Devtool } from '@excaliburjs/dev-tools'
-  import type { Engine, Loadable } from 'excalibur'
+  import type { Engine, Loadable, Scene } from 'excalibur'
   import { Loader } from '@mattjennings/merlin'
 
   export const engine: Engine
@@ -17,7 +17,11 @@ declare module '$game' {
 
   export function goToScene(
     key: string,
-    options?: { params?: any; transition?: Transition }
+    options?: {
+      params?: any
+      transition?: Transition
+      onComplete?: (scene: Scene) => void
+    }
   ): Promise<void>
   // export const devtool: Devtool
 }

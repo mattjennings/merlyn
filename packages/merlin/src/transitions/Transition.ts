@@ -8,8 +8,8 @@ export interface TransitionArgs {
 export class Transition extends Actor {
   duration: number
   easing: (t: number) => number
+  isOutro = false
   private startedAt?: number
-  private isOutro = false
 
   constructor({ duration = 300, easing = (t) => t }: TransitionArgs = {}) {
     super()
@@ -21,10 +21,7 @@ export class Transition extends Actor {
       if (this.startedAt) {
         const progress = (performance.now() - this.startedAt) / this.duration
 
-        this.emit(
-          this.isOutro ? 'outroupdate' : 'introupdate',
-          this.easing(progress)
-        )
+        this.emit(this.isOutro ? 'outro' : 'intro', this.easing(progress))
 
         if (progress >= 1) {
           this.emit(this.isOutro ? 'outrocomplete' : 'introcomplete', undefined)
@@ -34,33 +31,33 @@ export class Transition extends Actor {
     })
 
     this.on('introstart', this.onIntroStart.bind(this))
-    this.on('introupdate', this.onIntroUpdate.bind(this))
+    this.on('intro', this.onIntro.bind(this))
     this.on('introcomplete', this.onIntroComplete.bind(this))
     this.on('outrostart', this.onOutroStart.bind(this))
-    this.on('outroupdate', this.onOutroUpdate.bind(this))
+    this.on('outro', this.onOutro.bind(this))
     this.on('outrocomplete', this.onOutroComplete.bind(this))
   }
 
   onIntroStart() {}
 
-  onIntroUpdate(progress: number) {}
+  onIntro(progress: number) {}
 
   onIntroComplete() {}
 
   onOutroStart() {}
 
-  onOutroUpdate(progress: number) {}
+  onOutro(progress: number) {}
 
   onOutroComplete() {}
 
-  private async _execute(isOutro?: boolean) {
+  async _execute(isOutro?: boolean) {
+    this.isOutro = isOutro
     if (!this.isInitialized) {
       await new Promise((resolve) => {
         this.on('initialize', resolve)
       })
     }
 
-    this.isOutro = isOutro
     this.startedAt = performance.now()
     this.emit(isOutro ? 'outrostart' : 'introstart', undefined)
 

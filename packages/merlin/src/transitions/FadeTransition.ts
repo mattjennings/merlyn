@@ -20,7 +20,7 @@ export class FadeTransition extends Transition {
       height: engine.currentScene.camera.viewport.height,
       color: Color.Black,
     })
-    this.el.graphics.opacity = 0
+    this.el.graphics.opacity = this.isOutro ? 0 : 1
     this.addChild(this.el)
   }
 
@@ -32,11 +32,11 @@ export class FadeTransition extends Transition {
     this.el.graphics.opacity = 0
   }
 
-  onIntroUpdate(progress: number) {
+  onIntro(progress: number) {
     this.el.graphics.opacity = 1 - progress
   }
 
-  onOutroUpdate(progress: number) {
+  onOutro(progress: number) {
     this.el.graphics.opacity = progress
   }
 }

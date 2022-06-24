@@ -5,21 +5,13 @@ import { Transition } from './transitions'
 export class Scene extends ex.Scene {
   private _merlin = true
 
-  transition?: Transition
+  public transition() {}
 
-  constructor() {
-    super()
+  public onOutroStart() {}
+  public onOutro(progress: number) {}
+  public onOutroComplete() {}
 
-    this.on('deactivate', () => {
-      this.transition?.kill()
-      this.transition = undefined
-    })
-  }
-
-  public getTransition(out: boolean): Transition | undefined {
-    return
-  }
-
-  public onTransitionStart(out: boolean) {}
-  public onTransitionComplete(out: boolean) {}
+  public onIntroStart() {}
+  public onIntro(progress: number) {}
+  public onIntroComplete() {}
 }
