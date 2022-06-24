@@ -1,19 +1,39 @@
-import { SimpleLoader } from '@mattjennings/merlin'
-import { DevTool } from '@excaliburjs/dev-tools'
+import { FadeTransition } from '@mattjennings/merlin'
+import './styles.css'
+
+export const transition = new FadeTransition()
 
 const engine = new ex.Engine({
-  backgroundColor: ex.Color.ExcaliburBlue,
+  canvasElementId: 'game',
+  backgroundColor: ex.Color.Black,
   antialiasing: false,
   displayMode: ex.DisplayMode.FitScreen,
   resolution: ex.Resolution.GameBoyAdvance,
   suppressConsoleBootMessage: import.meta.env.DEV,
 })
 
-// new DevTool(engine)
-
-export const loader = import.meta.env.DEV
-  ? // during development, use loader that starts automatically
-    new SimpleLoader()
-  : new ex.Loader()
-
 export default engine
+
+// enforce ui stays at same resolution and scales up/down
+function updateUi() {
+  const ui = document.querySelector<HTMLElement>('#ui')
+
+  if (ui) {
+    const { width, height, left, top } = engine.canvas.getBoundingClientRect()
+    const scaledWidth = width / engine.drawWidth
+    const scaledHeight = height / engine.drawHeight
+
+    ui.style.width = `${engine.drawWidth}px`
+    ui.style.height = `${engine.drawHeight}px`
+    ui.style.left = `${left}px`
+    ui.style.top = `${top}px`
+
+    ui.style.transformOrigin = '0 0'
+    ui.style.transform = `scale(${scaledWidth}, ${scaledHeight})`
+  }
+}
+
+setTimeout(() => updateUi())
+window.addEventListener('resize', () => {
+  updateUi()
+})

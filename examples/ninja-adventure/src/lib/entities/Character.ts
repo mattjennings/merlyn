@@ -78,7 +78,6 @@ export class Character extends ex.Actor {
   move(direction: ex.Vector, speed = this.WALK_SPEED) {
     const anim = this.graphics.current[0].graphic as ex.Animation
 
-    this.graphics.use(this.facing)
     this.vel = direction.normalize().scale(speed)
     this.updateFacing()
     anim.play()
@@ -87,32 +86,38 @@ export class Character extends ex.Actor {
   /**
    * Updates the facing direction based on the current velocity
    */
-  updateFacing() {
+  updateFacing(direction?: Direction) {
     const isMovingDiagonal = this.vel.x !== 0 && this.vel.y !== 0
     const xDir = Math.sign(this.vel.x)
     const yDir = Math.sign(this.vel.y)
 
-    if (isMovingDiagonal) {
-      // preserve facing direction if adding diagonal movement to same direction
-      if (xDir === -1 && this.facing === 'right') {
-        this.facing = 'left'
-      } else if (xDir === 1 && this.facing === 'left') {
-        this.facing = 'right'
-      } else if (yDir === -1 && this.facing === 'down') {
-        this.facing = 'up'
-      } else if (yDir === 1 && this.facing === 'up') {
-        this.facing = 'down'
-      }
+    if (direction) {
+      this.facing = direction
     } else {
-      if (xDir === -1) {
-        this.facing = 'left'
-      } else if (xDir === 1) {
-        this.facing = 'right'
-      } else if (yDir === -1) {
-        this.facing = 'up'
-      } else if (yDir === 1) {
-        this.facing = 'down'
+      if (isMovingDiagonal) {
+        // preserve facing direction if adding diagonal movement to same direction
+        if (xDir === -1 && this.facing === 'right') {
+          this.facing = 'left'
+        } else if (xDir === 1 && this.facing === 'left') {
+          this.facing = 'right'
+        } else if (yDir === -1 && this.facing === 'down') {
+          this.facing = 'up'
+        } else if (yDir === 1 && this.facing === 'up') {
+          this.facing = 'down'
+        }
+      } else {
+        if (xDir === -1) {
+          this.facing = 'left'
+        } else if (xDir === 1) {
+          this.facing = 'right'
+        } else if (yDir === -1) {
+          this.facing = 'up'
+        } else if (yDir === 1) {
+          this.facing = 'down'
+        }
       }
     }
+
+    this.graphics.use(this.facing)
   }
 }

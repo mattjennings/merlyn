@@ -3,7 +3,6 @@ import path from 'path'
 import vite from 'vite'
 import { getMerlinConfig, getViteConfig } from '../config'
 import { createApp } from '../util/create-app'
-import createManifestData from '../util/create-manifest-data'
 
 export default async function build({ cwd = process.cwd() } = {}) {
   const config = await getMerlinConfig({ cwd })
@@ -12,11 +11,9 @@ export default async function build({ cwd = process.cwd() } = {}) {
   const outDir = path.resolve(cwd, config.build.outDir)
   await del([dir, outDir])
 
-  const manifestData = await createManifestData({ cwd, config })
   createApp({
-    manifestData,
     dir,
-    cwd,
+    config,
   })
 
   const viteConfig = await getViteConfig({

@@ -4,6 +4,7 @@
     "module": "esnext",
     "lib": ["esnext"],
     "types": ["vite/client"],
+    "target": "ES2015",
     "importHelpers": true,
     "resolveJsonModule": true,
     "declaration": true,
@@ -15,10 +16,13 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "moduleResolution": "node",
-    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mattjennings/merlin": ["./src/index.ts"]
+    }
   }
 }

@@ -2,6 +2,7 @@
   "include": ["src/**/*"],
   "compilerOptions": {
     "types": ["@mattjennings/merlin/app"],
+    "baseUrl": ".",
     "paths": {
       "$lib/*": ["./src/lib/*"],
       "$res/*": ["./res/*"]

@@ -3,6 +3,6 @@
  */
 export default {
   scenes: {
-    boot: 'index',
+    boot: 'world',
   },
 }

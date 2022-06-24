@@ -1,10 +1,10 @@
 import image from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
 import { Engine } from 'excalibur'
-import { Character } from './entities/Character'
+import { Character, CharacterArgs } from './entities/Character'
 import { getHeldDirections } from './util/input'
 
 export class Player extends Character {
-  constructor(args: ex.ActorArgs) {
+  constructor(args: Partial<CharacterArgs>) {
     super({
       name: 'player',
       image,
@@ -17,9 +17,28 @@ export class Player extends Character {
 
   onInitialize(engine: ex.Engine) {
     super.onInitialize(engine)
+    engine.currentScene.camera.strategy.lockToActor(this)
+
+    // set camera bounds
+    const tilemap = engine.currentScene.tileMaps[0]
+    if (tilemap) {
+      this.scene.camera.strategy.limitCameraBounds(
+        new ex.BoundingBox(
+          0,
+          0,
+          tilemap.tileWidth * tilemap.columns,
+          tilemap.tileHeight * tilemap.rows
+        )
+      )
+    }
   }
 
   onPreUpdate(engine: Engine, delta: number): void {
+    if (this.scene.isTransitioning) {
+      this.idle()
+      return
+    }
+
     const movement = new ex.Vector(0, 0)
     const heldDirections = getHeldDirections()
 
