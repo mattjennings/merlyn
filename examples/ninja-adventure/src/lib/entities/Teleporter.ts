@@ -1,4 +1,5 @@
 import { goToScene } from '$game'
+import { TestTransition } from '$lib/transitions/TestTransition'
 import { FadeTransition } from '@mattjennings/merlin'
 
 export class Teleporter extends ex.Actor {
@@ -20,7 +21,14 @@ export class Teleporter extends ex.Actor {
     this.on('collisionstart', (ev) => {
       if (ev.other.name === 'player') {
         goToScene(this.goto, {
-          transition: (out) => new FadeTransition({ out }),
+          transition: new TestTransition({
+            easing: (t: number) => {
+              // easeInOutCubic
+              return t < 0.5
+                ? 4 * t * t * t
+                : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+            },
+          }),
         })
       }
     })

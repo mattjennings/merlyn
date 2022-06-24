@@ -22,31 +22,4 @@ export class Scene extends ex.Scene {
 
   public onTransitionStart(out: boolean) {}
   public onTransitionComplete(out: boolean) {}
-
-  private async _executeTransition(out: boolean, transition?: Transition) {
-    if (!transition) {
-      transition = this.getTransition(out)
-    }
-
-    if (transition) {
-      this.transition = transition
-      this.engine.add(transition)
-
-      if (!transition.isInitialized) {
-        await new Promise((resolve) => {
-          transition.on('initialize', resolve)
-        })
-      }
-
-      this.onTransitionStart(out)
-      transition.execute()
-
-      await new Promise((resolve) => {
-        transition.on('complete', () => {
-          this.onTransitionComplete(out)
-          resolve(null)
-        })
-      })
-    }
-  }
 }

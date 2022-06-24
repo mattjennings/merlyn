@@ -17,7 +17,7 @@ declare module '$game' {
 
   export function goToScene(
     key: string,
-    options?: { params?: any; transition?: (out: boolean) => Transition }
+    options?: { params?: any; transition?: Transition }
   ): Promise<void>
   // export const devtool: Devtool
 }

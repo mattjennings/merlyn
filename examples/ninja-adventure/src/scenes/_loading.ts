@@ -4,10 +4,6 @@ export default class Loading extends LoadingScene {
   declare transition?: FadeTransition
   el!: HTMLElement
 
-  getTransition(out: boolean) {
-    return new FadeTransition({ out })
-  }
-
   onActivate() {
     this.el = document.createElement('div')
     this.el.className = 'loader'
