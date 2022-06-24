@@ -1,4 +1,4 @@
-import { SimpleLoader } from '@mattjennings/merlin'
+import { SimpleLoader } from 'merlyn'
 
 const engine = new ex.Engine({
   backgroundColor: ex.Color.ExcaliburBlue,

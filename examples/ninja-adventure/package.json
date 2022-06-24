@@ -1,16 +1,16 @@
 {
-  "name": "example-typescript",
+  "name": "example-ninja-adventure",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "merlin dev",
-    "build": "merlin build",
-    "preview": "merlin preview"
+    "dev": "merlyn dev",
+    "build": "merlyn build",
+    "preview": "merlyn preview"
   },
   "devDependencies": {
     "@excaliburjs/plugin-tiled": "^0.26.2",
-    "@mattjennings/merlin": "latest",
+    "merlyn": "latest",
     "excalibur": "^0.26.0",
     "typescript": "^4.7.3"
   }

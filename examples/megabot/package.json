@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "merlin dev",
-    "build": "merlin build",
-    "preview": "merlin preview"
+    "dev": "merlyn dev",
+    "build": "merlyn build",
+    "preview": "merlyn preview"
   },
   "devDependencies": {
     "@excaliburjs/dev-tools": "^0.25.3",
     "@types/events": "^3.0.0",
     "autoprefixer": "^10.4.4",
-    "@mattjennings/merlin": "latest",
+    "merlyn": "latest",
     "postcss": "^8.4.12",
     "postcss-load-config": "^3.1.4",
     "svelte-preprocess": "^4.10.5",

@@ -3,7 +3,7 @@ import * as ex from 'excalibur'
 import { Transition } from './transitions'
 
 export class Scene extends ex.Scene {
-  private _merlin = true
+  private _merlyn = true
 
   public transition() {}
 

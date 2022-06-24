@@ -1,7 +1,7 @@
 {
   "include": ["src/**/*"],
   "compilerOptions": {
-    "types": ["svelte", "vite/client", "@mattjennings/merlin/app"],
+    "types": ["svelte", "vite/client", "merlyn/app"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",

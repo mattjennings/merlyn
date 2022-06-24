@@ -11,7 +11,7 @@ type DeepPartial<T> = T extends object
     }
   : T
 
-export interface MerlinConfig {
+export interface MerlynConfig {
   game: string
   scenes: {
     path: string
@@ -25,14 +25,14 @@ export interface MerlinConfig {
   }
 }
 
-export type UserMerlinConfig = DeepPartial<MerlinConfig>
+export type UserMerlynConfig = DeepPartial<MerlynConfig>
 
-export async function getMerlinConfig({
+export async function getMerlynConfig({
   cwd = process.cwd(),
 }: {
   cwd?: string
-} = {}): Promise<MerlinConfig> {
-  const defaultConfig: MerlinConfig = {
+} = {}): Promise<MerlynConfig> {
+  const defaultConfig: MerlynConfig = {
     game: 'src/game',
     scenes: {
       path: 'src/scenes',
@@ -44,9 +44,9 @@ export async function getMerlinConfig({
   }
 
   try {
-    const configPath = path.join(cwd, `merlin.config.js`)
+    const configPath = path.join(cwd, `merlyn.config.js`)
     const config = await import(configPath + `?ts=${Date.now()}`)
-    return deepmerge<MerlinConfig>(defaultConfig, config.default)
+    return deepmerge<MerlynConfig>(defaultConfig, config.default)
   } catch (e) {
     if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
       throw e
@@ -62,7 +62,7 @@ export async function getViteConfig({
   production,
 }: {
   cwd?: string
-  config: MerlinConfig
+  config: MerlynConfig
   buildDir: string
   production?: boolean
 }): Promise<ViteConfig> {
@@ -70,7 +70,7 @@ export async function getViteConfig({
     base: '', // keep paths to assets relative
     publicDir: 'res',
     optimizeDeps: {
-      include: [path.resolve(process.cwd(), '.merlin/runtime')],
+      include: [path.resolve(process.cwd(), '.merlyn/runtime')],
     },
     mode: production ? 'production' : 'development',
     build: {
@@ -87,7 +87,7 @@ export async function getViteConfig({
     resolve: {
       alias: {
         $lib: '/src/lib',
-        $game: path.join('/.merlin/runtime.js'),
+        $game: path.join('/.merlyn/runtime.js'),
       },
     },
 

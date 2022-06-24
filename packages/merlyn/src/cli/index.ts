@@ -2,7 +2,7 @@ import sade from 'sade'
 import dev from './commands/dev'
 import preview from './commands/preview'
 import build from './commands/build'
-const prog = sade('merlin')
+const prog = sade('merlyn')
 
 prog.version('0.0.1')
 

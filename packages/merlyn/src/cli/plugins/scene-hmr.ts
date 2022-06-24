@@ -1,6 +1,6 @@
 import { Plugin } from 'vite'
 import MagicString from 'magic-string'
-import { MerlinConfig } from '../config'
+import { MerlynConfig } from '../config'
 import { getSceneName } from '../util/get-scene-name'
 
 // todo: build custom scene router before revisiting this
@@ -8,7 +8,7 @@ import { getSceneName } from '../util/get-scene-name'
 // ideas: use handleHotUpdate to invalidate url resource
 // otherwise, find some way to use true asset imports again
 
-export function sceneHmr(config: MerlinConfig): Plugin {
+export function sceneHmr(config: MerlynConfig): Plugin {
   const isScene = (id) => {
     return id.includes(config.scenes.path) && id.match(/\.(t|j)s$/)
   }
@@ -27,11 +27,11 @@ export function sceneHmr(config: MerlinConfig): Plugin {
 
         s.append(`      
 import { resources, engine, goToScene } from '$game'
-import { SimpleLoader } from '@mattjennings/merlin'
+import { SimpleLoader } from 'merlyn'
 
 if (${meta}) {
   ${meta}.accept((mod) => {
-    const name = engine.currentScene.__merlin?.name
+    const name = engine.currentScene.__merlyn?.name
     console.log(name)
 
     engine.addScene('${name}', new mod.default())

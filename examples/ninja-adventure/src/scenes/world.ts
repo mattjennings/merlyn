@@ -1,6 +1,6 @@
 import Tilemap from '$lib/entities/Tilemap'
 import tilemap from '$res/Tilemaps/world.tmx'
-import { Scene } from '@mattjennings/merlin'
+import { Scene } from 'merlyn'
 
 export default class World extends Scene {
   onInitialize(engine: ex.Engine) {

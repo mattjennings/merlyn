@@ -6,12 +6,12 @@ import {
   InlineConfig,
   ViteDevServer,
 } from 'vite'
-import { getMerlinConfig, getViteConfig } from '../config'
+import { getMerlynConfig, getViteConfig } from '../config'
 import { createApp } from '../util/create-app'
 
 export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
-  const config = await getMerlinConfig({ cwd })
-  const dir = path.resolve(cwd, '.merlin')
+  const config = await getMerlynConfig({ cwd })
+  const dir = path.resolve(cwd, '.merlyn')
   const outDir = path.resolve(cwd, config.build.outDir)
   await del([dir, outDir])
 
@@ -51,10 +51,10 @@ async function watcher({
   dir: string
   server: ViteDevServer
 }) {
-  let config = await getMerlinConfig()
+  let config = await getMerlynConfig()
 
   async function update() {
-    config = await getMerlinConfig()
+    config = await getMerlynConfig()
     createApp({
       config,
       dir,
@@ -63,7 +63,7 @@ async function watcher({
   const paths = [
     config.scenes.path,
     server.config.publicDir,
-    'merlin.config.js',
+    'merlyn.config.js',
   ].filter(Boolean)
 
   update()

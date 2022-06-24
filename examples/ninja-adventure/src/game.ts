@@ -1,4 +1,4 @@
-import { FadeTransition } from '@mattjennings/merlin'
+import { FadeTransition } from 'merlyn'
 import './styles.css'
 
 export const transition = new FadeTransition()

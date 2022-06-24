@@ -1,4 +1,4 @@
-# Merlin
+# Merlyn
 
 A meta framework for creating [Excalibur.js games](https://excaliburjs.com). Like Next.js to React, or SvelteKit to Svelte.
 
@@ -26,7 +26,7 @@ This is a monorepo that uses pnpm.
 
 ```
 pnpm install
-cd packages/merlin
+cd packages/merlyn
 pnpm run dev
 ```
 

@@ -6,7 +6,7 @@ export default class Main extends ex.Scene {
 
     engine.add(
       new ex.Label({
-        text: 'merlin',
+        text: 'merlyn',
         x: center.x,
         y: center.y - 64,
         font: new ex.Font({

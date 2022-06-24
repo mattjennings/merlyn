@@ -1,6 +1,6 @@
 # Typescript Example
 
-This is an example of using Merlin with Typescript.
+This is an example of using Merlyn with Typescript.
 
 ```
 npm install

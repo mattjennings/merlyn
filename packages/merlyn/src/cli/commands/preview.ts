@@ -2,7 +2,7 @@ import fs from 'fs'
 import kleur from 'kleur'
 import polka from 'polka'
 import sirv from 'sirv'
-import { getMerlinConfig } from '../config'
+import { getMerlynConfig } from '../config'
 
 export default async function preview({
   cwd = process.cwd(),
@@ -10,12 +10,12 @@ export default async function preview({
 } = {}) {
   const {
     build: { outDir },
-  } = await getMerlinConfig({ cwd })
+  } = await getMerlynConfig({ cwd })
 
   if (!fs.existsSync(outDir)) {
     console.error(
       kleur.red(
-        `${outDir} folder does not exist - please run "merlin build" first`
+        `${outDir} folder does not exist - please run "merlyn build" first`
       )
     )
     process.exit(1)

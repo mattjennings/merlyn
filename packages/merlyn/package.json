@@ -1,12 +1,12 @@
 {
-  "name": "@mattjennings/merlin",
+  "name": "merlyn",
   "version": "0.0.0-8",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "bin": {
-    "merlin": "bin/index.js"
+    "merlyn": "bin/index.js"
   },
   "files": [
     "bin",
@@ -15,7 +15,7 @@
     "modules.d.ts"
   ],
   "scripts": {
-    "merlin": "node bin/index.js",
+    "merlyn": "node bin/index.js",
     "dev": "NODE_ENV=development node scripts/build.mjs",
     "build": "NODE_ENV=production node scripts/build.mjs",
     "release": "npm run build && npm publish --access public"

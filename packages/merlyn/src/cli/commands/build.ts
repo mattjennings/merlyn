@@ -1,13 +1,13 @@
 import del from 'del'
 import path from 'path'
 import vite from 'vite'
-import { getMerlinConfig, getViteConfig } from '../config'
+import { getMerlynConfig, getViteConfig } from '../config'
 import { createApp } from '../util/create-app'
 
 export default async function build({ cwd = process.cwd() } = {}) {
-  const config = await getMerlinConfig({ cwd })
+  const config = await getMerlynConfig({ cwd })
 
-  const dir = path.resolve(cwd, '.merlin')
+  const dir = path.resolve(cwd, '.merlyn')
   const outDir = path.resolve(cwd, config.build.outDir)
   await del([dir, outDir])
 

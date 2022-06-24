@@ -1,7 +1,7 @@
 import type { Engine } from 'excalibur'
 import { Transition } from '../../transitions'
 import { Scene } from '../../Scene'
-import { MerlinConfig } from '../config'
+import { MerlynConfig } from '../config'
 
 export interface ManifestData {
   game: string
@@ -9,7 +9,7 @@ export interface ManifestData {
     files: Record<string, { path: string; name: string }>
     boot: string
   }
-  devtool?: MerlinConfig['devtool']
+  devtool?: MerlynConfig['devtool']
 }
 
 export type Manifest = {

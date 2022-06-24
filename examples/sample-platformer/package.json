@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "merlin dev",
-    "build": "merlin build",
-    "preview": "merlin preview"
+    "dev": "merlyn dev",
+    "build": "merlyn build",
+    "preview": "merlyn preview"
   },
   "devDependencies": {
-    "@mattjennings/merlin": "latest"
+    "merlyn": "latest"
   },
   "dependencies": {
     "excalibur": "^0.26.0"

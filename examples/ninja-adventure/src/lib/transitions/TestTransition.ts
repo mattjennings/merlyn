@@ -1,4 +1,4 @@
-import { Transition } from '@mattjennings/merlin'
+import { Transition } from 'merlyn'
 import { Engine, Scene } from 'excalibur'
 
 export class TestTransition extends Transition {

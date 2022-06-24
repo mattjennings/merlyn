@@ -1,5 +1,5 @@
 /**
- * @type {import("merlin").UserMerlinConfig}
+ * @type {import("merlyn").UserMerlynConfig}
  */
 export default {
   scenes: {

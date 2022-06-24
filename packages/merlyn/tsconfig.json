@@ -22,7 +22,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@mattjennings/merlin": ["./src/index.ts"]
+      "merlyn": ["./src/index.ts"]
     }
   }
 }

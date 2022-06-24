@@ -4,7 +4,7 @@ import mkdirp from 'mkdirp'
 import { ManifestData } from './types'
 import prettier from 'prettier'
 import { fileURLToPath } from 'url'
-import { MerlinConfig } from '../config'
+import { MerlynConfig } from '../config'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const previousContents = new Map<string, string>()
@@ -23,7 +23,7 @@ export function createApp({
   config,
 }: {
   dir: string
-  config: MerlinConfig
+  config: MerlynConfig
 }) {
   writeIfChanged(`${dir}/manifest.js`, generateClientManifest(dir, config))
   writeIfChanged(`${dir}/index.js`, generateApp())
@@ -42,7 +42,7 @@ function format(str: string) {
   })
 }
 
-function generateClientManifest(dir: string, config: MerlinConfig) {
+function generateClientManifest(dir: string, config: MerlynConfig) {
   const devtool = JSON.stringify(config.devtool)
   return format(/* js */ `
 		import * as _game from ${JSON.stringify(path.relative(dir, config.game))};

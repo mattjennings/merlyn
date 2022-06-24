@@ -73,7 +73,7 @@ await vite.build({
     emptyOutDir: false,
     lib: {
       entry: path.resolve(__dirname, '../src/index.ts'),
-      name: 'merlin',
+      name: 'merlyn',
       fileName: (format) => `index.js`,
       formats: ['es'],
     },

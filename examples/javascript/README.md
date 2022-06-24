@@ -1,6 +1,6 @@
 # JavaScript Example
 
-This is an example of using Merlin with JavaScript.
+This is an example of using Merlyn with JavaScript.
 
 ```
 npm install
