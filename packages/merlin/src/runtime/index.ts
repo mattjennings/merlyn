@@ -7,6 +7,8 @@ export {
   getResources,
   loader,
 } from './resources'
+export { isBooting, isTransitioning } from './router'
+
 // import { DevTool } from '@excaliburjs/dev-tools'
 // export let devtool: DevTool
 

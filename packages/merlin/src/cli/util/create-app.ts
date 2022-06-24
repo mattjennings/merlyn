@@ -77,7 +77,7 @@ function generateClientManifest(dir: string, config: MerlinConfig) {
     
     export const devtool = ${devtool};
     export const game = _game.default;
-    export const loader = _game.loader;
+    export const transition = _game.transition;
 
     function getSceneName(path) {
       let name = path

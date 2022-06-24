@@ -4,6 +4,7 @@ import { loader, getResources } from './resources'
 import { Scene } from 'excalibur'
 
 export let isTransitioning = false
+export let isBooting = true
 
 export class Router {
   scenes: Record<
@@ -40,7 +41,7 @@ export class Router {
     })
 
     this.engine.start(loader as any).then(() => {
-      this.goToScene(manifest.bootScene)
+      this.goToScene(manifest.bootScene, { transition: manifest.transition })
     })
   }
 
@@ -49,7 +50,7 @@ export class Router {
     options: {
       params?: Record<string, any>
       transition?: Transition
-      onComplete?: (scene: Scene) => void
+      onActivate?: (scene: Scene) => void
     } = {}
   ) {
     const sceneData = this.scenes[name]
@@ -76,15 +77,20 @@ export class Router {
     }
 
     scene = await this.preloadScene(name)
+    isBooting = false
 
+    scene.once('activate', () => {
+      options.onActivate?.(scene)
+    })
     this.engine.goToScene(name)
-    options.onComplete?.(scene)
 
     // play intro transition
     await this.executeTransition({
       isOutro: false,
       transition: options.transition,
     })
+
+    return scene
   }
 
   get currentScene() {
@@ -162,13 +168,12 @@ export class Router {
 
   private async executeTransition({
     isOutro,
-    ...options
+    transition,
   }: {
     isOutro: boolean
     transition?: Transition
   }) {
     const scene = this.engine.currentScene
-    const transition = options.transition ?? scene.transition?.()
 
     if (transition) {
       isTransitioning = true
@@ -195,6 +200,8 @@ export class Router {
 
       if (!isOutro) {
         scene.onIntroComplete?.()
+
+        // transition is complete, remove it
         transition.kill()
       } else {
         scene.onOutroComplete?.()

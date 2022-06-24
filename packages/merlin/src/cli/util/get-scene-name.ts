@@ -1,9 +1,9 @@
 import { posixify } from './helpers'
 
-export function getSceneName(path: string, scenesDir: string) {
+export function getPathName(path: string, dir: string) {
   let route = posixify(
     path
-      .split(posixify(`${scenesDir}/`))
+      .split(posixify(`${dir}/`))
       .pop()
       .replace(/.(j|t)s/, '')
   )

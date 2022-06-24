@@ -1,19 +1,9 @@
-import {
-  createServer as createViteServer,
-  InlineConfig,
-  ViteDevServer,
-} from 'vite'
-import path from 'path'
-import del from 'del'
-import createManifestData from '../util/create-manifest-data'
-import { createApp } from '../util/create-app'
-import chokidar from 'chokidar'
-import kleur from 'kleur'
-import merge from 'deepmerge'
-import { getMerlinConfig, getViteConfig } from '../config'
-import sirv from 'sirv'
-import polka from 'polka'
 import fs from 'fs'
+import kleur from 'kleur'
+import polka from 'polka'
+import sirv from 'sirv'
+import { getMerlinConfig } from '../config'
+
 export default async function preview({
   cwd = process.cwd(),
   port = 3000,

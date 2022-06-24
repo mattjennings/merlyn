@@ -1,16 +1,13 @@
+import merge from 'deepmerge'
+import del from 'del'
+import path from 'path'
 import {
   createServer as createViteServer,
   InlineConfig,
   ViteDevServer,
 } from 'vite'
-import path from 'path'
-import del from 'del'
-import createManifestData from '../util/create-manifest-data'
-import { createApp } from '../util/create-app'
-import kleur from 'kleur'
-import merge from 'deepmerge'
 import { getMerlinConfig, getViteConfig } from '../config'
-import FullReload from 'vite-plugin-full-reload'
+import { createApp } from '../util/create-app'
 
 export default async function dev({ cwd = process.cwd(), port = 3000 } = {}) {
   const config = await getMerlinConfig({ cwd })

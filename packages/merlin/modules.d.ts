@@ -6,6 +6,9 @@ declare module '$game' {
   export const engine: Engine
   export const loader: Loader
 
+  export const isBooting: boolean
+  export const isTransitioning: boolean
+
   export function addResource<T extends Loadable<any>>(
     url: string,
     options?: any
@@ -20,9 +23,13 @@ declare module '$game' {
     options?: {
       params?: any
       transition?: Transition
-      onComplete?: (scene: Scene) => void
+
+      /**
+       * Called when the target scene is activated
+       */
+      onActivate?: (scene: Scene) => void
     }
-  ): Promise<void>
+  ): Promise<Scene>
   // export const devtool: Devtool
 }
 
