@@ -12,6 +12,7 @@ export class Teleporter extends ex.Actor {
   _scene: string
   coordinates: { x: number; y: number }
   facing?: 'left' | 'right' | 'up' | 'down'
+  isNavigating = false
 
   constructor({ scene, coordinates, facing, ...args }: TeleporterArgs) {
     super({
@@ -31,17 +32,26 @@ export class Teleporter extends ex.Actor {
     super.onInitialize(engine)
 
     this.on('precollision', (ev) => {
+      if (this.isNavigating) {
+        return
+      }
+
       if (ev.other.name === 'player') {
         // trigger if player is halfway into the collider
         if (
           Math.abs(ev.intersection.x) > this.height / 2 ||
           Math.abs(ev.intersection.y) > this.height / 2
         ) {
+          this.isNavigating = true
+
           goToScene(this._scene, {
             onComplete: (scene) => {
+              this.isNavigating = false
+
               let player = scene.actors.find(
                 (actor) => actor.name === 'player'
               ) as Player
+
               if (!player) {
                 player = new Player({
                   x: this.coordinates.x,
