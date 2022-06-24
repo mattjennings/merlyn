@@ -61,11 +61,11 @@ export class TestTransition extends Transition {
     }
   }
 
-  onOutroUpdate(progress: number) {
+  onOutro(progress: number) {
     this.updateTransition(progress, true)
   }
 
-  onIntroUpdate(progress: number) {
+  onIntro(progress: number) {
     this.updateTransition(progress, false)
   }
 

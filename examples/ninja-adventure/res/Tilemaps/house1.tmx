@@ -41,9 +41,12 @@
   <properties>
    <property name="excalibur" type="bool" value="true"/>
   </properties>
-  <object id="1" name="Player" type="spawn" x="96" y="160">
-   <point/>
+  <object id="3" name="world" type="teleporter" x="96" y="176" width="16" height="16">
+   <properties>
+    <property name="facing" value="down"/>
+    <property name="x" type="int" value="64"/>
+    <property name="y" type="int" value="48"/>
+   </properties>
   </object>
-  <object id="3" name="world" type="teleporter" x="96" y="182.317" width="16" height="8"/>
  </objectgroup>
 </map>

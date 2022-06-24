@@ -389,7 +389,13 @@
   <object id="1" name="Player" type="spawn" x="74.2861" y="94.0686">
    <point/>
   </object>
-  <object id="4" name="house1" type="teleporter" x="64" y="32" width="16" height="8"/>
-  <object id="5" name="house1" type="teleporter" x="176" y="96" width="16" height="8"/>
+  <object id="4" name="house1" type="teleporter" x="64" y="32" width="16" height="16">
+   <properties>
+    <property name="facing" value="up"/>
+    <property name="x" type="int" value="96"/>
+    <property name="y" type="int" value="160"/>
+   </properties>
+  </object>
+  <object id="5" name="house1" type="teleporter" x="176" y="96" width="16" height="16"/>
  </objectgroup>
 </map>

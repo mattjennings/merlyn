@@ -1,7 +1,4 @@
-import { FadeTransition, LoadingScene } from '@mattjennings/merlin'
-
-export default class Loading extends LoadingScene {
-  declare transition?: FadeTransition
+export default class Loading extends ex.Scene {
   el!: HTMLElement
 
   onActivate() {

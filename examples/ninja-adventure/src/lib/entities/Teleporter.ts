@@ -1,35 +1,72 @@
 import { goToScene } from '$game'
-import { TestTransition } from '$lib/transitions/TestTransition'
+import { Player } from '$lib/Player'
 import { FadeTransition } from '@mattjennings/merlin'
+import { ActorArgs } from 'excalibur'
 
+export interface TeleporterArgs extends ActorArgs {
+  scene: string
+  coordinates: { x: number; y: number }
+  facing?: 'left' | 'right' | 'up' | 'down'
+}
 export class Teleporter extends ex.Actor {
-  goto: string
-  constructor({ goto, ...args }: ex.ActorArgs & { goto: string }) {
+  _scene: string
+  coordinates: { x: number; y: number }
+  facing?: 'left' | 'right' | 'up' | 'down'
+
+  constructor({ scene, coordinates, facing, ...args }: TeleporterArgs) {
     super({
       width: 16,
       height: 16,
       anchor: new ex.Vector(0, 0),
       ...args,
       // color: ex.Color.Red,
-      collisionType: ex.CollisionType.Fixed,
+      collisionType: ex.CollisionType.Passive,
     })
-    this.goto = goto
+    this._scene = scene
+    this.coordinates = coordinates
+    this.facing = facing
   }
 
   onInitialize(engine: ex.Engine) {
     super.onInitialize(engine)
-    this.on('collisionstart', (ev) => {
+
+    this.on('precollision', (ev) => {
       if (ev.other.name === 'player') {
-        goToScene(this.goto, {
-          transition: new TestTransition({
-            easing: (t: number) => {
-              // easeInOutCubic
-              return t < 0.5
-                ? 4 * t * t * t
-                : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+        // trigger if player is halfway into the collider
+        if (
+          Math.abs(ev.intersection.x) > this.height / 2 ||
+          Math.abs(ev.intersection.y) > this.height / 2
+        ) {
+          goToScene(this._scene, {
+            onComplete: (scene) => {
+              let player = scene.actors.find(
+                (actor) => actor.name === 'player'
+              ) as Player
+              if (!player) {
+                player = new Player({
+                  x: this.coordinates.x,
+                  y: this.coordinates.y,
+                  facing: this.facing,
+                })
+                scene.engine.add(player)
+              } else {
+                player.pos = new ex.Vector(
+                  this.coordinates.x,
+                  this.coordinates.y
+                )
+                player.updateFacing(this.facing)
+              }
             },
-          }),
-        })
+            transition: new FadeTransition({
+              easing: (t: number) => {
+                // easeInOutCubic
+                return t < 0.5
+                  ? 4 * t * t * t
+                  : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+              },
+            }),
+          })
+        }
       }
     })
   }

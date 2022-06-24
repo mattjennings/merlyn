@@ -41,11 +41,6 @@ export default class Tilemap extends ex.Entity {
       }
     }
 
-    // set camera bounds
-    this.scene.camera.strategy.limitCameraBounds(
-      new ex.BoundingBox(0, 0, tilemapWidth, tilemapHeight)
-    )
-
     // create world bounds
     engine.add(
       new ex.Actor({
@@ -75,7 +70,7 @@ export default class Tilemap extends ex.Entity {
   createObject(
     object: TiledObject,
     layer: TiledObjectGroup,
-    properties?: any
+    props?: any
   ): ex.Entity | undefined {
     switch (object.type) {
       case 'spawn':
@@ -84,10 +79,8 @@ export default class Tilemap extends ex.Entity {
             x: object.x,
             y: object.y,
             z: layer.getProperty<number>('z')?.value,
+            facing: props.facing,
           })
-
-          this.scene.engine.add(player)
-          this.scene.camera.strategy.lockToActor(player)
           return player
         }
         break
@@ -95,7 +88,9 @@ export default class Tilemap extends ex.Entity {
         return new Teleporter({
           x: object.x,
           y: object.y,
-          goto: object.name!,
+          scene: object.name!,
+          coordinates: { x: props.x, y: props.y },
+          facing: props.facing,
           width: object.width,
           height: object.height,
         })
