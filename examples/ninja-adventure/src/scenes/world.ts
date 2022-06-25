@@ -4,9 +4,9 @@ import { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
 import tilemap from '$res/Tilemaps/world.tmx'
 import { Scene } from 'merlyn'
-import sndBattleIntro from '$res/Musics/battle-intro.wav'
-import sndBattleLoop from '$res/Musics/battle-loop.wav'
-import sndVillage from '$res/Musics/4 - Village.ogg'
+import sndBattleIntro from '$res/Musics/battle-intro.mp3'
+import sndBattleLoop from '$res/Musics/battle-loop.mp3'
+import sndVillage from '$res/Musics/village.mp3'
 import sndBattleStarted from '$res/Sounds/Game/Explosion4.wav'
 
 import { playSong } from '$lib/sound/audio-manager'
@@ -56,8 +56,8 @@ export default class World extends Scene {
   }
 
   resetBattleCounter() {
-    const max = 100 //2000
-    const min = 10 //500
+    const max = 1000
+    const min = 250
     this.battleCounter = Math.floor(Math.random() * (max - min + 1)) + min
   }
 
