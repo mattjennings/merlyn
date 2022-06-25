@@ -1,6 +1,6 @@
 { "columns":22,
  "image":"..\/Backgrounds\/Tilesets\/TilesetFloor.png",
- "imageheight":417,
+ "imageheight":416,
  "imagewidth":352,
  "margin":0,
  "name":"TilesetFloor",

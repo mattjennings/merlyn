@@ -19,6 +19,16 @@ export class Player extends Character {
     super.onInitialize(engine)
     engine.currentScene.camera.strategy.lockToActor(this)
 
+    // this fixes tilemap seaming...??
+    engine.currentScene.camera.addStrategy({
+      target: null,
+      action(target, camera, engine, delta) {
+        // round to the 2nd decimal place, add 0.001, artifacing is gone
+        const round = (n: number) => Math.round(n * 100) / 100 + 0.001
+        return new ex.Vector(round(camera.pos.x), round(camera.pos.y))
+      },
+    })
+
     // set camera bounds
     const tilemap = engine.currentScene.tileMaps[0]
     if (tilemap) {

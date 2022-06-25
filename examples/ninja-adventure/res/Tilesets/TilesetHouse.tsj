@@ -1,0 +1,14 @@
+{ "columns":29,
+ "image":"..\/Backgrounds\/Tilesets\/TilesetHouse.png",
+ "imageheight":368,
+ "imagewidth":464,
+ "margin":0,
+ "name":"TilesetHouse",
+ "spacing":0,
+ "tilecount":667,
+ "tiledversion":"1.8.4",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.8"
+}

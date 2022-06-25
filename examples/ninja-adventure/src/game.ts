@@ -6,10 +6,10 @@ export const transition = new FadeTransition()
 const engine = new ex.Engine({
   canvasElementId: 'game',
   backgroundColor: ex.Color.Black,
-  antialiasing: false,
-  displayMode: ex.DisplayMode.FitScreen,
+  displayMode: ex.DisplayMode.FitContainer,
   resolution: ex.Resolution.GameBoyAdvance,
   suppressConsoleBootMessage: import.meta.env.DEV,
+  antialiasing: false,
 })
 
 export default engine
