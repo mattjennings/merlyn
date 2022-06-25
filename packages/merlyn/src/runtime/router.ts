@@ -149,13 +149,6 @@ export class Router {
     if (mod.default) {
       const scene = new mod.default() as Scene
 
-      // @ts-ignore - enforce scenes extend our Scene
-      if (!scene._merlyn) {
-        throw new Error(
-          `"${name}" is not a Merlyn Scene. Please import and extend Scene from "merlyn"\n\nimport { Scene } from "merlyn"\n`
-        )
-      }
-
       // @ts-ignore
       scene.name = name
       // scene.params = params

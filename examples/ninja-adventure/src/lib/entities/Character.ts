@@ -1,3 +1,4 @@
+import { coroutine } from '$lib/util/entities'
 import imgShadow from '$res/Actor/Characters/Shadow.png'
 
 export interface CharacterArgs extends ex.ActorArgs {
@@ -7,7 +8,6 @@ export interface CharacterArgs extends ex.ActorArgs {
 
 type Direction = 'up' | 'down' | 'left' | 'right'
 export class Character extends ex.Actor {
-  private ANIM_SPEED = 150
   private WALK_SPEED = 100
 
   facing: Direction = 'down'
@@ -32,26 +32,10 @@ export class Character extends ex.Actor {
     })
 
     this.anims = {
-      down: ex.Animation.fromSpriteSheet(
-        spriteSheet,
-        [0, 4, 8, 12],
-        this.ANIM_SPEED
-      ),
-      up: ex.Animation.fromSpriteSheet(
-        spriteSheet,
-        [1, 5, 9, 13],
-        this.ANIM_SPEED
-      ),
-      left: ex.Animation.fromSpriteSheet(
-        spriteSheet,
-        [2, 6, 10, 14],
-        this.ANIM_SPEED
-      ),
-      right: ex.Animation.fromSpriteSheet(
-        spriteSheet,
-        [3, 7, 11, 15],
-        this.ANIM_SPEED
-      ),
+      down: ex.Animation.fromSpriteSheet(spriteSheet, [0, 4, 8, 12], 0),
+      up: ex.Animation.fromSpriteSheet(spriteSheet, [1, 5, 9, 13], 0),
+      left: ex.Animation.fromSpriteSheet(spriteSheet, [2, 6, 10, 14], 0),
+      right: ex.Animation.fromSpriteSheet(spriteSheet, [3, 7, 11, 15], 0),
     }
   }
 
@@ -60,12 +44,13 @@ export class Character extends ex.Actor {
       this.graphics.add(name, anim)
     })
 
-    this.graphics.use(this.facing)
-
     // draw shadow behind character
     this.graphics.onPreDraw = (ctx) => {
       ctx.drawImage(imgShadow.image, 2, 11)
     }
+
+    this.updateFacing(this.facing)
+    this.idle()
   }
 
   idle() {
@@ -77,10 +62,36 @@ export class Character extends ex.Actor {
 
   move(direction: ex.Vector, speed = this.WALK_SPEED) {
     const anim = this.graphics.current[0].graphic as ex.Animation
-
+    anim.frameDuration = this.WALK_SPEED * 1.5
     this.vel = direction.normalize().scale(speed)
     this.updateFacing()
     anim.play()
+  }
+
+  async moveTo(coords: ex.Vector, speed = this.WALK_SPEED) {
+    const initialPos = this.pos
+    const targetPos = initialPos.add(coords)
+
+    return new Promise((resolve) => {
+      coroutine(
+        function* (this: Character) {
+          const vecDistance = targetPos.sub(this.pos)
+          while (this.pos.distance(targetPos) > 4) {
+            this.move(
+              ex.vec(
+                Math.sign(Math.floor(vecDistance.x)),
+                Math.sign(Math.floor(vecDistance.y))
+              ),
+              speed
+            )
+            yield
+          }
+          this.pos = targetPos
+          this.idle()
+          resolve(null)
+        }.bind(this)
+      )
+    })
   }
 
   /**

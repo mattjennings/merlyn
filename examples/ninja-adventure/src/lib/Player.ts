@@ -62,4 +62,9 @@ export class Player extends Character {
       this.move(movement)
     }
   }
+
+  move(direction: ex.Vector) {
+    super.move(direction)
+    this.emit('move', direction)
+  }
 }

@@ -1,5 +1,8 @@
 lockfileVersion: 5.4
 
+overrides:
+  excalibur: next
+
 importers:
 
   .:
@@ -25,7 +28,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -43,7 +46,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -68,7 +71,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       events: ^3.3.0
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -94,7 +97,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       events: 3.3.0
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -124,7 +127,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -143,7 +146,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -165,7 +168,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -183,7 +186,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -203,7 +206,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -222,7 +225,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -245,7 +248,7 @@ importers:
       '@types/polka': ^0.5.4
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: ^0.26.0
+      excalibur: next
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -264,7 +267,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -514,14 +517,14 @@ packages:
     resolution: {integrity: sha512-mrOzbW2cQbp9F6dj0K+BtfNhdcBeF3i9uupdnR9hn6bHK0KXSzRrZJJukqcE//vXa7vUXZ4AdC7FgJQWB4IC5A==}
     dependencies:
       '@tweakpane/core': 1.0.8
-      excalibur: 0.25.3
+      excalibur: 0.27.0-alpha.490
       tweakpane: 3.0.7
     dev: true
 
   /@excaliburjs/plugin-tiled/0.26.2:
     resolution: {integrity: sha512-PcTbp327n+ZSqpd3D1Ls+WOJb+4dVnWiLzGBUBDLscBixLerjFkFj1ZiKIWnZ6LL0C5FGFnPB4L+sDZkJYKqHQ==}
     dependencies:
-      excalibur: 0.26.0
+      excalibur: 0.27.0-alpha.490
       fast-xml-parser: 3.21.1
       pako: 1.0.11
       zstddec: 0.0.2
@@ -1706,15 +1709,9 @@ packages:
       is-what: 3.14.1
     dev: true
 
-  /core-js/3.21.0:
-    resolution: {integrity: sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==}
+  /core-js/3.23.1:
+    resolution: {integrity: sha512-wfMYHWi1WQjpgZNC9kAlN4ut04TM9fUTdi7CqIoTVM7yaiOUQTklOzfb+oWH3r9edQcT3F887swuVmxrV+CC8w==}
     requiresBuild: true
-    dev: true
-
-  /core-js/3.22.5:
-    resolution: {integrity: sha512-VP/xYuvJ0MJWRAobcmQ8F2H6Bsn+s7zqAAjFaHGBMc5AQm7zaelhD1LGduFn2EehEcQcU+br6t+fwbpQ5d1ZWA==}
-    requiresBuild: true
-    dev: false
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -2229,17 +2226,10 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /excalibur/0.25.3:
-    resolution: {integrity: sha512-BfhnOZJSkUEWFpZaKYPhmiivRYpXF6TykaUSJK3zzAwzUhNdTjT1XKSBFyN8CePkBtmza8cB/ufblG1bH91QjA==}
+  /excalibur/0.27.0-alpha.490:
+    resolution: {integrity: sha512-o9ZdXPyQ2mI1aR47jvEslUAW+QeAtUQTWM7FJSGleGzRgrPxrtz/li1HQU7rJcVGmD/8rsF2GNS6kqVYAXOxyA==}
     dependencies:
-      core-js: 3.21.0
-    dev: true
-
-  /excalibur/0.26.0:
-    resolution: {integrity: sha512-TbQ9K/RA99CJW8ksTpgxVbg3hECv3hk+tTgovltL0oba4WuoXlL0DY9hWuoID5G9wbpVJiXiE8dA0Wyfd8ksfg==}
-    dependencies:
-      core-js: 3.22.5
-    dev: false
+      core-js: 3.23.1
 
   /extend/3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}

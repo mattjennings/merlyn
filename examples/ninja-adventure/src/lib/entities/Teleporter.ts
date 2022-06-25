@@ -1,6 +1,5 @@
 import { goToScene } from '$game'
 import { Player } from '$lib/Player'
-import { TestTransition } from '$lib/transitions/TestTransition'
 import { FadeTransition } from 'merlyn'
 import { ActorArgs } from 'excalibur'
 
@@ -68,14 +67,7 @@ export class Teleporter extends ex.Actor {
                 player.updateFacing(this.facing)
               }
             },
-            transition: new TestTransition({
-              easing: (t: number) => {
-                // easeInOutCubic
-                return t < 0.5
-                  ? 4 * t * t * t
-                  : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
-              },
-            }),
+            transition: new FadeTransition(),
           })
         }
       }
