@@ -5,7 +5,7 @@ import { getMerlynConfig, getViteConfig } from '../config'
 import { createApp } from '../util/create-app'
 
 export default async function build({ cwd = process.cwd() } = {}) {
-  const config = await getMerlynConfig({ cwd })
+  const config = await getMerlynConfig({ dev: false, cwd })
 
   const dir = path.resolve(cwd, '.merlyn')
   const outDir = path.resolve(cwd, config.build.outDir)

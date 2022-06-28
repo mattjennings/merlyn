@@ -1,9 +1,8 @@
 /**
  * @type {import("merlyn").UserMerlynConfig}
  */
-export default {
+export default ({ dev }) => ({
   scenes: {
-    // boot: 'world',
-    boot: 'battle',
+    boot: dev ? 'battle' : 'world',
   },
-}
+})

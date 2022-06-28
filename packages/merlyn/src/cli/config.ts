@@ -28,10 +28,12 @@ export interface MerlynConfig {
 export type UserMerlynConfig = DeepPartial<MerlynConfig>
 
 export async function getMerlynConfig({
+  dev,
   cwd = process.cwd(),
 }: {
+  dev: boolean
   cwd?: string
-} = {}): Promise<MerlynConfig> {
+}): Promise<MerlynConfig> {
   const defaultConfig: MerlynConfig = {
     game: 'src/game',
     scenes: {
@@ -45,8 +47,15 @@ export async function getMerlynConfig({
 
   try {
     const configPath = path.join(cwd, `merlyn.config.js`)
-    const config = await import(configPath + `?ts=${Date.now()}`)
-    return deepmerge<MerlynConfig>(defaultConfig, config.default)
+    const mod = await import(configPath + `?ts=${Date.now()}`)
+
+    let config
+    if (typeof mod.default === 'function') {
+      config = mod.default({ dev })
+    } else {
+      config = mod.default
+    }
+    return deepmerge<MerlynConfig>(defaultConfig, config)
   } catch (e) {
     if (e?.code !== 'ERR_MODULE_NOT_FOUND') {
       throw e
