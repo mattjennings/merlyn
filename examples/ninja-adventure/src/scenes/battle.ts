@@ -5,12 +5,14 @@ import imgPlayer from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
 import imgCyclops from '$res/Actor/Monsters/Cyclope/Cyclopes.png'
 import { goToScene } from '$game'
 import { FadeTransition } from 'merlyn'
+import SvelteUI from '$lib/ui/SvelteUI'
+import BattleUI from '$lib/ui/Battle.svelte'
 
 export default class Battle extends ex.Scene {
   partyHasEntered = false
   runningAway = false
 
-  player!: BattleCharacter
+  ui?: SvelteUI
 
   heros: BattleCharacter[] = []
   enemies: BattleCharacter[] = []
@@ -27,7 +29,7 @@ export default class Battle extends ex.Scene {
       new BattleCharacter({
         name: 'player-battle',
         x: 16 * 15,
-        y: 16 * 5,
+        y: 16 * 3.5,
         facing: 'left',
         image: imgPlayer,
       }),
@@ -36,13 +38,13 @@ export default class Battle extends ex.Scene {
     this.enemies = [
       new BattleCharacter({
         x: 16,
-        y: 16 * 4,
+        y: 16 * 3,
         facing: 'right',
         image: imgCyclops,
       }),
       new BattleCharacter({
         x: 16,
-        y: 16 * 6,
+        y: 16 * 5,
         facing: 'right',
         image: imgCyclops,
       }),
@@ -57,20 +59,25 @@ export default class Battle extends ex.Scene {
       await Promise.all(
         this.heros.map((hero) => hero.moveTo(ex.vec(32, 0), 300))
       )
-
       goToScene('world', {
         transition: new FadeTransition(),
       })
     }
   }
 
+  onOutro() {
+    if (this.ui) {
+      this.engine.remove(this.ui)
+    }
+  }
+
   onDeactivate() {
     this.heros.forEach((actor) => this.engine.remove(actor))
     this.enemies.forEach((actor) => this.engine.remove(actor))
-  }
 
-  onIntroComplete() {
-    this.engine.input.keyboard.once('press', this.runAway.bind(this))
+    if (this.ui) {
+      this.engine.remove(this.ui)
+    }
   }
 
   onIntro(progress: number) {
@@ -79,6 +86,15 @@ export default class Battle extends ex.Scene {
         hero.moveTo(ex.vec(-32, 0), 300)
       })
       this.partyHasEntered = true
+
+      this.ui = new SvelteUI({
+        component: BattleUI,
+      })
+      this.ui.svelteComponent.$on('flee', () => {
+        this.runAway()
+        this.engine.remove(this.ui!)
+      })
+      this.engine.add(this.ui)
     }
   }
 }

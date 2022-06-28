@@ -23,10 +23,10 @@ export const playSong = async (
 
     currentSong = song
     isLooping = loop
+    song.play()
     if (loop) {
       song.loop = true
     }
-    song.play()
 
     if (opts?.onComplete) {
       song.once('playbackend', opts.onComplete)

@@ -3,6 +3,7 @@
  */
 export default {
   scenes: {
-    boot: 'world',
+    // boot: 'world',
+    boot: 'battle',
   },
 }

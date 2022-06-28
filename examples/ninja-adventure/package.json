@@ -10,8 +10,15 @@
   },
   "devDependencies": {
     "@excaliburjs/plugin-tiled": "^0.26.2",
-    "merlyn": "latest",
+    "@sveltejs/vite-plugin-svelte": "1.0.0-next.46",
+    "@tsconfig/svelte": "^3.0.0",
     "excalibur": "^0.26.0",
-    "typescript": "^4.7.3"
+    "focus-trap": "^6.9.4",
+    "merlyn": "latest",
+    "svelte-preprocess": "^4.10.5",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "svelte": "^3.48.0"
   }
 }

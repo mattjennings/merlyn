@@ -1,6 +1,6 @@
 import image from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
-import { Engine } from 'excalibur'
-import { Character, CharacterArgs } from './entities/Character'
+import type { Engine } from 'excalibur'
+import { Character, type CharacterArgs } from './entities/Character'
 import { getHeldDirections } from './util/input'
 
 export class Player extends Character {

@@ -1,12 +1,11 @@
 import { engine } from '$game'
 
-const controls = {
+export const controls = {
   up: [ex.Input.Keys.W, ex.Input.Keys.ArrowUp],
   down: [ex.Input.Keys.S, ex.Input.Keys.ArrowDown],
   left: [ex.Input.Keys.A, ex.Input.Keys.ArrowLeft],
   right: [ex.Input.Keys.D, ex.Input.Keys.ArrowRight],
-  interact: [ex.Input.Keys.Space],
-  attack: [ex.Input.Keys.Space],
+  interact: [ex.Input.Keys.Space, ex.Input.Keys.Enter],
 }
 
 const inputToName: Record<any, keyof typeof controls | undefined> =

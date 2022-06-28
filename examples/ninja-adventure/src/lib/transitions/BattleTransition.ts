@@ -1,5 +1,4 @@
-import { Transition, TransitionArgs } from 'merlyn'
-import { Engine, Scene } from 'excalibur'
+import { Transition, type TransitionArgs } from 'merlyn'
 
 export class BattleTransition extends Transition {
   fade!: ex.Actor
@@ -17,7 +16,7 @@ export class BattleTransition extends Transition {
     })
   }
 
-  onInitialize(engine: Engine): void {
+  onInitialize(engine: ex.Engine): void {
     engine.graphicsContext.addPostProcessor(this.pixel)
     engine.graphicsContext.addPostProcessor(this.swirl)
 
