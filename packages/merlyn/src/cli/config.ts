@@ -112,7 +112,11 @@ export async function getViteConfig({
   })
 
   if (userConfig?.config) {
-    return deepmerge(defaultConfig, userConfig.config)
+    // plugins in config seem to get picked by vite up on their own,
+    // it causes issues when merged here?
+    const { plugins, ...c } = userConfig.config
+
+    return deepmerge(defaultConfig, c)
   }
   return defaultConfig
 }

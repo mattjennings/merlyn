@@ -1,4 +1,4 @@
-import { Actor, Entity } from 'excalibur'
+import { Actor } from 'excalibur'
 
 export interface TransitionArgs {
   duration?: number
