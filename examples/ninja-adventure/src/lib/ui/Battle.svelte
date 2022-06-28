@@ -5,21 +5,29 @@
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()
+
+  let showAttackMenu = false
 </script>
 
 <div
-  class="main-menu"
+  class="root"
   transition:fly={{
     y: 50,
     easing: cubicInOut,
     duration: 500,
   }}
 >
-  <div class="pane">
-    <Menu let:register>
+  <div class="pane" class:inactive={showAttackMenu}>
+    <Menu let:register active={!showAttackMenu}>
       <div class="actions">
-        <button use:register id="attack" disabled>ATTACK</button>
-        <button use:register id="items" disabled>ITEMS</button>
+        <button
+          use:register
+          id="attack"
+          on:select={() => {
+            showAttackMenu = true
+          }}>ATTACK</button
+        >
+        <!-- <button use:register id="items" disabled>ITEMS</button> -->
         <button
           use:register
           id="flee"
@@ -32,16 +40,39 @@
       </div>
     </Menu>
   </div>
+
+  {#if showAttackMenu}
+    <div
+      class="attack-menu pane"
+      transition:fly={{
+        x: -1,
+        opacity: 0,
+        duration: 150,
+      }}
+    >
+      <Menu
+        let:register
+        on:close={() => {
+          showAttackMenu = false
+        }}
+      >
+        <div class="actions">
+          <button use:register id="1">Cyclops 1</button>
+          <button use:register id="2">Cyclops 2</button>
+        </div>
+      </Menu>
+    </div>
+  {/if}
 </div>
 
 <style>
-  .main-menu {
+  .root {
     display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: flex-end;
+    flex-flow: row;
+    align-items: flex-end;
     height: 100%;
     max-height: 100%;
+    gap: 0.2rem;
   }
 
   .actions {
@@ -67,14 +98,14 @@
     );
   }
 
-  button:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.35);
-    /* box-shadow: 0 0 0 0.75px rgba(255, 255, 255, 0.75); */
+  .pane.inactive {
+    opacity: 0.5;
   }
 
-  button {
-    width: 2.5rem;
+  button:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 0.75px rgba(255, 255, 255, 0.75);
   }
 
   button:not([disabled]) {

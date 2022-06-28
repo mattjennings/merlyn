@@ -3,7 +3,7 @@
   import { type Writable, writable } from 'svelte/store'
   import { engine } from '$game'
   import { Input, Vector } from 'excalibur'
-  import { controls } from '$lib/util/input'
+  import { controls, isKey } from '$lib/util/input'
   import { createFocusTrap } from 'focus-trap'
 
   export let active = true
@@ -52,7 +52,9 @@
     })
 
     node.addEventListener('click', () => {
-      node.dispatchEvent(new Event('select'))
+      if (active) {
+        node.dispatchEvent(new Event('select'))
+      }
     })
     return {
       destroy() {
@@ -76,137 +78,152 @@
   $: selectableActions = $actions.filter(
     (a) => !a.element.hasAttribute('disabled')
   )
+
   $: focusTrap = self
     ? createFocusTrap(self, {
         escapeDeactivates: false,
         clickOutsideDeactivates: false,
       })
     : null
+  $: active ? focusTrap?.activate() : focusTrap?.deactivate()
 
   $: if (active && $actions.length) {
     focus($focused ?? selectableActions[0])
-    focusTrap?.activate()
   } else if (!active) {
     $focused = null
-    focusTrap?.deactivate()
   }
 
   onMount(() => {
+    const isDirectionalInput = (key: Input.Keys) => {
+      return (
+        isKey('up', key) ||
+        isKey('down', key) ||
+        isKey('left', key) ||
+        isKey('right', key)
+      )
+    }
     /**
      * handle navigating menu items via directional input.
      * TLDR: it looks for the closest item in that direction and shifts focus to it
      */
     function handler(ev: Input.KeyEvent) {
       if (active) {
-        // direction in degrees. 0 = right
-        let direction!: number
-
-        if (controls.up.includes(ev.key)) {
-          direction = 270
-        } else if (controls.down.includes(ev.key)) {
-          direction = 90
-        } else if (controls.left.includes(ev.key)) {
-          direction = 180
-        } else if (controls.right.includes(ev.key)) {
-          direction = 0
-        } else {
-          return
+        if (isKey('cancel', ev.key)) {
+          dispatch('close')
         }
 
-        if (!$focused) {
-          focus($actions[0])
-        } else if ($focused) {
-          const currentBounds = $focused!.element.getBoundingClientRect()
+        // handle directional input
+        if (isDirectionalInput(ev.key)) {
+          // direction in degrees. 0 = right
+          let direction!: number
 
-          // find closest element by bounds for each direction
-          const closest = selectableActions.reduce(
-            (closest, a) => {
-              if (a.element === $focused!.element) {
-                return closest
-              }
-
-              const nextBounds = a.element.getBoundingClientRect()
-
-              // get angle in degrees
-              const degrees = (x: number, y: number) =>
-                Math.atan2(x, y) * (180 / Math.PI)
-
-              // get angle of element relative to direction of input
-              const relativeAngle = (x: number, y: number) =>
-                Math.abs((degrees(x, y) - direction) % 180) // mod 180 because we are only looking on one side
-
-              const angle = relativeAngle(
-                nextBounds.top - currentBounds.top,
-                nextBounds.left - currentBounds.left
-              )
-
-              let distance = Infinity
-
-              // down
-              if (
-                direction === 90 &&
-                nextBounds.bottom > currentBounds.bottom
-              ) {
-                distance = Vector.distance(
-                  new Vector(nextBounds.left, nextBounds.bottom),
-                  new Vector(currentBounds.left, currentBounds.bottom)
-                )
-              }
-              // up
-              else if (
-                direction === 270 &&
-                nextBounds.top < currentBounds.top
-              ) {
-                distance = Vector.distance(
-                  new Vector(nextBounds.left, nextBounds.top),
-                  new Vector(currentBounds.left, currentBounds.top)
-                )
-              }
-              // right
-              else if (
-                direction === 0 &&
-                nextBounds.right > currentBounds.right
-              ) {
-                distance = Vector.distance(
-                  new Vector(nextBounds.right, nextBounds.top),
-                  new Vector(currentBounds.right, currentBounds.top)
-                )
-              }
-              // left
-              else if (
-                direction === 180 &&
-                nextBounds.left < currentBounds.left
-              ) {
-                distance = Vector.distance(
-                  new Vector(nextBounds.left, nextBounds.top),
-                  new Vector(currentBounds.left, currentBounds.top)
-                )
-              }
-
-              // if angle is very shallow, prioritize it
-              if (angle < 5) {
-                distance *= 0.5
-              }
-              // if angle is very steep, penalize it
-              // (not sure about this)
-              // else if (angle >= 45) {
-              //   distance *= 2.5
-              // }
-
-              if (distance > 0 && distance < closest.distance) {
-                return { distance, action: a }
-              }
-
-              return closest
-            },
-            { distance: Infinity, action: null as Action | null }
-          )
-
-          if (closest?.action) {
-            focus(closest.action)
+          if (controls.up.includes(ev.key)) {
+            direction = 270
+          } else if (controls.down.includes(ev.key)) {
+            direction = 90
+          } else if (controls.left.includes(ev.key)) {
+            direction = 180
+          } else if (controls.right.includes(ev.key)) {
+            direction = 0
           } else {
-            // user tried to navigate "outside" of the menu
-            dispatch('edge', direction)
+            return
+          }
+
+          if (!$focused) {
+            focus($actions[0])
+          } else if ($focused) {
+            const currentBounds = $focused!.element.getBoundingClientRect()
+
+            // find closest element by bounds for each direction
+            const closest = selectableActions.reduce(
+              (closest, a) => {
+                if (a.element === $focused!.element) {
+                  return closest
+                }
+
+                const nextBounds = a.element.getBoundingClientRect()
+
+                // get angle in degrees
+                const degrees = (x: number, y: number) =>
+                  Math.atan2(x, y) * (180 / Math.PI)
+
+                // get angle of element relative to direction of input
+                const relativeAngle = (x: number, y: number) =>
+                  Math.abs((degrees(x, y) - direction) % 180) // mod 180 because we are only looking on one side
+
+                const angle = relativeAngle(
+                  nextBounds.top - currentBounds.top,
+                  nextBounds.left - currentBounds.left
+                )
+
+                let distance = Infinity
+
+                // down
+                if (
+                  direction === 90 &&
+                  nextBounds.bottom > currentBounds.bottom
+                ) {
+                  distance = Vector.distance(
+                    new Vector(nextBounds.left, nextBounds.bottom),
+                    new Vector(currentBounds.left, currentBounds.bottom)
+                  )
+                }
+                // up
+                else if (
+                  direction === 270 &&
+                  nextBounds.top < currentBounds.top
+                ) {
+                  distance = Vector.distance(
+                    new Vector(nextBounds.left, nextBounds.top),
+                    new Vector(currentBounds.left, currentBounds.top)
+                  )
+                }
+                // right
+                else if (
+                  direction === 0 &&
+                  nextBounds.right > currentBounds.right
+                ) {
+                  distance = Vector.distance(
+                    new Vector(nextBounds.right, nextBounds.top),
+                    new Vector(currentBounds.right, currentBounds.top)
+                  )
+                }
+                // left
+                else if (
+                  direction === 180 &&
+                  nextBounds.left < currentBounds.left
+                ) {
+                  distance = Vector.distance(
+                    new Vector(nextBounds.left, nextBounds.top),
+                    new Vector(currentBounds.left, currentBounds.top)
+                  )
+                }
+
+                // if angle is very shallow, prioritize it
+                if (angle < 5) {
+                  distance *= 0.5
+                }
+                // if angle is very steep, penalize it
+                // (not sure about this)
+                // else if (angle >= 45) {
+                //   distance *= 2.5
+                // }
+
+                if (distance > 0 && distance < closest.distance) {
+                  return { distance, action: a }
+                }
+
+                return closest
+              },
+              { distance: Infinity, action: null as Action | null }
+            )
+
+            if (closest?.action) {
+              focus(closest.action)
+            } else {
+              // user tried to navigate "outside" of the menu
+              dispatch('edge', direction)
+            }
           }
         }
       }

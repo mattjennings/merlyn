@@ -1,4 +1,5 @@
 import { engine } from '$game'
+import type { Input } from 'excalibur'
 
 export const controls = {
   up: [ex.Input.Keys.W, ex.Input.Keys.ArrowUp],
@@ -6,6 +7,15 @@ export const controls = {
   left: [ex.Input.Keys.A, ex.Input.Keys.ArrowLeft],
   right: [ex.Input.Keys.D, ex.Input.Keys.ArrowRight],
   interact: [ex.Input.Keys.Space, ex.Input.Keys.Enter],
+  cancel: [
+    ex.Input.Keys.Escape,
+    ex.Input.Keys.Backspace,
+    ex.Input.Keys.ShiftLeft,
+  ],
+}
+
+export function isKey(control: keyof typeof controls, key: Input.Keys) {
+  return controls[control].includes(key)
 }
 
 const inputToName: Record<any, keyof typeof controls | undefined> =
