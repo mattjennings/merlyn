@@ -1,26 +1,34 @@
 lockfileVersion: 5.4
 
 overrides:
-  excalibur: next
+  excalibur: 0.27.0-alpha.498
 
 importers:
 
   .:
     specifiers:
       '@excaliburjs/dev-tools': ^0.25.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@tsconfig/svelte': ^3.0.0
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
       eslint: ^8.16.0
+      eslint-plugin-svelte3: ^4.0.0
       prettier: ^2.6.2
       prettier-plugin-svelte: ^2.7.0
+      svelte: ^3.48.0
       typescript: ^4.7.2
     devDependencies:
       '@excaliburjs/dev-tools': 0.25.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@tsconfig/svelte': 3.0.0
       '@typescript-eslint/eslint-plugin': 5.27.0_typescript@4.7.3
       '@typescript-eslint/parser': 5.27.0_typescript@4.7.3
       eslint: 8.17.0
+      eslint-plugin-svelte3: 4.0.0
       prettier: 2.6.2
       prettier-plugin-svelte: 2.7.0
+      svelte: 3.48.0
       typescript: 4.7.3
 
   examples/javascript:
@@ -28,7 +36,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -46,7 +54,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -65,13 +73,12 @@ importers:
     specifiers:
       '@excaliburjs/dev-tools': ^0.25.3
       '@excaliburjs/plugin-tiled': ^0.26.2
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       '@types/events': ^3.0.0
       autoprefixer: ^10.4.4
       deepmerge: ^4.2.2
       del: ^6.1.1
       events: ^3.3.0
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -86,18 +93,17 @@ importers:
       sirv: ^2.0.2
       svelte: ^3.48.0
       svelte-preprocess: ^4.10.5
-      tailwindcss: ^3.0.23
+      tailwindcss: ^3.1.0
       typescript: ^4.5.4
       unplugin-auto-import: ^0.8.7
       vite: ^2.9.9
       vite-plugin-full-reload: ^1.0.0
     dependencies:
       '@excaliburjs/plugin-tiled': 0.26.2
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       deepmerge: 4.2.2
       del: 6.1.1
       events: 3.3.0
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -119,15 +125,18 @@ importers:
       postcss: 8.4.14
       postcss-load-config: 3.1.4
       svelte-preprocess: 4.10.6
-      tailwindcss: 3.0.24
+      tailwindcss: 3.1.4
       typescript: 4.7.3
 
   examples/ninja-adventure:
     specifiers:
       '@excaliburjs/plugin-tiled': ^0.26.2
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@tsconfig/svelte': ^3.0.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
+      focus-trap: ^6.9.4
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -138,7 +147,9 @@ importers:
       query-string: ^7.1.1
       sade: ^1.8.1
       sirv: ^2.0.2
-      typescript: ^4.7.3
+      svelte: ^3.48.0
+      svelte-preprocess: ^4.10.5
+      typescript: ^4.7.4
       unplugin-auto-import: ^0.8.7
       vite: ^2.9.9
       vite-plugin-full-reload: ^1.0.0
@@ -146,7 +157,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -157,18 +168,23 @@ importers:
       query-string: 7.1.1
       sade: 1.8.1
       sirv: 2.0.2
+      svelte: 3.48.0
       unplugin-auto-import: 0.8.7
       vite: 2.9.9
       vite-plugin-full-reload: 1.0.0
     devDependencies:
-      typescript: 4.7.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@tsconfig/svelte': 3.0.0
+      focus-trap: 6.9.4
+      svelte-preprocess: 4.10.6
+      typescript: 4.7.4
 
   examples/sample-platformer:
     specifiers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -186,7 +202,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -206,7 +222,7 @@ importers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -225,7 +241,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -248,7 +264,7 @@ importers:
       '@types/polka': ^0.5.4
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: next
+      excalibur: 0.27.0-alpha.498
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -267,7 +283,7 @@ importers:
       '@excaliburjs/plugin-tiled': 0.26.2
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -517,14 +533,14 @@ packages:
     resolution: {integrity: sha512-mrOzbW2cQbp9F6dj0K+BtfNhdcBeF3i9uupdnR9hn6bHK0KXSzRrZJJukqcE//vXa7vUXZ4AdC7FgJQWB4IC5A==}
     dependencies:
       '@tweakpane/core': 1.0.8
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       tweakpane: 3.0.7
     dev: true
 
   /@excaliburjs/plugin-tiled/0.26.2:
     resolution: {integrity: sha512-PcTbp327n+ZSqpd3D1Ls+WOJb+4dVnWiLzGBUBDLscBixLerjFkFj1ZiKIWnZ6LL0C5FGFnPB4L+sDZkJYKqHQ==}
     dependencies:
-      excalibur: 0.27.0-alpha.490
+      excalibur: 0.27.0-alpha.498
       fast-xml-parser: 3.21.1
       pako: 1.0.11
       zstddec: 0.0.2
@@ -663,7 +679,6 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
-    dev: false
 
   /@rushstack/node-core-library/3.45.5:
     resolution: {integrity: sha512-KbN7Hp9vH3bD3YJfv6RnVtzzTAwGYIBl7y2HQLY4WEQqRbvE3LgI78W9l9X+cTAXCX//p0EeoiUYNTFdqJrMZg==}
@@ -713,7 +728,7 @@ packages:
       vite: 2.9.9
     transitivePeerDependencies:
       - supports-color
-    dev: false
+    dev: true
 
   /@swc/core-android-arm-eabi/1.2.196:
     resolution: {integrity: sha512-rWM909UT01+CWxvOkQ7f6bhtceFz/jBuVhYqtOjkDleMV6UsKVfMOAkAMQBfvQmoQzvqddypCDl5tOZIoj3O0w==}
@@ -879,6 +894,10 @@ packages:
 
   /@tsconfig/node16/1.0.2:
     resolution: {integrity: sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==}
+    dev: true
+
+  /@tsconfig/svelte/3.0.0:
+    resolution: {integrity: sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==}
     dev: true
 
   /@tweakpane/core/1.0.8:
@@ -1439,8 +1458,8 @@ packages:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
     dev: true
 
-  /arg/5.0.1:
-    resolution: {integrity: sha512-e0hDa9H2Z9AwFkk2qDlwhoMYE4eToKarchkQHovNdLTCYMHZHeRjI71crOh+dio4K6u1IcwubQqo79Ga4CyAQA==}
+  /arg/5.0.2:
+    resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
     dev: true
 
   /argparse/1.0.10:
@@ -1789,7 +1808,6 @@ packages:
   /deepmerge/4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /defined/1.0.0:
     resolution: {integrity: sha512-Y2caI5+ZwS5c3RiNDJ6u53VhQHv+hHKwhkI1iHvceKUHw9Df6EK2zRLfjejRgMuCuxK7PfSWIMwWecceVvThjQ==}
@@ -1835,7 +1853,7 @@ packages:
 
   /diff-match-patch/1.0.5:
     resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
-    dev: false
+    dev: true
 
   /diff/4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
@@ -2103,6 +2121,15 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /eslint-plugin-svelte3/4.0.0:
+    resolution: {integrity: sha512-OIx9lgaNzD02+MDFNLw0GEUbuovNcglg+wnd/UY0fbZmlQSz7GlQiQ1f+yX0XvC07XPcDOnFcichqI3xCwp71g==}
+    dependencies:
+      eslint: 8.17.0
+      svelte: 3.48.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /eslint-scope/5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -2214,7 +2241,6 @@ packages:
 
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-    dev: false
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -2226,8 +2252,8 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /excalibur/0.27.0-alpha.490:
-    resolution: {integrity: sha512-o9ZdXPyQ2mI1aR47jvEslUAW+QeAtUQTWM7FJSGleGzRgrPxrtz/li1HQU7rJcVGmD/8rsF2GNS6kqVYAXOxyA==}
+  /excalibur/0.27.0-alpha.498:
+    resolution: {integrity: sha512-8tnFtAIzzqDy0IYl11mE5mX7HhKvDGiw0ypm9HfIT6T5In+ZTmP8R5CWKOK7HwE9akLRT/hmPJd0L1mpuAXRDg==}
     dependencies:
       core-js: 3.23.1
 
@@ -2300,6 +2326,12 @@ packages:
 
   /flatted/3.2.5:
     resolution: {integrity: sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==}
+    dev: true
+
+  /focus-trap/6.9.4:
+    resolution: {integrity: sha512-v2NTsZe2FF59Y+sDykKY+XjqZ0cPfhq/hikWVL88BqLivnNiEffAsac6rP6H45ff9wG9LL5ToiDqrLEP9GX9mw==}
+    dependencies:
+      tabbable: 5.3.3
     dev: true
 
   /forever-agent/0.6.1:
@@ -2699,7 +2731,6 @@ packages:
   /kleur/4.1.4:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
-    dev: false
 
   /less/3.9.0:
     resolution: {integrity: sha512-31CmtPEZraNUtuUREYjSqRkeETFdyEHSEPAGq4erDlUXtda7pzNmctdljdIagSb589d/qXGWiiP31R5JVf+v0w==}
@@ -2791,7 +2822,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       sourcemap-codec: 1.4.8
-    dev: false
 
   /make-dir/2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -3039,6 +3069,11 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
+  /pify/2.3.0:
+    resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
   /pify/4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
@@ -3059,6 +3094,16 @@ packages:
       '@polka/url': 0.5.0
       trouter: 2.0.1
     dev: false
+
+  /postcss-import/14.1.0:
+    resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
+    engines: {node: '>=10.0.0'}
+    dependencies:
+      postcss: 8.4.14
+      postcss-value-parser: 4.2.0
+      read-cache: 1.0.0
+      resolve: 1.22.0
+    dev: true
 
   /postcss-js/4.0.0:
     resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
@@ -3274,6 +3319,12 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /read-cache/1.0.0:
+    resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
+    dependencies:
+      pify: 2.3.0
+    dev: true
+
   /readdirp/3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
@@ -3386,7 +3437,7 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
   /sander/0.5.1:
-    resolution: {integrity: sha1-dB4kXiMfB8r7b98PEzrfohalAq0=}
+    resolution: {integrity: sha512-3lVqBir7WuKDHGrKRDn/1Ye3kwpXaDOMsiRP1wd6wpZW56gJhsbp5RqQpA6JG/P+pkXizygnr1dKR8vzWaVsfA==}
     dependencies:
       es6-promise: 3.3.1
       graceful-fs: 4.2.10
@@ -3470,7 +3521,7 @@ packages:
     engines: {node: '>=8'}
 
   /sorcery/0.10.0:
-    resolution: {integrity: sha1-iukK19fLBfxZ8asMY3hF1cFaUrc=}
+    resolution: {integrity: sha512-R5ocFmKZQFfSTstfOtHjJuAwbpGyf9qjQa1egyhvXSbM7emjrtLXtGdZsDJDABC85YBfVvrOiGWKSYXPKdvP1g==}
     hasBin: true
     dependencies:
       buffer-crc32: 0.2.13
@@ -3634,7 +3685,7 @@ packages:
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     dependencies:
       svelte: 3.48.0
-    dev: false
+    dev: true
 
   /svelte-preprocess/4.10.6:
     resolution: {integrity: sha512-I2SV1w/AveMvgIQlUF/ZOO3PYVnhxfcpNyGt8pxpUVhPfyfL/CZBkkw/KPfuFix5FJ9TnnNYMhACK3DtSaYVVQ==}
@@ -3682,7 +3733,7 @@ packages:
       stylus: 0.55.0
       sugarss: 2.0.0
       svelte: 3.48.0
-      typescript: 4.7.3
+      typescript: 4.7.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3691,12 +3742,16 @@ packages:
     resolution: {integrity: sha512-fN2YRm/bGumvjUpu6yI3BpvZnpIm9I6A7HR4oUNYd7ggYyIwSA/BX7DJ+UXXffLp6XNcUijyLvttbPVCYa/3xQ==}
     engines: {node: '>= 8'}
 
-  /tailwindcss/3.0.24:
-    resolution: {integrity: sha512-H3uMmZNWzG6aqmg9q07ZIRNIawoiEcNFKDfL+YzOPuPsXuDXxJxB9icqzLgdzKNwjG3SAro2h9SYav8ewXNgig==}
+  /tabbable/5.3.3:
+    resolution: {integrity: sha512-QD9qKY3StfbZqWOPLp0++pOrAVb/HbUi5xCc8cUo4XjP19808oaMiDzn0leBY5mCespIBM0CIZePzZjgzR83kA==}
+    dev: true
+
+  /tailwindcss/3.1.4:
+    resolution: {integrity: sha512-NrxbFV4tYsga/hpWbRyUfIaBrNMXDxx5BsHgBS4v5tlyjf+sDsgBg5m9OxjrXIqAS/uR9kicxLKP+bEHI7BSeQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      arg: 5.0.1
+      arg: 5.0.2
       chokidar: 3.5.3
       color-name: 1.1.4
       detective: 5.2.1
@@ -3710,6 +3765,7 @@ packages:
       object-hash: 3.0.0
       picocolors: 1.0.0
       postcss: 8.4.14
+      postcss-import: 14.1.0
       postcss-js: 4.0.0
       postcss-load-config: 3.1.4
       postcss-nested: 5.0.6
@@ -3762,7 +3818,7 @@ packages:
     dev: false
 
   /text-table/0.2.0:
-    resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
+    resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
     dev: true
 
   /timsort/0.3.0:
@@ -3770,7 +3826,7 @@ packages:
     dev: true
 
   /to-fast-properties/2.0.0:
-    resolution: {integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=}
+    resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
     dev: true
 
@@ -3834,7 +3890,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 4.7.3
+      typescript: 4.7.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
@@ -3895,6 +3951,12 @@ packages:
     resolution: {integrity: sha512-WOkT3XYvrpXx4vMMqlD+8R8R37fZkjyLGlxavMc4iB8lrl8L0DeTcHbYgw/v0N/z9wAFsgBhcsF0ruoySS22mA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+
+  /typescript/4.7.4:
+    resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
 
   /unimport/0.2.6:
     resolution: {integrity: sha512-4cOokUIEvaXAfVCHH87vR+wdKI1KDzxQREW9oi0r6J68TPFEeGLHHc2pdyL0uNDUMd2aLxUikhWARNfoQKqC4Q==}
@@ -4057,7 +4119,7 @@ packages:
       - supports-color
 
   /void-elements/3.1.0:
-    resolution: {integrity: sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=}
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
     engines: {node: '>=0.10.0'}
     dev: true
 
