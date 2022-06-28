@@ -25,7 +25,14 @@ export interface MerlynConfig {
   }
 }
 
-export type UserMerlynConfig = DeepPartial<MerlynConfig>
+export type UserMerlynConfig =
+  | ((args: {
+      /**
+       * If we're running as a development server
+       */
+      dev?: boolean
+    }) => DeepPartial<MerlynConfig>)
+  | DeepPartial<MerlynConfig>
 
 export async function getMerlynConfig({
   dev,
