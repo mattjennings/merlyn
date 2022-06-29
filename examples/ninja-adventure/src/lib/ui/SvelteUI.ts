@@ -10,7 +10,9 @@ export default class SvelteUI<
   svelteComponent: SvelteComponentTyped<Props, Events, Slots>
 
   constructor(args: { component: typeof SvelteComponentTyped<Props, Events, Slots>; props?: Props }) {
-    super()
+    super({
+      resolution: 'native'
+    })
 
     this.svelteComponent = new args.component({
       target: this.element,
@@ -28,7 +30,7 @@ export default class SvelteUI<
 
 // Workaround for https://github.com/sveltejs/svelte/issues/4056
 const outroAndDestroy = (
-  instance: SvelteComponent | undefined,
+  instance: SvelteComponentTyped | undefined,
   cb: () => void
 ) => {
   // @ts-ignore

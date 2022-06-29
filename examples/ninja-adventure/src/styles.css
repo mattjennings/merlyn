@@ -23,12 +23,26 @@ button {
   background: none;
   border: none;
   display: block;
-  padding: 0.1rem;
-  border-radius: 0.125rem;
-  font-size: 0.5rem;
+  padding: 0.25em;
+  border-radius: 0.25em;
+  font-size: 5.5em;
   font-weight: bold;
   text-align: left;
   user-select: none;
+}
+
+button:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 0.1em rgba(255, 255, 255, 0.75);
+}
+
+button:not([disabled]) {
+  cursor: pointer;
+}
+
+button[disabled] {
+  opacity: 0.5;
 }
 
 .loader,

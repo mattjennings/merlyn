@@ -1,20 +1,21 @@
 <script>
-  import { fly } from 'svelte/transition'
   import { cubicInOut } from 'svelte/easing'
   import Menu from './components/Menu.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { fly } from './transitions'
 
   const dispatch = createEventDispatcher()
 
   let showAttackMenu = false
 </script>
 
+<div class="pixel" />
 <div
   class="root"
   transition:fly={{
-    y: 50,
+    y: 10,
     easing: cubicInOut,
-    duration: 500,
+    duration: 200,
   }}
 >
   <div class="pane" class:inactive={showAttackMenu}>
@@ -47,7 +48,7 @@
       transition:fly={{
         x: -1,
         opacity: 0,
-        duration: 150,
+        duration: 200,
       }}
     >
       <Menu
@@ -72,47 +73,32 @@
     align-items: flex-end;
     height: 100%;
     max-height: 100%;
-    gap: 0.2rem;
+    gap: 1em;
   }
 
   .actions {
     display: flex;
     flex-flow: column wrap;
-    gap: 0.2rem;
+    gap: 2em;
     height: 100%;
   }
 
   .pane {
-    border: 1px solid white;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    height: 3rem;
+    border: 0.75em solid white;
+    border-radius: 2em;
+    padding: 2em 3em;
+    height: 40em;
     opacity: 90%;
-    padding: 0.5rem;
 
     background: radial-gradient(
-      circle at -180px 0px,
-      #0053ad 300px,
-      #001b85 500px,
+      circle at -15% 0,
+      #0053ad 20%,
+      #001b85 125%,
       #000223
     );
   }
 
   .pane.inactive {
-    opacity: 0.5;
-  }
-
-  button:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 0.75px rgba(255, 255, 255, 0.75);
-  }
-
-  button:not([disabled]) {
-    cursor: pointer;
-  }
-
-  button[disabled] {
     opacity: 0.5;
   }
 </style>
