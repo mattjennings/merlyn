@@ -35,11 +35,11 @@ export class BattleTransition extends Transition {
     )
 
     this.fade = new ex.ScreenElement({
-      x: 0,
-      y: 0,
+      x: -1,
+      y: -1,
       z: 9999,
-      width: engine.currentScene.camera.viewport.width,
-      height: engine.currentScene.camera.viewport.height,
+      width: engine.currentScene.camera.viewport.width + 2,
+      height: engine.currentScene.camera.viewport.height + 2,
       color: ex.Color.White,
     })
 

@@ -12,12 +12,16 @@ export class FadeTransition extends Transition {
   }
 
   onInitialize(engine: Engine): void {
+    // extend element beyond camera bounds incase
+    // camera is off by 1 due to pixel snapping
+    const buffer = 1
+
     this.el = new ScreenElement({
-      x: 0,
-      y: 0,
+      x: -buffer,
+      y: -buffer,
       z: 9999,
-      width: engine.currentScene.camera.viewport.width,
-      height: engine.currentScene.camera.viewport.height,
+      width: engine.currentScene.camera.viewport.width + buffer * 2,
+      height: engine.currentScene.camera.viewport.height + buffer * 2,
       color: Color.Black,
     })
     this.el.graphics.opacity = this.isOutro ? 0 : 1
