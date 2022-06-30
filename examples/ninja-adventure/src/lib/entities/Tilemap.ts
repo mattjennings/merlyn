@@ -1,5 +1,5 @@
-import { Engine } from 'excalibur'
-import {
+import type { Engine } from 'excalibur'
+import type {
   TiledMapResource,
   TiledObject,
   TiledObjectGroup,

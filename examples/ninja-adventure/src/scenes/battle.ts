@@ -2,11 +2,10 @@ import { BattleCharacter } from '$lib/entities/BattleCharacter'
 import Tilemap from '$lib/entities/Tilemap'
 import tilemap from '$res/Tilemaps/battle.tmx'
 import imgPlayer from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
-import imgCyclops from '$res/Actor/Monsters/Cyclope/Cyclopes.png'
 import { goToScene } from '$game'
 import { FadeTransition } from 'merlyn'
-import SvelteUI from '$lib/ui/SvelteUI'
-import BattleUI from '$lib/ui/Battle.svelte'
+import { SvelteUI } from '$lib/ui/SvelteUI'
+import BattleSvelte from '$lib/ui/Battle.svelte'
 
 export default class Battle extends ex.Scene {
   partyHasEntered = false
@@ -22,12 +21,13 @@ export default class Battle extends ex.Scene {
     engine.add(map)
   }
 
-  onActivate() {
+  onActivate(ctx: ex.SceneActivationContext<{ enemies: BattleCharacter[] }>) {
     this.partyHasEntered = false
 
     this.heros = [
       new BattleCharacter({
-        name: 'player-battle',
+        name: 'Player',
+        hp: 100,
         x: 16 * 15,
         y: 16 * 3.5,
         facing: 'left',
@@ -35,20 +35,9 @@ export default class Battle extends ex.Scene {
       }),
     ]
 
-    this.enemies = [
-      new BattleCharacter({
-        x: 16,
-        y: 16 * 3,
-        facing: 'right',
-        image: imgCyclops,
-      }),
-      new BattleCharacter({
-        x: 16,
-        y: 16 * 5,
-        facing: 'right',
-        image: imgCyclops,
-      }),
-    ]
+    if (ctx.data?.enemies) {
+      this.enemies = ctx.data.enemies
+    }
 
     this.heros.forEach((actor) => this.engine.add(actor))
     this.enemies.forEach((actor) => this.engine.add(actor))
@@ -88,7 +77,7 @@ export default class Battle extends ex.Scene {
       this.partyHasEntered = true
 
       this.ui = new SvelteUI({
-        component: BattleUI,
+        component: BattleSvelte,
       })
       this.ui.svelteComponent.$on('flee', () => {
         this.runAway()

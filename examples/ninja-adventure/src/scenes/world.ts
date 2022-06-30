@@ -1,6 +1,6 @@
 import { goToScene } from '$game'
 import Tilemap from '$lib/entities/Tilemap'
-import { Player } from '$lib/Player'
+import type { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
 import tilemap from '$res/Tilemaps/world.tmx'
 import { Scene } from 'merlyn'
@@ -50,13 +50,61 @@ export default class World extends Scene {
     })
 
     goToScene('battle', {
+      data: async () => {
+        const Cyclops = await import(
+          '$lib/entities/battle/enemies/Cyclops'
+        ).then((r) => r.Cyclops)
+        const Slime = await import('$lib/entities/battle/enemies/Slime').then(
+          (r) => r.Slime
+        )
+
+        const groups = [
+          [
+            new Cyclops({
+              x: 16,
+              y: 16 * 3,
+            }),
+            new Cyclops({
+              x: 16,
+              y: 16 * 5,
+            }),
+          ],
+          [
+            new Cyclops({
+              x: 16,
+              y: 16 * 4,
+            }),
+          ],
+          [
+            new Slime({
+              x: 16,
+              y: 16 * 4,
+            }),
+          ],
+          [
+            new Slime({
+              x: 16,
+              y: 16 * 3,
+            }),
+            new Cyclops({
+              x: 16,
+              y: 16 * 5,
+            }),
+          ],
+        ]
+
+        return {
+          // choose from groups at random
+          enemies: groups[Math.floor(Math.random() * groups.length)],
+        }
+      },
       transition: new BattleTransition(),
     })
     this.resetBattleCounter()
   }
 
   resetBattleCounter() {
-    const max = 1000
+    const max = 750
     const min = 250
     this.battleCounter = Math.floor(Math.random() * (max - min + 1)) + min
   }

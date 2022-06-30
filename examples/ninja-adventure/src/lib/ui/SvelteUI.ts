@@ -2,7 +2,7 @@ import { HTMLUI } from 'merlyn'
 import type { SvelteComponentTyped } from 'svelte'
 import { check_outros, group_outros, transition_out } from 'svelte/internal'
 
-export default class SvelteUI<
+export class SvelteUI<
   Props extends Record<string, any> = any,
   Events extends Record<string, any> = any,
   Slots extends Record<string, any> = any
