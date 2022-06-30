@@ -18,10 +18,10 @@ declare module '$game' {
   )
   export function getResources(): Loadable<any>[]
 
-  export function goToScene(
+  export function goToScene<Data = any>(
     key: string,
     options?: {
-      params?: any
+      data?: Data | Promise<Data>
       transition?: Transition
 
       /**

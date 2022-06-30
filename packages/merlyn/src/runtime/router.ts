@@ -38,6 +38,10 @@ export class Router {
 
     Object.entries(manifest.loadingScenes).map(async ([key, mod]) => {
       this.engine.add(key, new mod.default())
+      this.scenes[key] = {
+        import: async () => mod,
+        loadingSceneKey: key,
+      }
     })
 
     this.engine.start(loader as any).then(() => {
@@ -45,16 +49,19 @@ export class Router {
     })
   }
 
-  async goToScene(
+  async goToScene<Data = any>(
     name: string,
     options: {
-      params?: Record<string, any>
+      data?: Data | Promise<Data>
       transition?: Transition
       onActivate?: (scene: Scene) => void
     } = {}
   ) {
     const sceneData = this.scenes[name]
     let scene = this.engine.scenes[name] as Scene
+
+    const isDataPromise = (data: any): data is () => Promise<any> =>
+      typeof data === 'function'
 
     // check if scene exists
     if (!sceneData) {
@@ -67,7 +74,7 @@ export class Router {
       transition: options.transition,
     })
 
-    if (this.sceneNeedsLoading(name)) {
+    if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
       this.engine.goToScene(this.scenes[name].loadingSceneKey)
 
       // carry transition instance into loading scene
@@ -76,13 +83,17 @@ export class Router {
       }
     }
 
+    const data = isDataPromise(options.data)
+      ? await options.data()
+      : options.data
+
     scene = await this.preloadScene(name)
     isBooting = false
 
     scene.once('activate', () => {
       options.onActivate?.(scene)
     })
-    this.engine.goToScene(name)
+    this.engine.goToScene(name, data)
 
     // play intro transition
     await this.executeTransition({

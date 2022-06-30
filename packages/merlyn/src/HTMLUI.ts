@@ -49,7 +49,7 @@ export class HTMLUI extends Actor {
   }
 
   resizeToCanvas = () => {
-    if (this.element) {
+    if (this.element && this.engine?.canvas) {
       const { width, height, left, top, bottom, right } =
         this.engine.canvas.getBoundingClientRect()
 
