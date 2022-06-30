@@ -27,6 +27,6 @@ export default class Loading extends ex.Scene {
   }
 
   onLoad(progress) {
-    this.label.text = `Loading... ${Math.floor(progress * 100)}%`
+    this.label.text = `Loading... ${Math.floor(progress)}%`
   }
 }

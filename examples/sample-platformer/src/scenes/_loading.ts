@@ -8,7 +8,6 @@ export default class Loading extends ex.Scene {
       y: engine.drawHeight / 2,
       font: new ex.Font({
         textAlign: ex.TextAlign.Center,
-        family: 'Luminari',
         size: 64,
         unit: ex.FontUnit.Px,
         color: ex.Color.White,
@@ -21,6 +20,7 @@ export default class Loading extends ex.Scene {
 
   onActivate() {
     this.label.graphics.opacity = 0
+
     setTimeout(() => {
       this.label.actions.fade(1, 500)
     }, 1000)
