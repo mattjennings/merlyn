@@ -1,7 +1,7 @@
 {
   "include": ["src/**/*"],
   "compilerOptions": {
-    "types": ["merlyn/app"],
+    "types": ["merlyn/types"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
