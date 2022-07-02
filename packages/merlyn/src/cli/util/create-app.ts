@@ -1,10 +1,11 @@
 import fs from 'fs-extra'
 import path from 'path'
 import mkdirp from 'mkdirp'
-import { ManifestData } from './types'
-import prettier from 'prettier'
 import { fileURLToPath } from 'url'
 import { MerlynConfig } from '../config'
+import glob from 'glob'
+import { posixify } from './helpers'
+import dedent from 'dedent'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const previousContents = new Map<string, string>()
@@ -27,6 +28,7 @@ export function createApp({
 }) {
   writeIfChanged(`${dir}/manifest.js`, generateClientManifest(dir, config))
   writeIfChanged(`${dir}/index.js`, generateApp())
+  writeIfChanged(`${dir}/generated.d.ts`, generateTypes(dir, config))
 
   if (isInitial) {
     copyRuntime(`${dir}/runtime`)
@@ -35,16 +37,9 @@ export function createApp({
   }
 }
 
-function format(str: string) {
-  return prettier.format(str, {
-    semi: false,
-    parser: 'babel',
-  })
-}
-
 function generateClientManifest(dir: string, config: MerlynConfig) {
   const devtool = JSON.stringify(config.devtool)
-  return format(/* js */ `
+  return dedent(/* js */ `
 		import * as _game from ${JSON.stringify(path.relative(dir, config.game))};
 
     export const bootScene = ${JSON.stringify(config.scenes.boot)};
@@ -102,7 +97,7 @@ function generateClientManifest(dir: string, config: MerlynConfig) {
 }
 
 function generateApp() {
-  return format(
+  return dedent(
     `    
     import * as manifest from './manifest.js' 
     import * as runtime from './runtime'
@@ -110,6 +105,49 @@ function generateApp() {
     runtime._start(manifest)
 	`
   )
+}
+
+function generateTypes(dir: string, config: MerlynConfig) {
+  // read all files recursively in ../res
+  // const files = fs.readdirSync(path.resolve(__dirname, '../res'))
+  const base = posixify(path.resolve(dir, '../res'))
+  const files = glob
+    .sync(posixify(path.join(base, '**/*.*')))
+    .map((path) => path.split(base + '/').pop())
+
+  // type ResourcePath = ${files.map((file) => `'${file}'`).join(' | ')}
+
+  function getResourceType(file) {
+    const images = ['png', 'jpg', 'jpeg', 'gif']
+    const audio = ['mp3', 'ogg', 'wav']
+    const tilesets = ['.tmx']
+
+    if (images.some((ext) => file.endsWith(ext))) {
+      return 'ex.ImageSource'
+    }
+
+    if (audio.some((ext) => file.endsWith(ext))) {
+      return 'ex.Sound'
+    }
+
+    if (tilesets.some((ext) => file.endsWith(ext))) {
+      return 'TiledMapResource'
+    }
+
+    return 'any'
+  }
+
+  return dedent(/* ts */ `
+    import type { TiledMapResource } from '@excaliburjs/plugin-tiled'
+
+    interface Resource {
+      ${files.map((file) => `'${file}': ${getResourceType(file)}`).join('\n')}
+    }
+    
+    declare global {
+      export function $res<T extends keyof Resource>(path: T): Resource[T]
+    }
+  `)
 }
 
 function copyRuntime(dest: string) {

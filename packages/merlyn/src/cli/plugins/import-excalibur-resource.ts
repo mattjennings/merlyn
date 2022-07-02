@@ -1,5 +1,6 @@
 import { Plugin } from 'vite'
 import qs from 'query-string'
+import MagicString from 'magic-string'
 
 /**
  * Parses the import as an excalibur resource and adds
@@ -33,6 +34,45 @@ const resource = addResource(${JSON.stringify(
 
 export default resource
 `
+      }
+    },
+    // transform $res('/path/to/resource') to imports
+    transform(code, id, options) {
+      if (options?.ssr || id.includes('node_modules')) return
+
+      const s = new MagicString(code)
+      const imports = []
+
+      // use regex to find any function calls of $res() and its arguments
+      const regex = /\$res\((['"])([^'"]+)\1\)/g
+      let match = regex.exec(code)
+
+      while (match != null) {
+        // get path of resource
+        if (match[2]) {
+          imports.push(match[2])
+        }
+
+        // replace string with variable
+        s.replace(
+          match[0].replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
+          `__$res_${imports.length - 1}`
+        )
+
+        match = regex.exec(code)
+      }
+
+      if (imports.length) {
+        // define variable with an import to the resource
+        imports.forEach((imp) => {
+          const path = `$res/${imp}`
+          s.prepend(`import __$res_${imports.indexOf(imp)} from "${path}";\n`)
+        })
+
+        return {
+          code: s.toString(),
+          map: s.generateMap({ hires: true }),
+        }
       }
     },
   }
