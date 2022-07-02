@@ -16,12 +16,9 @@ export class Hero extends Character {
 
   onInitialize(engine: ex.Engine) {
     this.addChild(this.input)
-    // this.move('right', { tiles: 5 }).then(() => {
-    //   this.move('up', { tiles: 3 })
-    // })
   }
 
-  onPreUpdate(engine: Engine, delta: number): void {
+  onPreUpdate(): void {
     const direction = this.input.getHeldDirection()
 
     if (direction) {
@@ -36,7 +33,7 @@ export class Hero extends Character {
       } else if (direction !== this.facing) {
         this.stop()
       }
-    } else {
+    } else if (this.isMoving) {
       this.stop()
     }
   }

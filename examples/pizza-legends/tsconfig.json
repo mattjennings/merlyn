@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*", ".merlyn/**/*"],
   "compilerOptions": {
     "types": ["merlyn/types"],
     "target": "ESNext",
