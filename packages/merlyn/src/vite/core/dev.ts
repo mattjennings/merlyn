@@ -1,7 +1,7 @@
 import type { ViteDevServer } from 'vite'
-import type { MerlynConfig } from '../types.js'
-import * as data from '../data/index.js'
-import { loadConfig } from '../config.js'
+import type { MerlynConfig } from './types.js'
+import { writeMerlynData } from './data/index.js'
+import { loadConfig } from './config.js'
 
 export async function dev(vite: ViteDevServer) {
   let merlynConfig: MerlynConfig
@@ -11,13 +11,14 @@ export async function dev(vite: ViteDevServer) {
   }
 
   await updateConfig()
-  data.all(merlynConfig)
+  writeMerlynData(merlynConfig)
+
   vite.watcher.add(`.merlyn.config.js`)
 
   for (const event of ['add', 'unlink']) {
     vite.watcher.on(event, (file) => {
       if (file.startsWith(merlynConfig.scenes.path)) {
-        data.update(merlynConfig)
+        writeMerlynData(merlynConfig)
       }
     })
   }
@@ -25,7 +26,7 @@ export async function dev(vite: ViteDevServer) {
   vite.watcher.on('change', async (path) => {
     if (path.includes(`merlyn.config.js`)) {
       await updateConfig()
-      data.update(merlynConfig)
+      writeMerlynData(merlynConfig)
     }
   })
 }

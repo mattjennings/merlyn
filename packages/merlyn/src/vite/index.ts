@@ -5,7 +5,8 @@ import { mkdirp, rimraf } from './core/utils/fs.js'
 import { importExcaliburResource } from './plugins/import-excalibur-resource.js'
 import path from 'path'
 import type { MerlynConfig } from './core/types.js'
-import { dev } from './core/cmd/dev.js'
+import { dev } from './core/dev.js'
+import { writeMerlynData } from './core/data/index.js'
 
 export default function merlyn(): Plugin[] {
   return [
@@ -72,7 +73,9 @@ function merlynPlugin(): Plugin {
       }
     },
 
-    async writeBundle(_options, bundle) {},
+    async writeBundle(_options, bundle) {
+      writeMerlynData(merlynConfig)
+    },
 
     configResolved(config) {
       viteConfig = config as any
