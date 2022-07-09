@@ -1,6 +1,6 @@
 import { Character } from './Character'
 import { Image } from './Image'
-import { gridToPx, GRID_SIZE } from './util'
+import { gridToPx, GRID_SIZE } from '$lib/util'
 
 export interface OverworldSceneArgs {
   map: {
@@ -19,12 +19,13 @@ export interface OverworldSceneArgs {
 
 export default class OverworldScene extends ex.Scene {
   npcs: Character[] = []
-
   map: {
     lower: Image
     upper: Image
     walls: ex.Actor[]
   }
+
+  isCutscenePlaying = false
 
   constructor({ map }: OverworldSceneArgs) {
     super()

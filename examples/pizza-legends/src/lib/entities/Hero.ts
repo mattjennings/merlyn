@@ -1,8 +1,7 @@
 import imgHero from '$res/characters/people/hero.png'
-import { Engine } from 'excalibur'
 import { Character } from './Character'
 import { Input } from './Input'
-import { snapToGrid } from './util'
+import { snapToGrid } from '$lib/util'
 
 export class Hero extends Character {
   input = new Input()

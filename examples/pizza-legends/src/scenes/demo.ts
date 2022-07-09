@@ -1,30 +1,23 @@
-import { Hero } from '$lib/Hero'
-import OverworldScene from '$lib/OverworldScene'
+import { Hero } from '$lib/entities/Hero'
+import OverworldScene from '$lib/entities/OverworldScene'
 import { gridToPx } from '$lib/util'
-import { Character } from '$lib/Character'
+import { Character } from '$lib/entities/Character'
 
 export default class Main extends OverworldScene {
   npcs = [
+    // new Character({
+    //   image: $res('characters/people/npc1.png'),
+    //   pos: gridToPx(ex.vec(7, 9)),
+    // }),
     new Character({
-      pos: gridToPx(ex.vec(7, 9)),
-      image: $res('characters/people/npc1.png'),
-      behaviour: [
-        { type: 'stand', direction: 'left', time: 800 },
-        { type: 'stand', direction: 'up', time: 1200 },
-        { type: 'stand', direction: 'down', time: 300 },
-        { type: 'stand', direction: 'right', time: 1200 },
-      ],
-    }),
-    new Character({
-      pos: gridToPx(ex.vec(3, 7)),
       image: $res('characters/people/npc2.png'),
-      behaviour: [
-        { type: 'walk', direction: 'left' },
-        { type: 'stand', direction: 'up', time: 800 },
-        { type: 'walk', direction: 'up' },
-        { type: 'walk', direction: 'right' },
-        { type: 'walk', direction: 'down' },
-      ],
+      pos: gridToPx(ex.vec(3, 7)),
+      // behaviour: [
+      //   (self) => self.moveDistance('up', 1, { speed: 25 }),
+      //   (self) => self.moveDistance('right', 1, { speed: 25 }),
+      //   (self) => self.moveDistance('down', 1, { speed: 25 }),
+      //   (self) => self.moveDistance('left', 1, { speed: 25 }),
+      // ],
     }),
   ]
 
@@ -76,11 +69,12 @@ export default class Main extends OverworldScene {
   onInitialize(engine: ex.Engine) {
     super.onInitialize(engine)
 
-    const hero = new Hero({
-      pos: gridToPx(ex.vec(5, 6)),
-    })
+    // const hero = new Hero({
+    //   pos: gridToPx(ex.vec(5, 6)),
+    // })
 
-    engine.add(hero)
-    this.camera.addStrategy(new ex.LockCameraToActorStrategy(hero))
+    // engine.add(hero)
+    // this.camera.addStrategy(new ex.LockCameraToActorStrategy(hero))
+    this.npcs[0].moveDistance('left', 5, { cancelable: true })
   }
 }

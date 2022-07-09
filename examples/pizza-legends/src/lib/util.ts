@@ -1,24 +1,16 @@
-import { engine } from '$game'
+import { coroutine } from 'merlyn'
 
 export const GRID_SIZE = 16
 
-export function coroutine<T>(
-  callback: (this: T, bail: () => void) => any,
-  _this: T,
-  event: 'postupdate' | 'preupdate' = 'preupdate'
-) {
-  let bail = false
-  const generator = callback.call(_this, () => (bail = true))
-
-  const loopFn = () => {
-    const result = generator.next()
-    if (result.done || bail) {
-      engine.off(event, loopFn)
+export function wait(ms: number) {
+  return coroutine(function* () {
+    while (ms > 0) {
+      const ev = yield
+      ms -= ev.delta
     }
-  }
-  engine.on(event, loopFn)
+  })
 }
-
+// }
 /**
  * Converts a pixel value to the nearest grid value
  */
