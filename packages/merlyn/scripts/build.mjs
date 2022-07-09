@@ -17,6 +17,7 @@ const external = [
   'path',
   'fs',
   'url',
+  '$game',
 ]
 
 const mode = process.env.NODE_ENV ?? 'production'

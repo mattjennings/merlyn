@@ -22,7 +22,13 @@
   },
   "pnpm": {
     "overrides": {
-      "excalibur": "0.27.0-alpha.498"
+      "excalibur": "0.27.0-alpha.506"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "istanbul-instrument-loader",
+        "typedoc"
+      ]
     }
   }
 }

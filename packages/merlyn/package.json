@@ -30,10 +30,12 @@
   "license": "ISC",
   "dependencies": {
     "@excaliburjs/plugin-tiled": "^0.26.2",
+    "abstract-syntax-tree": "^2.20.6",
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
     "excalibur": "^0.26.0",
     "fs-extra": "^10.1.0",
+    "glob": "^8.0.3",
     "kleur": "^4.1.4",
     "magic-string": "^0.26.2",
     "mkdirp": "^1.0.4",

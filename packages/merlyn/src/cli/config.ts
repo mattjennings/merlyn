@@ -87,6 +87,9 @@ export async function getViteConfig({
     publicDir: 'res',
     optimizeDeps: {
       include: [path.resolve(process.cwd(), '.merlyn/runtime')],
+
+      // merlyn uses $game
+      exclude: ['$game'],
     },
     mode: production ? 'production' : 'development',
     build: {

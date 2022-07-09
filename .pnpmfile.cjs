@@ -26,6 +26,13 @@ function readPackage(pkg, context) {
     }
   }
 
+  if (pkg.dependencies.excalibur) {
+    // pkg.dependencies.excalibur = `file:${path.resolve(
+    //   __dirname,
+    //   '../Excalibur'
+    // )}`
+  }
+
   return pkg
 }
 
