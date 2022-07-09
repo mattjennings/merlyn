@@ -1,15 +1,22 @@
 import { engine } from '$game'
 
-export function coroutine<T>(
-  callback: (this: T) => any,
-  _this: T,
-  event: 'postupdate' | 'preupdate' = 'preupdate'
+type CoroutineEventType = 'postupdate' | 'preupdate'
+
+export function coroutine<T, E extends CoroutineEventType = 'preupdate'>(
+  callback: (
+    this: T
+  ) => Generator<
+    void,
+    void,
+    E extends 'preupdate' ? ex.PreUpdateEvent : ex.PostUpdateEvent
+  >,
+  _this?: T,
+  event: E = 'preupdate' as E
 ) {
   return new Promise<void>((resolve) => {
     const generator = callback.call(_this)
-
-    const loopFn = () => {
-      const result = generator.next()
+    const loopFn = (ev: ex.PostUpdateEvent | ex.PreUpdateEvent) => {
+      const result = generator.next(ev)
       if (result.done) {
         engine.off(event, loopFn)
         resolve(void 0)
