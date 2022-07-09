@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "^4.7.4",

@@ -7,7 +7,7 @@ import path from 'path'
 import type { MerlynConfig } from './core/types.js'
 import { dev } from './core/cmd/dev.js'
 
-export default function merlyn() {
+export default function merlyn(): Plugin[] {
   return [
     AutoImport({
       imports: [

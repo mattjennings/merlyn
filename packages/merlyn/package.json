@@ -26,6 +26,16 @@
     "./transitions": "./dist/transitions/index.js",
     ".": "./dist/index.js"
   },
+  "typesVersions": {
+    "*": {
+      "vite": [
+        "dist/vite/index.d.ts"
+      ],
+      "transitions": [
+        "dist/transitions/index.d.ts"
+      ]
+    }
+  },
   "keywords": [],
   "author": "mattjennings",
   "license": "ISC",
