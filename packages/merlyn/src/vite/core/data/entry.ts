@@ -1,5 +1,5 @@
 import dedent from 'dedent'
-import { writeIfChanged } from '../utils'
+import { writeIfChanged } from '../utils/index.js'
 
 export function writeEntry(dir: string) {
   writeIfChanged(`${dir}/index.js`, entry())
@@ -8,8 +8,8 @@ export function writeEntry(dir: string) {
 function entry() {
   return dedent(/* js */ `
     import * as manifest from './manifest.js' 
-    import * as runtime from './runtime'
+    import { start }from 'merlyn/runtime'
     
-    runtime._start(manifest)
+    start(manifest)
   `)
 }

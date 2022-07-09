@@ -1,16 +1,13 @@
-import AutoImport from 'unplugin-auto-import/vite'
-import { ConfigEnv, Plugin, UserConfig } from 'vite'
-import { loadConfig } from './core/config'
-import { mkdirp, rimraf } from './core/utils/fs'
-import { importExcaliburResource } from './plugins/import-excalibur-resource'
+import { default as AutoImport } from 'unplugin-auto-import/vite'
+import type { ConfigEnv, Plugin, UserConfig } from 'vite'
+import { loadConfig } from './core/config.js'
+import { mkdirp, rimraf } from './core/utils/fs.js'
+import { importExcaliburResource } from './plugins/import-excalibur-resource.js'
 import path from 'path'
-import fs from 'fs'
-import { MerlynConfig } from './core/types'
-import { dev } from './core/cmd/dev'
+import type { MerlynConfig } from './core/types.js'
+import { dev } from './core/cmd/dev.js'
 
-const cwd = process.cwd()
-
-export function merlyn() {
+export default function merlyn() {
   return [
     AutoImport({
       imports: [
@@ -43,7 +40,7 @@ function merlynPlugin(): Plugin {
         base: '', // keep paths to assets relative
         publicDir: 'res',
         optimizeDeps: {
-          include: [path.resolve(process.cwd(), '.merlyn/runtime')],
+          // include: ['merlyn/runtime'],
 
           // merlyn uses $game
           exclude: ['$game'],
@@ -52,7 +49,7 @@ function merlynPlugin(): Plugin {
           minify: 'terser',
           sourcemap: true,
           assetsDir: '',
-          outDir: config.build.outDir,
+          outDir: merlynConfig.build.outDir,
           brotliSize: false,
 
           // skip warnings about large chunks. games are going to be large.
@@ -62,7 +59,7 @@ function merlynPlugin(): Plugin {
         resolve: {
           alias: {
             $lib: '/src/lib',
-            $game: path.join('/.merlyn/runtime.js'),
+            $game: path.join('merlyn/runtime'),
           },
         },
       }
@@ -81,7 +78,7 @@ function merlynPlugin(): Plugin {
       viteConfig = config as any
     },
     async configureServer(vite) {
-      return dev(vite, viteConfig, merlynConfig)
+      return dev(vite)
     },
 
     // configurePreviewServer(vite) {

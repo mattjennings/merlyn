@@ -1,9 +1,9 @@
 import dedent from 'dedent'
-import { Engine, Scene } from 'excalibur'
+import type { Engine, Scene } from 'excalibur'
 import path from 'path'
-import { Transition } from '../../../transitions'
-import { MerlynConfig } from '../types'
-import { writeIfChanged } from '../utils'
+import type { Transition } from '../../../transitions/Transition.js'
+import type { MerlynConfig } from '../types.js'
+import { writeIfChanged } from '../utils/index.js'
 
 export interface Manifest {
   game: Engine

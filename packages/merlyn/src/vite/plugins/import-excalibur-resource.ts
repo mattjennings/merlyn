@@ -1,6 +1,6 @@
 import { Plugin } from 'vite'
 import qs from 'query-string'
-import MagicString from 'magic-string'
+import { default as MagicString } from 'magic-string'
 
 /**
  * Parses the import as an excalibur resource and adds

@@ -1,6 +1,5 @@
-import type { Engine } from 'excalibur'
-import { Transition } from '../../transitions'
-import { Scene } from '../../Scene'
+import type { Engine, Scene } from 'excalibur'
+import type { Transition } from '../../transitions/Transition.js'
 
 export interface MerlynConfig {
   game: string

@@ -9,16 +9,16 @@
   "license": "ISC",
   "devDependencies": {
     "@excaliburjs/dev-tools": "^0.25.3",
+    "@sveltejs/vite-plugin-svelte": "1.0.0-next.46",
+    "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
-    "@sveltejs/vite-plugin-svelte": "1.0.0-next.46",
-    "eslint-plugin-svelte3": "^4.0.0",
     "eslint": "^8.16.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "prettier": "^2.6.2",
     "prettier-plugin-svelte": "^2.7.0",
-    "typescript": "^4.7.2",
     "svelte": "^3.48.0",
-    "@tsconfig/svelte": "^3.0.0"
+    "typescript": "^4.7.4"
   },
   "pnpm": {
     "overrides": {

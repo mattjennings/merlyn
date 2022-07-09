@@ -1,8 +1,8 @@
 /**
  * @type {import("merlyn").UserMerlynConfig}
  */
-export default {
+export default ({ dev }) => ({
   scenes: {
     boot: 'index',
   },
-}
+})

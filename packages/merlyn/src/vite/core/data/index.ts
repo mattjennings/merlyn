@@ -1,16 +1,16 @@
 import path from 'path'
-import { MerlynConfig } from '../types'
-import { writeEntry } from './entry'
-import { writeManifest } from './manifest'
-import { copyRuntime } from './runtime'
-import { writeTypes } from './types'
+import type { MerlynConfig } from '../types.js'
+import { writeEntry } from './entry.js'
+import { writeManifest } from './manifest.js'
+import { copyRuntime } from './runtime.js'
+import { writeTypes } from './types.js'
 
 export function init(config: MerlynConfig) {
-  copyRuntime(path.join(config.build.outDir, 'runtime'))
+  // copyRuntime(path.join('.merlyn', 'runtime'))
 }
 
 export function update(config: MerlynConfig) {
-  const dir = path.relative('.', config.build.outDir)
+  const dir = '.merlyn'
 
   writeEntry(dir)
   writeManifest(dir, config)

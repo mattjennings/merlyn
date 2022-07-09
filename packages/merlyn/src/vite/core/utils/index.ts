@@ -1,6 +1,6 @@
 import path from 'path'
 import { writeFileSync } from 'fs'
-import { mkdirp, posixify } from './fs'
+import { mkdirp, posixify } from './fs.js'
 
 const previousContents = new Map<string, string>()
 

@@ -1,15 +1,17 @@
 import path from 'path'
 import fs from 'fs-extra'
+import { fileURLToPath } from 'url'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+console.log(__dirname)
 export function copyRuntime(dest: string) {
   let prefix = '..'
   do {
-    const resolved = path.resolve(__dirname, `${prefix}/dist/runtime.js`)
-    const resolvedMap = path.resolve(__dirname, `${prefix}/dist/runtime.js.map`)
+    const resolved = path.resolve(__dirname, `${prefix}/dist/runtime`)
 
     if (fs.existsSync(resolved)) {
-      fs.copySync(resolved, dest + '.js')
-      fs.copySync(resolvedMap, dest + '.js.map')
+      fs.copySync(resolved, dest)
       return
     }
 

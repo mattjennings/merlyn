@@ -1,8 +1,9 @@
 import dedent from 'dedent'
 import glob from 'glob'
 import path from 'path'
-import { MerlynConfig } from '../types'
-import { posixify, writeIfChanged } from '../utils'
+import type { MerlynConfig } from '../types.js'
+import { writeIfChanged } from '../utils/index.js'
+import { posixify } from '../utils/fs.js'
 
 export function writeTypes(dir: string, config: MerlynConfig) {
   writeIfChanged(`${dir}/types.d.ts`, types(dir, config))
