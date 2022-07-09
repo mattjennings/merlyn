@@ -68,28 +68,19 @@ function merlynPlugin(): Plugin {
 
     buildStart() {
       if (isBuild) {
-        rimraf(merlynConfig.build.outDir)
-        mkdirp(merlynConfig.build.outDir)
+        rimraf('.merlyn')
+        mkdirp('.merlyn')
+        writeMerlynData(merlynConfig)
       }
-    },
-
-    async writeBundle(_options, bundle) {
-      writeMerlynData(merlynConfig)
     },
 
     configResolved(config) {
       viteConfig = config as any
     },
     async configureServer(vite) {
+      rimraf('.merlyn')
+      mkdirp('.merlyn')
       return dev(vite)
     },
-
-    // configurePreviewServer(vite) {
-    //   return preview(
-    //     vite,
-    //     merlynConfig,
-    //     vite_config.preview.https ? 'https' : 'http'
-    //   )
-    // },
   }
 }
