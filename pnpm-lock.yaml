@@ -8,35 +8,16 @@ importers:
   .:
     specifiers:
       '@excaliburjs/dev-tools': ^0.25.3
+      '@excaliburjs/plugin-tiled': ^0.26.2
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
       '@tsconfig/svelte': ^3.0.0
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
-      eslint: ^8.16.0
-      eslint-plugin-svelte3: ^4.0.0
-      prettier: ^2.6.2
-      prettier-plugin-svelte: ^2.7.0
-      svelte: ^3.48.0
-      typescript: ^4.7.4
-    devDependencies:
-      '@excaliburjs/dev-tools': 0.25.3
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
-      '@tsconfig/svelte': 3.0.0
-      '@typescript-eslint/eslint-plugin': 5.27.0_typescript@4.7.4
-      '@typescript-eslint/parser': 5.27.0_typescript@4.7.4
-      eslint: 8.17.0
-      eslint-plugin-svelte3: 4.0.0
-      prettier: 2.6.2
-      prettier-plugin-svelte: 2.7.0
-      svelte: 3.48.0
-      typescript: 4.7.4
-
-  examples/javascript:
-    specifiers:
-      '@excaliburjs/plugin-tiled': ^0.26.2
       abstract-syntax-tree: ^2.20.6
       deepmerge: ^4.2.2
       del: ^6.1.1
+      eslint: ^8.16.0
+      eslint-plugin-svelte3: ^4.0.0
       excalibur: 0.27.0-alpha.506
       fs-extra: ^10.1.0
       glob: ^8.0.3
@@ -46,9 +27,12 @@ importers:
       mkdirp: ^1.0.4
       polka: ^0.5.2
       prettier: ^2.6.2
+      prettier-plugin-svelte: ^2.7.0
       query-string: ^7.1.1
       sade: ^1.8.1
       sirv: ^2.0.2
+      svelte: ^3.48.0
+      typescript: ^4.7.4
       unplugin-auto-import: ^0.9.2
       vite: ^2.9.9
       vite-plugin-full-reload: ^1.0.0
@@ -62,7 +46,7 @@ importers:
       glob: 8.0.3
       kleur: 4.1.4
       magic-string: 0.26.2
-      merlyn: link:../../packages/merlyn
+      merlyn: link:packages/merlyn
       mkdirp: 1.0.4
       polka: 0.5.2
       prettier: 2.6.2
@@ -72,6 +56,17 @@ importers:
       unplugin-auto-import: 0.9.2
       vite: 2.9.9
       vite-plugin-full-reload: 1.0.0
+    devDependencies:
+      '@excaliburjs/dev-tools': 0.25.3
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.46
+      '@tsconfig/svelte': 3.0.0
+      '@typescript-eslint/eslint-plugin': 5.27.0_typescript@4.7.4
+      '@typescript-eslint/parser': 5.27.0_typescript@4.7.4
+      eslint: 8.17.0
+      eslint-plugin-svelte3: 4.0.0
+      prettier-plugin-svelte: 2.7.0
+      svelte: 3.48.0
+      typescript: 4.7.4
 
   examples/megabot:
     specifiers:
@@ -281,7 +276,57 @@ importers:
       vite: 2.9.9
       vite-plugin-full-reload: 1.0.0
 
-  examples/typescript:
+  packages/create-merlyn:
+    specifiers:
+      kleur: ^4.1.4
+      prompts: ^2.4.2
+    dependencies:
+      kleur: 4.1.4
+      prompts: 2.4.2
+
+  packages/create-merlyn/templates/javascript:
+    specifiers:
+      '@excaliburjs/plugin-tiled': ^0.26.2
+      abstract-syntax-tree: ^2.20.6
+      deepmerge: ^4.2.2
+      del: ^6.1.1
+      excalibur: 0.27.0-alpha.506
+      fs-extra: ^10.1.0
+      glob: ^8.0.3
+      kleur: ^4.1.4
+      magic-string: ^0.26.2
+      merlyn: workspace:*
+      mkdirp: ^1.0.4
+      polka: ^0.5.2
+      prettier: ^2.6.2
+      query-string: ^7.1.1
+      sade: ^1.8.1
+      sirv: ^2.0.2
+      unplugin-auto-import: ^0.9.2
+      vite: ^2.9.9
+      vite-plugin-full-reload: ^1.0.0
+    dependencies:
+      '@excaliburjs/plugin-tiled': 0.26.2
+      abstract-syntax-tree: 2.20.6
+      deepmerge: 4.2.2
+      del: 6.1.1
+      excalibur: 0.27.0-alpha.506
+      fs-extra: 10.1.0
+      glob: 8.0.3
+      kleur: 4.1.4
+      magic-string: 0.26.2
+      merlyn: link:../../../merlyn
+      mkdirp: 1.0.4
+      polka: 0.5.2
+      prettier: 2.6.2
+      query-string: 7.1.1
+      sade: 1.8.1
+      sirv: 2.0.2
+      unplugin-auto-import: 0.9.2
+      vite: 2.9.9
+      vite-plugin-full-reload: 1.0.0
+
+  packages/create-merlyn/templates/typescript:
     specifiers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       abstract-syntax-tree: ^2.20.6
@@ -313,7 +358,7 @@ importers:
       glob: 8.0.3
       kleur: 4.1.4
       magic-string: 0.26.2
-      merlyn: link:../../packages/merlyn
+      merlyn: link:../../../merlyn
       mkdirp: 1.0.4
       polka: 0.5.2
       prettier: 2.6.2
@@ -2837,6 +2882,11 @@ packages:
       promise: 7.3.1
     dev: true
 
+  /kleur/3.0.3:
+    resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
+    engines: {node: '>=6'}
+    dev: false
+
   /kleur/4.1.4:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
@@ -3292,6 +3342,14 @@ packages:
     dependencies:
       asap: 2.0.6
 
+  /prompts/2.4.2:
+    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
+    engines: {node: '>= 6'}
+    dependencies:
+      kleur: 3.0.3
+      sisteransi: 1.0.5
+    dev: false
+
   /prr/1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
     optional: true
@@ -3619,6 +3677,10 @@ packages:
       '@polka/url': 1.0.0-next.21
       mrmime: 1.0.0
       totalist: 3.0.0
+    dev: false
+
+  /sisteransi/1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
   /slash/3.0.0:

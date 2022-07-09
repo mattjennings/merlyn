@@ -2,6 +2,7 @@
 import sade from 'sade'
 import { writeMerlynData } from '../dist/vite/core/data/index.js'
 import { loadConfig } from '../dist/vite/core/config.js'
+import fs from 'fs'
 
 const prog = sade('merlyn')
 
