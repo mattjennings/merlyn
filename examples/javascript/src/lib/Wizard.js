@@ -1,7 +1,5 @@
-import image from '$res/wizard.png'
-
 const spriteSheet = ex.SpriteSheet.fromImageSource({
-  image,
+  image: $res('wizard.png'),
   grid: {
     columns: 6,
     rows: 1,
@@ -20,7 +18,7 @@ export class Wizard extends ex.Actor {
     })
   }
 
-  onInitialize(engine) {
+  onInitialize() {
     const idle = ex.Animation.fromSpriteSheet(
       spriteSheet,
       [0, 1, 2, 3, 4, 5],

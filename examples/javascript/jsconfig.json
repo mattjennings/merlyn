@@ -1,11 +1,14 @@
 {
-  "include": ["src/**/*"],
+  "extends": "./.merlyn/tsconfig.json",
   "compilerOptions": {
     "types": ["merlyn/types"],
-    "baseUrl": ".",
-    "paths": {
-      "$lib/*": ["./src/lib/*"],
-      "$res/*": ["./res/*"]
-    }
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false
   }
 }

@@ -7,6 +7,7 @@ import path from 'path'
 import type { MerlynConfig } from './core/types.js'
 import { dev } from './core/dev.js'
 import { writeMerlynData } from './core/data/index.js'
+import fs from 'fs'
 
 export default function merlyn(): Plugin[] {
   return [
@@ -35,6 +36,7 @@ function merlynPlugin(): Plugin {
     async config(config, _env) {
       env = _env
       merlynConfig = await loadConfig({ dev: env.mode === 'development' })
+
       isBuild = env.command === 'build'
 
       return {
@@ -78,8 +80,6 @@ function merlynPlugin(): Plugin {
       viteConfig = config as any
     },
     async configureServer(vite) {
-      rimraf('.merlyn')
-      mkdirp('.merlyn')
       return dev(vite)
     },
   }
