@@ -1,6 +1,7 @@
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 import qs from 'query-string'
 import { default as MagicString } from 'magic-string'
+import { format } from 'prettier'
 
 /**
  * Parses the import as an excalibur resource and adds
@@ -22,18 +23,21 @@ export function importExcaliburResource(): Plugin {
       }
     },
     load(id) {
-      const [base, params] = id.split('?')
+      const [, params] = id.split('?')
       const query = params ? qs.parse('?' + params) : {}
       if (isResource(id)) {
-        return `
-import { addResource } from '$game'
+        return format(
+          /* js */ `
+          import { addResource } from '$game'
 
-const resource = addResource(${JSON.stringify(
-          id.replace('$res', '')
-        )}, ${JSON.stringify(query)})
+          const resource = addResource(${JSON.stringify(
+            id.replace('$res', '')
+          )}, ${JSON.stringify(query)})
 
-export default resource
-`
+          export default resource
+          `,
+          { parser: 'babel' }
+        )
       }
     },
     // transform $res('/path/to/resource') to imports

@@ -1,5 +1,5 @@
 import type { Engine } from 'excalibur'
-import type { Manifest } from '../vite/core/types.js'
+import type { Manifest } from '../vite/core/data/manifest.js'
 import { Router } from './router.js'
 export {
   addResource,

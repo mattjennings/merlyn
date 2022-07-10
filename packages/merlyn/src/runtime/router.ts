@@ -1,7 +1,8 @@
 import type { Transition } from '../transitions/Transition.js'
-import type { Manifest, SceneData } from '../vite/core/types.js'
+import type { Manifest, SceneData } from '../vite/core/data/manifest.js'
 import { loader, getResources } from './resources.js'
 import type { Scene } from 'excalibur'
+import { Loader } from 'merlyn'
 
 export let isTransitioning = false
 export let isBooting = true
@@ -9,10 +10,11 @@ export let isBooting = true
 export class Router {
   scenes: Record<string, SceneData>
   engine: ex.Engine
+  manifest: Manifest
 
   constructor(manifest: Manifest) {
+    this.manifest = manifest
     this.engine = manifest.game
-
     this.scenes = {}
 
     Object.entries(manifest.scenes).forEach(([key, value]) => {
@@ -57,11 +59,19 @@ export class Router {
       isOutro: true,
       transition: options.transition,
       // if this is the initial loading screen, start transition
-      // at complete state of outro
+      // at the completed state of outro
       progress: initial ? 1 : 0,
     })
 
     if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
+      // if initial loading screen uses resources, load them
+      if (initial && this.manifest.loadingSceneResources.length) {
+        // create new loader so we don't include resources from other preloaded scenes
+        const loader = new Loader()
+        loader.addResources(this.manifest.loadingSceneResources)
+        await loader.load()
+      }
+
       this.engine.goToScene(this.getLoadingSceneKeyForScene(name))
 
       // carry transition instance into loading scene
@@ -147,6 +157,10 @@ export class Router {
       return true
     }
 
+    return this.resourcesNeedLoading()
+  }
+
+  private resourcesNeedLoading() {
     return getResources().filter((r) => !r.isLoaded()).length > 0
   }
 
