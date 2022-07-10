@@ -3,7 +3,6 @@ import Tilemap from '$lib/entities/Tilemap'
 import type { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
 import tilemap from '$res/Tilemaps/world.tmx'
-import { Scene } from 'merlyn'
 import sndBattleIntro from '$res/Musics/battle-intro.mp3'
 import sndBattleLoop from '$res/Musics/battle-loop.mp3'
 import sndVillage from '$res/Musics/village.mp3'
@@ -11,7 +10,7 @@ import sndBattleStarted from '$res/Sounds/Game/Explosion4.wav'
 
 import { playSong } from '$lib/sound/audio-manager'
 
-export default class World extends Scene {
+export default class World extends ex.Scene {
   player!: Player
   battleCounter = -1
 

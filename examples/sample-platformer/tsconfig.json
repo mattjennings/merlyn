@@ -1,26 +1,13 @@
 {
-  "include": ["src/**/*"],
+  "extends": "./.merlyn/tsconfig.json",
   "compilerOptions": {
-    "types": ["vite/client", "merlyn/app"],
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "allowJs": true,
+    "checkJs": true,
     "esModuleInterop": true,
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "$lib/*": ["./src/lib/*"],
-      "$res/*": ["./res/*"]
-    }
+    "sourceMap": true,
+    "strict": true
   }
 }

@@ -1,7 +1,5 @@
-import {
-  Behaviour,
-  BehaviourComponent,
-} from '$lib/components/BehaviourComponent'
+import type { Behaviour } from '$lib/components/BehaviourComponent'
+import { BehaviourComponent } from '$lib/components/BehaviourComponent'
 import { GRID_SIZE, snapToGrid } from '$lib/util'
 import imgShadow from '$res/characters/shadow.png'
 import { coroutine } from 'merlyn'
@@ -185,7 +183,7 @@ export class Character extends ex.Actor {
           ex.vec(Math.sign(xDir), Math.sign(yDir))
         )
 
-        this.scene.
+        // this.scene.
         const collision = this.collider.get().rayCast(ray)
         console.log(ray, collision)
 

@@ -1,11 +1,7 @@
 import { Baddie } from './baddie'
 
-import image from '$res/excalibot.png'
-import hit from '$res/hurt.wav'
-import jump from '$res/jump.wav'
-
 const botSpriteSheet = ex.SpriteSheet.fromImageSource({
-  image,
+  image: $res('excalibot.png'),
   grid: {
     columns: 8,
     rows: 1,
@@ -99,7 +95,7 @@ export class Bot extends ex.Actor {
       }
       this.hurt = true
       this.hurtTime = 1000
-      hit.play(0.1)
+      $res('hurt.wav').play(0.1)
     }
   }
 
@@ -128,7 +124,7 @@ export class Bot extends ex.Actor {
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Up) && this.onGround) {
       this.vel.y = -400
       this.onGround = false
-      jump.play(0.1)
+      $res('jump.wav').play(0.1)
     }
 
     // Change animation based on velocity

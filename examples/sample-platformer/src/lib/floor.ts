@@ -1,7 +1,6 @@
 import * as ex from 'excalibur'
-import image from '$res/block.png'
 
-const blockSprite = image.toSprite()
+const blockSprite = $res('block.png').toSprite()
 
 export class Floor extends ex.Actor {
   constructor(x: number, y: number, public cols: number, public rows: number) {

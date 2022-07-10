@@ -1,9 +1,7 @@
 import { Bot } from './bot'
-import image from '$res/baddie.png'
-import gotEm from '$res/gottem.wav'
 
 const baddieSpriteSheet = ex.SpriteSheet.fromImageSource({
-  image,
+  image: $res('baddie.png'),
   grid: {
     columns: 6,
     rows: 1,
@@ -68,7 +66,7 @@ export class Baddie extends ex.Actor {
 
   onPostCollision(evt: ex.PostCollisionEvent) {
     if (evt.other instanceof Bot && evt.side === ex.Side.Top) {
-      gotEm.play(0.1)
+      $res('gottem.wav').play(0.1)
       // Clear patrolling
       this.actions.clearActions()
       // Remove ability to collide

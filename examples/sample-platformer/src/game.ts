@@ -19,6 +19,10 @@ engine.on('visible', () => {
   engine.start()
 })
 
+window.addEventListener('pointerdown', () => {
+  ex.WebAudio.unlock()
+})
+
 export const loader = new ex.Loader()
 
 export default engine
