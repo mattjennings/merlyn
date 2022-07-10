@@ -1,13 +1,19 @@
-import dedent from 'dedent'
 import type { MerlynConfig } from '../types.js'
 import { writeIfChanged } from '../utils/index.js'
+import { format } from 'prettier'
+import path from 'path'
 
-export function writeTsconfig(dir: string, config: MerlynConfig) {
-  writeIfChanged(`${dir}/tsconfig.json`, tsconfig(dir, config))
+export function writeTsconfig(
+  cwd: string,
+  outDir: string,
+  config: MerlynConfig
+) {
+  writeIfChanged(path.join(cwd, `${outDir}/tsconfig.json`), tsconfig(), true)
 }
 
-function tsconfig(dir: string, config: MerlynConfig) {
-  return dedent(/* json */ `
+function tsconfig() {
+  return format(
+    /* json */ `
     {
       "include": [
         "../src/**/*.js",
@@ -45,5 +51,7 @@ function tsconfig(dir: string, config: MerlynConfig) {
         "target": "esnext"
       }
     }
-  `)
+  `,
+    { parser: 'json' }
+  )
 }

@@ -71,15 +71,18 @@ export function copy(
   return files
 }
 
-export function walk(cwd: string, dirs = false) {
-  /** @type {string[]} */
-  const all_files = []
+export function walk(
+  cwd: string,
+  { dirs, dot }: { dirs?: boolean; dot?: boolean } = {}
+) {
+  const all_files: string[] = []
 
-  /** @param {string} dir */
-  function walk_dir(dir) {
+  function walk_dir(dir: string) {
     const files = fs.readdirSync(path.join(cwd, dir))
 
     for (const file of files) {
+      if (!dot && file[0] === '.') continue
+
       const joined = path.join(dir, file)
       const stats = fs.statSync(path.join(cwd, joined))
       if (stats.isDirectory()) {

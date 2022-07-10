@@ -72,7 +72,7 @@ function merlynPlugin(): Plugin {
       if (isBuild) {
         rimraf('.merlyn')
         mkdirp('.merlyn')
-        writeMerlynData(merlynConfig)
+        writeMerlynData(process.cwd(), merlynConfig)
       }
     },
 

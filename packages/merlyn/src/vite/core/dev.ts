@@ -3,6 +3,7 @@ import type { MerlynConfig } from './types.js'
 import { writeMerlynData } from './data/index.js'
 import { loadConfig } from './config.js'
 
+const cwd = process.cwd()
 export async function dev(vite: ViteDevServer) {
   let merlynConfig: MerlynConfig
 

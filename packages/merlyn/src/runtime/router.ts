@@ -1,5 +1,5 @@
 import type { Transition } from '../transitions/Transition.js'
-import type { Manifest } from '../vite/core/types.js'
+import type { Manifest, SceneData } from '../vite/core/types.js'
 import { loader, getResources } from './resources.js'
 import type { Scene } from 'excalibur'
 
@@ -7,40 +7,19 @@ export let isTransitioning = false
 export let isBooting = true
 
 export class Router {
-  scenes: Record<
-    string,
-    {
-      import: () => Promise<{ default: typeof Scene }>
-      loadingSceneKey: string
-    }
-  >
+  scenes: Record<string, SceneData>
   engine: ex.Engine
 
   constructor(manifest: Manifest) {
     this.engine = manifest.game
 
-    this.scenes = Object.entries(manifest.scenes).reduce(
-      (acc, [key, value]) => {
-        return {
-          ...acc,
-          [key]: {
-            import: value,
-            loadingSceneKey: Object.entries(manifest.loadingScenes).find(
-              ([loadingKey]) => {
-                return key.split('/').length === loadingKey.split('/').length
-              }
-            )[0],
-          },
-        }
-      },
-      {}
-    )
+    this.scenes = {}
 
-    Object.entries(manifest.loadingScenes).map(async ([key, mod]) => {
-      this.engine.add(key, new mod.default())
-      this.scenes[key] = {
-        import: async () => mod,
-        loadingSceneKey: key,
+    Object.entries(manifest.scenes).forEach(([key, value]) => {
+      this.scenes[key] = value
+
+      if (value.isPreloaded) {
+        this.preloadScene(key)
       }
     })
 
@@ -75,7 +54,7 @@ export class Router {
     })
 
     if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
-      this.engine.goToScene(this.scenes[name].loadingSceneKey)
+      this.engine.goToScene(this.getLoadingSceneKeyForScene(name))
 
       // carry transition instance into loading scene
       if (transition) {
@@ -110,6 +89,14 @@ export class Router {
 
   getSceneByName(key: string) {
     return this.engine.scenes[key]
+  }
+
+  getLoadingSceneKeyForScene(key: string) {
+    const loadingScenes = Object.entries(this.scenes).find(([loadingKey]) => {
+      return key.split('/').length === loadingKey.split('/').length
+    })
+
+    return loadingScenes?.[0] ?? '_loading'
   }
 
   async preloadScene(name: string) {
@@ -156,9 +143,13 @@ export class Router {
   private async loadSceneFile(name: string) {
     const sceneData = this.scenes[name]
 
-    const mod = await sceneData.import()
-    if (mod.default) {
-      const scene = new mod.default() as Scene
+    const Scene =
+      sceneData.isPreloaded === false
+        ? await sceneData.scene().then((r) => r.default)
+        : sceneData.scene
+
+    if (Scene) {
+      const scene = new Scene()
 
       // @ts-ignore
       scene.name = name

@@ -1,9 +1,10 @@
-import dedent from 'dedent'
 import type { Engine, Scene } from 'excalibur'
 import path from 'path'
 import type { Transition } from '../../../transitions/Transition.js'
 import type { MerlynConfig } from '../types.js'
-import { writeIfChanged } from '../utils/index.js'
+import { writeIfChanged, getRouteName } from '../utils/index.js'
+import { walk } from '../utils/fs.js'
+import { format } from 'prettier'
 
 export interface Manifest {
   game: Engine
@@ -14,64 +15,85 @@ export interface Manifest {
   devtool?: boolean
 }
 
-export function writeManifest(dir: string, config: MerlynConfig) {
-  writeIfChanged(`${dir}/manifest.js`, manifest(dir, config))
+export function writeManifest(
+  cwd: string,
+  outDir: string,
+  config: MerlynConfig
+) {
+  writeIfChanged(
+    path.join(cwd, `${outDir}/manifest.js`),
+    format(manifest(cwd, outDir, config), { parser: 'babel' })
+  )
 }
 
-function manifest(dir: string, config: MerlynConfig) {
-  return dedent(/* js */ `
-		import * as _game from ${JSON.stringify(path.relative(dir, config.game))};
+function manifest(cwd: string, outDir: string, config: MerlynConfig) {
+  const imports = []
+  const scenes: Record<
+    string,
+    { isLoadingScene?: boolean; isPreloaded?: boolean; path?: string }
+  > = walk(config.scenes.path).reduce((acc, name) => {
+    const key = getRouteName(name, config.scenes.path)
+    const isPreloaded = isScenePreloaded(key, config)
+    const scenePath = path.relative(outDir, path.join(config.scenes.path, name))
+
+    if (isPreloaded) {
+      imports.push(`import _scene_${toValidName(key)} from '${scenePath}'`)
+    }
+
+    acc[key] = {
+      isLoadingScene: isLoadingScene(key),
+      isPreloaded,
+      path: scenePath,
+    }
+
+    return acc
+  }, {})
+
+  return /* js */ `
+    ${imports.join('\n')}
+		import * as _game from ${JSON.stringify(
+      path.relative(outDir, path.join(cwd, config.game))
+    )};
 
     export const bootScene = ${JSON.stringify(config.scenes.boot)};
-
-    export const loadingScenes = reduceGlob(
-      import.meta.globEager(${JSON.stringify(
-        path.relative(dir, config.scenes.path) + '/**/_loading.*'
-      )}), 
-      (acc, path, value) => {
-        return {
-          ...acc,
-          [getSceneName(path)]: value
-        }
-      })
-    
-		export const scenes = reduceGlob(
-      import.meta.glob(${JSON.stringify(
-        path.relative(dir, config.scenes.path) + '/**/*'
-      )}),
-      (acc, path, value) => {
-        if (path.includes('_loading')) {
-          return acc
-        }
-
-        return {
-          ...acc,
-          [getSceneName(path)]: value
-        }
-      });
-    
     export const devtool = ${JSON.stringify(config.devtool)};
     export const game = _game.default;
     export const transition = _game.transition;
 
-    function getSceneName(path) {
-      let name = path
-        .replace(${JSON.stringify(
-          path.relative(dir, config.scenes.path)
-        )} + '/', '')
-        .replace(/\\.(t|j)s$/, '')
-
-        if (name.endsWith('/index')) {
-          name = name.split(/\\/index$/)[0]
-        }
-
-      return name
+		export const scenes = {
+      ${Object.entries(scenes)
+        .map(([key, value]) => {
+          return `${JSON.stringify(key)}: {
+            isLoadingScene: ${value.isLoadingScene ? 'true' : 'false'},
+            isPreloaded: ${value.isPreloaded ? 'true' : 'false'},
+            scene: ${
+              value.isPreloaded
+                ? `_scene_${toValidName(key)}`
+                : `() => import("${value.path}")`
+            }
+        }`
+        })
+        .join(',')}
     }
+  `
+}
 
-    function reduceGlob(glob, fn) {
-      return Object.entries(glob).reduce((acc, [key, value]) => {
-        return fn(acc, key, value)
-      }, {})
-    }
-	`)
+function isScenePreloaded(name: string, config: MerlynConfig) {
+  if (isLoadingScene(name)) {
+    return true
+  }
+
+  if (typeof config.scenes.preload === 'boolean' || !config.scenes.preload) {
+    return !!config.scenes.preload
+  }
+
+  return config.scenes.preload.includes(name)
+}
+
+function isLoadingScene(name: string) {
+  return name.match(/_loading$/)
+}
+
+function toValidName(name: string) {
+  return name.replace(/[^a-zA-Z0-9]/g, '_')
 }

@@ -1,15 +1,19 @@
-import dedent from 'dedent'
 import { writeIfChanged } from '../utils/index.js'
+import { format } from 'prettier'
+import path from 'path'
 
-export function writeEntry(dir: string) {
-  writeIfChanged(`${dir}/index.js`, entry())
+export function writeEntry(cwd: string, outDir: string) {
+  writeIfChanged(
+    path.join(cwd, `${outDir}/index.js`),
+    format(entry(), { parser: 'babel' })
+  )
 }
 
 function entry() {
-  return dedent(/* js */ `
+  return /* js */ `
     import * as manifest from './manifest.js' 
     import { start }from 'merlyn/runtime'
     
     start(manifest)
-  `)
+  `
 }

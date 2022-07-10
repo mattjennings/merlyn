@@ -6,6 +6,7 @@ export interface MerlynConfig {
   scenes: {
     path: string
     boot: string
+    preload?: boolean | string[]
   }
   devtool?: {
     enabled: boolean
@@ -27,20 +28,41 @@ export type UserMerlynConfig =
 export interface ManifestData {
   game: string
   scenes: {
-    files: Record<string, { path: string; name: string }>
+    files: Record<
+      string,
+      {
+        isLoadingScene?: boolean
+        isPreloaded?: boolean
+        path: string
+        name: string
+      }
+    >
     boot: string
   }
   devtool?: MerlynConfig['devtool']
 }
 
-export type Manifest = {
+export interface Manifest {
   game: Engine
   transition?: Transition
   bootScene: string
-  scenes: Record<string, () => { default: typeof Scene }>
-  loadingScenes: Record<string, { default: typeof Scene }>
+  scenes: Record<string, SceneData>
   devtool?: boolean
 }
+
+export type SceneData = {
+  isLoadingScene?: boolean
+  path: string
+} & (
+  | {
+      isPreloaded: true
+      scene: typeof Scene
+    }
+  | {
+      isPreloaded: false | undefined
+      scene: () => Promise<{ default: typeof Scene }>
+    }
+)
 
 type DeepPartial<T> = T extends object
   ? {

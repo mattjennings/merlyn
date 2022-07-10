@@ -1,21 +1,20 @@
 import dedent from 'dedent'
-import glob from 'glob'
 import path from 'path'
 import type { MerlynConfig } from '../types.js'
 import { writeIfChanged } from '../utils/index.js'
-import { posixify } from '../utils/fs.js'
+import { posixify, walk } from '../utils/fs.js'
+import { format } from 'prettier'
 
-export function writeTypes(dir: string, config: MerlynConfig) {
-  writeIfChanged(`${dir}/types.d.ts`, types(dir, config))
+export function writeTypes(cwd: string, outDir: string, config: MerlynConfig) {
+  writeIfChanged(
+    path.join(cwd, `${outDir}/types.d.ts`),
+    format(types(cwd), { parser: 'typescript' })
+  )
 }
 
-function types(dir: string, config: MerlynConfig) {
-  // read all files recursively in ../res
-  // const files = fs.readdirSync(path.resolve(__dirname, '../res'))
-  const base = posixify(path.resolve(dir, '../res'))
-  const files = glob
-    .sync(posixify(path.join(base, '**/*.*')))
-    .map((path) => path.split(base + '/').pop())
+function types(cwd: string) {
+  const base = posixify(path.join(cwd, 'res'))
+  const files = walk(base).map((path) => path.split(base + '/').pop())
 
   function getResourceType(file) {
     const images = ['png', 'jpg', 'jpeg', 'gif']
