@@ -28,12 +28,14 @@ export function writeManifest(
 
 function manifest(cwd: string, outDir: string, config: MerlynConfig) {
   const imports = []
+
   const scenes: Record<
     string,
     { isLoadingScene?: boolean; isPreloaded?: boolean; path?: string }
   > = walk(config.scenes.path).reduce((acc, name) => {
     const key = getRouteName(name, config.scenes.path)
     const isPreloaded = isScenePreloaded(key, config)
+    const isLoadingScene = isSceneLoadingScene(key)
     const scenePath = path.relative(outDir, path.join(config.scenes.path, name))
 
     if (isPreloaded) {
@@ -41,13 +43,23 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
     }
 
     acc[key] = {
-      isLoadingScene: isLoadingScene(key),
+      isLoadingScene,
       isPreloaded,
       path: scenePath,
     }
 
     return acc
   }, {})
+
+  if (!scenes['_loading']) {
+    scenes['_loading'] = {
+      isLoadingScene: true,
+      isPreloaded: true,
+    }
+    imports.push(
+      `import _scene__loading from 'merlyn/runtime/DefaultLoading.js'`
+    )
+  }
 
   return /* js */ `
     ${imports.join('\n')}
@@ -79,7 +91,7 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
 }
 
 function isScenePreloaded(name: string, config: MerlynConfig) {
-  if (isLoadingScene(name)) {
+  if (isSceneLoadingScene(name)) {
     return true
   }
 
@@ -90,8 +102,8 @@ function isScenePreloaded(name: string, config: MerlynConfig) {
   return config.scenes.preload.includes(name)
 }
 
-function isLoadingScene(name: string) {
-  return name.match(/_loading$/)
+function isSceneLoadingScene(name: string) {
+  return name.match(/(^|\/)_loading$/)
 }
 
 function toValidName(name: string) {

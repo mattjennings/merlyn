@@ -24,7 +24,11 @@ export class Router {
     })
 
     this.engine.start(loader as any).then(() => {
-      this.goToScene(manifest.bootScene, { transition: manifest.transition })
+      this.goToScene(
+        manifest.bootScene,
+        { transition: manifest.transition },
+        true
+      )
     })
   }
 
@@ -34,7 +38,8 @@ export class Router {
       data?: Data | Promise<Data>
       transition?: Transition
       onActivate?: (scene: Scene) => void
-    } = {}
+    } = {},
+    initial = false
   ) {
     const sceneData = this.scenes[name]
     let scene = this.engine.scenes[name] as Scene
@@ -51,6 +56,9 @@ export class Router {
     const transition = await this.executeTransition({
       isOutro: true,
       transition: options.transition,
+      // if this is the initial loading screen, start transition
+      // at complete state of outro
+      progress: initial ? 1 : 0,
     })
 
     if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
@@ -92,9 +100,14 @@ export class Router {
   }
 
   getLoadingSceneKeyForScene(key: string) {
-    const loadingScenes = Object.entries(this.scenes).find(([loadingKey]) => {
-      return key.split('/').length === loadingKey.split('/').length
-    })
+    const loadingScenes = Object.entries(this.scenes).find(
+      ([loadingKey, value]) => {
+        return (
+          value.isLoadingScene &&
+          key.split('/').length === loadingKey.split('/').length
+        )
+      }
+    )
 
     return loadingScenes?.[0] ?? '_loading'
   }
@@ -164,9 +177,11 @@ export class Router {
   private async executeTransition({
     isOutro,
     transition,
+    progress = 0,
   }: {
     isOutro: boolean
     transition?: Transition
+    progress?: number
   }) {
     const scene = this.engine.currentScene
 
@@ -191,7 +206,7 @@ export class Router {
       })
 
       // @ts-ignore
-      await transition._execute(isOutro)
+      await transition._execute(isOutro, progress)
 
       if (!isOutro) {
         scene.onIntroComplete?.()

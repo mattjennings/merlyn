@@ -25,6 +25,7 @@
     "./types": "./types.d.ts",
     "./package.json": "./package.json",
     "./runtime": "./dist/runtime/index.js",
+    "./runtime/DefaultLoading.js": "./dist/runtime/DefaultLoading.js",
     "./vite": "./dist/vite/index.js",
     "./transitions": "./dist/transitions/index.js",
     ".": "./dist/index.js"

@@ -1,4 +1,4 @@
-import { Transition, type TransitionArgs } from 'merlyn'
+import { Transition, type TransitionArgs } from 'merlyn/transitions'
 
 export class BattleTransition extends Transition {
   fade!: ex.Actor

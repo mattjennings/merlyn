@@ -16,9 +16,9 @@ export async function dev(vite: ViteDevServer) {
 
   vite.watcher.add(`.merlyn.config.js`)
 
-  for (const event of ['add', 'unlink']) {
+  for (const event of ['add', 'unlink', 'unlinkDir']) {
     vite.watcher.on(event, (file) => {
-      if (file.startsWith(merlynConfig.scenes.path)) {
+      if (file.includes(merlynConfig.scenes.path)) {
         writeMerlynData(merlynConfig)
       }
     })

@@ -3,7 +3,7 @@ import Tilemap from '$lib/entities/Tilemap'
 import tilemap from '$res/Tilemaps/battle.tmx'
 import imgPlayer from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
 import { goToScene } from '$game'
-import { FadeTransition } from 'merlyn'
+import { FadeTransition } from 'merlyn/transitions'
 import { SvelteUI } from '$lib/ui/SvelteUI'
 import BattleSvelte from '$lib/ui/Battle.svelte'
 

@@ -1,4 +1,6 @@
-import { FadeTransition } from 'merlyn'
+/// <reference types="svelte" />
+
+import { FadeTransition } from 'merlyn/transitions'
 import './styles.css'
 
 export const transition = new FadeTransition()

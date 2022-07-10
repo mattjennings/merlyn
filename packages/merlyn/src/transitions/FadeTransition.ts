@@ -9,6 +9,7 @@ export class FadeTransition extends Transition {
   constructor(args: TransitionArgs = {}) {
     super({
       duration: 300,
+      z: 999999,
       ...args,
     })
   }
@@ -21,7 +22,7 @@ export class FadeTransition extends Transition {
     this.el = new ScreenElement({
       x: -buffer,
       y: -buffer,
-      z: 9999,
+      z: this.z,
       width: engine.currentScene.camera.viewport.width + buffer * 2,
       height: engine.currentScene.camera.viewport.height + buffer * 2,
       color: Color.Black,

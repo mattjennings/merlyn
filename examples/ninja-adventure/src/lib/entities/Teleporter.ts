@@ -1,6 +1,6 @@
 import { goToScene } from '$game'
 import { Player } from '$lib/Player'
-import { FadeTransition } from 'merlyn'
+import { FadeTransition } from 'merlyn/transitions'
 import type { ActorArgs } from 'excalibur'
 
 export interface TeleporterArgs extends ActorArgs {
