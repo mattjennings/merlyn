@@ -1,2 +1,2 @@
-export * from './Transition'
-export * from './FadeTransition'
+export * from './Transition.js'
+export * from './FadeTransition.js'

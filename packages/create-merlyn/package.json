@@ -1,0 +1,17 @@
+{
+  "name": "create-merlyn",
+  "version": "0.0.0-3",
+  "description": "",
+  "type": "module",
+  "bin": "./bin.js",
+  "keywords": [],
+  "author": "mattjennings",
+  "license": "ISC",
+  "dependencies": {
+    "kleur": "^4.1.4",
+    "prompts": "^2.4.2"
+  },
+  "scripts": {
+    "release": "npm publish --access public"
+  }
+}

@@ -1,9 +1,7 @@
-import botImage from '$res/excalibot-red.png'
-import npcImage from '$res/npc.png'
+const npcSprite = $res('npc.png').toSprite()
 
-const npcSprite = npcImage.toSprite()
 const botRedSpriteSheet = ex.SpriteSheet.fromImageSource({
-  image: botImage,
+  image: $res('excalibot-red.png'),
   grid: {
     columns: 8,
     rows: 1,

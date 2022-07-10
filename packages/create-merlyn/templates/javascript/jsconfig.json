@@ -1,0 +1,14 @@
+{
+  "extends": "./.merlyn/tsconfig.json",
+  "compilerOptions": {
+    "types": ["merlyn/types"],
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false
+  }
+}

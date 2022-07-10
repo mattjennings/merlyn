@@ -1,7 +1,7 @@
-import { Transition } from '../transitions'
-import { Manifest } from '../cli/util/types'
-import { loader, getResources } from './resources'
-import { Scene } from 'excalibur'
+import type { Transition } from '../transitions/Transition.js'
+import type { Manifest } from '../vite/core/types.js'
+import { loader, getResources } from './resources.js'
+import type { Scene } from 'excalibur'
 
 export let isTransitioning = false
 export let isBooting = true

@@ -3,6 +3,6 @@
  */
 export default {
   scenes: {
-    path: 'src/scenes',
+    boot: 'index',
   },
 }

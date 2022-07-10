@@ -1,29 +1,43 @@
 {
   "name": "merlyn",
-  "version": "0.0.0-13",
+  "version": "0.0.0-16",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "bin": {
-    "merlyn": "bin/index.js"
-  },
+  "types": "dist/index.d.ts",
   "files": [
     "bin",
     "dist",
     "app.d.ts",
-    "modules.d.ts"
+    "modules.d.ts",
+    "types.d.ts"
   ],
+  "bin": {
+    "merlyn": "bin/index.js"
+  },
   "scripts": {
-    "merlyn": "node bin/index.js",
-    "dev": "NODE_ENV=development node scripts/build.mjs",
-    "build": "NODE_ENV=production node scripts/build.mjs",
+    "dev": "tsc --watch",
+    "build": "tsc",
     "release": "npm run build && npm publish --access public"
   },
   "exports": {
+    "./types": "./types.d.ts",
     "./package.json": "./package.json",
-    ".": "./dist/index.js",
-    "./runtime": "./dist/runtime.js"
+    "./runtime": "./dist/runtime/index.js",
+    "./vite": "./dist/vite/index.js",
+    "./transitions": "./dist/transitions/index.js",
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "vite": [
+        "dist/vite/index.d.ts"
+      ],
+      "transitions": [
+        "dist/transitions/index.d.ts"
+      ]
+    }
   },
   "keywords": [],
   "author": "mattjennings",
@@ -39,22 +53,20 @@
     "kleur": "^4.1.4",
     "magic-string": "^0.26.2",
     "mkdirp": "^1.0.4",
-    "polka": "^0.5.2",
     "prettier": "^2.6.2",
     "query-string": "^7.1.1",
     "sade": "^1.8.1",
     "sirv": "^2.0.2",
-    "unplugin-auto-import": "^0.8.7",
+    "unplugin-auto-import": "^0.9.2",
     "vite": "^2.9.9",
-    "vite-plugin-full-reload": "^1.0.0"
+    "vite-plugin-full-reload": "^1.0.0",
+    "dedent": "^0.7.0"
   },
   "peerDependencies": {
     "excalibur": "^0.26.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.38",
-    "@types/polka": "^0.5.4",
-    "tslib": "^2.4.0",
-    "vite-plugin-dts": "^1.2.0"
+    "tslib": "^2.4.0"
   }
 }

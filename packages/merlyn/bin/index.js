@@ -1,2 +1,14 @@
 #! /usr/bin/env node
-import '../dist/cli.js'
+import sade from 'sade'
+import { writeMerlynData } from '../dist/vite/core/data/index.js'
+import { loadConfig } from '../dist/vite/core/config.js'
+import fs from 'fs'
+
+const prog = sade('merlyn')
+
+prog.command('sync', 'Prepares initial data for Merlyn').action(async () => {
+  const config = await loadConfig({ dev: true })
+  writeMerlynData(config)
+})
+
+prog.parse(process.argv)

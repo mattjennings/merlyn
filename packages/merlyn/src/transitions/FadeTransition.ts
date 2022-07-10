@@ -1,5 +1,7 @@
-import { Color, Engine, ScreenElement } from 'excalibur'
-import { Transition, TransitionArgs } from './Transition'
+import type { Engine } from 'excalibur'
+import { Color, ScreenElement } from 'excalibur'
+import type { TransitionArgs } from './Transition.js'
+import { Transition } from './Transition.js'
 
 export class FadeTransition extends Transition {
   el: ScreenElement

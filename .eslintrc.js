@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/consistent-type-imports': 'error',
   },
   overrides: [
     {
@@ -24,5 +25,9 @@ module.exports = {
   ],
   settings: {
     'svelte3/typescript': true,
+  },
+  globals: {
+    ex: true,
+    $res: true,
   },
 }

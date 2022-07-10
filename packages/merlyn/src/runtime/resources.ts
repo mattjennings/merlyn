@@ -1,6 +1,7 @@
 import { TiledMapResource } from '@excaliburjs/plugin-tiled'
-import { ImageSource, Loadable, Sound } from 'excalibur'
-import { Loader } from '../Loader'
+import type { Loadable } from 'excalibur'
+import { ImageSource, Sound } from 'excalibur'
+import { Loader } from '../Loader.js'
 
 export const loader = new Loader([])
 

@@ -4,15 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "merlyn dev",
-    "build": "merlyn build",
-    "preview": "merlyn preview"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "merlyn sync"
   },
   "devDependencies": {
-    "merlyn": "latest"
+    "merlyn": "latest",
+    "vite": "^2.9.14"
   },
   "dependencies": {
-    "dedent": "^0.7.0",
     "excalibur": "^0.26.0",
     "typescript": "^4.7.3"
   }
