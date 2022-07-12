@@ -1,4 +1,5 @@
-import { Engine, Actor } from 'excalibur'
+import type { Engine } from 'excalibur'
+import { Actor } from 'excalibur'
 
 /**
  * When 'native' the UI will be sized to the actual "css" pixels of the canvas.
@@ -13,8 +14,9 @@ export class HTMLUI extends Actor {
   element: HTMLElement
   engine: Engine
   resolution: Resolution
-
   resizeObserver: ResizeObserver | null = null
+
+  parentElement!: HTMLElement
 
   constructor({
     tag = 'div',
@@ -36,16 +38,31 @@ export class HTMLUI extends Actor {
       this.element.id = id
     }
 
-    parent.appendChild(this.element)
+    this.parentElement = parent
     this.resizeObserver = new ResizeObserver(() => {
       this.resizeToCanvas()
     })
     this.resizeObserver.observe(document.body)
+
+    this.onPreUpdate = () => {
+      if (this.element) {
+        this.element.style.opacity = this.graphics.opacity.toString()
+      }
+    }
   }
 
   onInitialize(engine: Engine): void {
     this.engine = engine
     this.resizeToCanvas()
+
+    this.parentElement.appendChild(this.element)
+
+    this.engine.currentScene.on('activate', () => {
+      this.parentElement.appendChild(this.element)
+    })
+    this.engine.currentScene.on('deactivate', () => {
+      this.parentElement.removeChild(this.element)
+    })
   }
 
   resizeToCanvas = () => {
