@@ -8,6 +8,7 @@ export async function loadConfig({
   dev: boolean
 }): Promise<MerlynConfig> {
   const defaultConfig: MerlynConfig = {
+    title: 'Merlyn',
     game: 'src/game',
     scenes: {
       path: 'src/scenes',

@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  excalibur: 0.27.0-alpha.506
+  excalibur: ^0.27.0
 
 importers:
 
@@ -19,7 +19,7 @@ importers:
       del: ^6.1.1
       eslint: ^8.16.0
       eslint-plugin-svelte3: ^4.0.0
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -41,7 +41,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -78,7 +78,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       events: ^3.3.0
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -105,7 +105,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       events: 3.3.0
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -138,7 +138,7 @@ importers:
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       focus-trap: ^6.9.4
       fs-extra: ^10.1.0
       kleur: ^4.1.4
@@ -161,7 +161,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -189,7 +189,7 @@ importers:
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -209,7 +209,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -231,7 +231,7 @@ importers:
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -250,7 +250,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -279,7 +279,7 @@ importers:
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -298,7 +298,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -319,7 +319,7 @@ importers:
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -339,7 +339,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -357,13 +357,14 @@ importers:
 
   packages/merlyn:
     specifiers:
+      '@excaliburjs/dev-tools': ^0.27.1
       '@excaliburjs/plugin-tiled': ^0.26.2
       '@types/node': ^17.0.38
       abstract-syntax-tree: ^2.20.6
       dedent: ^0.7.0
       deepmerge: ^4.2.2
       del: ^6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: ^0.27.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -377,12 +378,13 @@ importers:
       vite: ^2.9.9
       vite-plugin-full-reload: ^1.0.0
     dependencies:
+      '@excaliburjs/dev-tools': 0.27.1
       '@excaliburjs/plugin-tiled': 0.26.2
       abstract-syntax-tree: 2.20.6
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -624,14 +626,22 @@ packages:
     resolution: {integrity: sha512-mrOzbW2cQbp9F6dj0K+BtfNhdcBeF3i9uupdnR9hn6bHK0KXSzRrZJJukqcE//vXa7vUXZ4AdC7FgJQWB4IC5A==}
     dependencies:
       '@tweakpane/core': 1.0.8
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       tweakpane: 3.0.7
     dev: true
+
+  /@excaliburjs/dev-tools/0.27.1:
+    resolution: {integrity: sha512-xcwsnUCVoGcNm8Or42/2qTSAdXwL8Wf2Pxn5Ds9sylZ5pCTCuEU7f4hOQEeec9OvSZiIqFTg5eXge3122Et3IQ==}
+    dependencies:
+      '@tweakpane/core': 1.1.0
+      excalibur: 0.27.0
+      tweakpane: 3.1.0
+    dev: false
 
   /@excaliburjs/plugin-tiled/0.26.2:
     resolution: {integrity: sha512-PcTbp327n+ZSqpd3D1Ls+WOJb+4dVnWiLzGBUBDLscBixLerjFkFj1ZiKIWnZ6LL0C5FGFnPB4L+sDZkJYKqHQ==}
     dependencies:
-      excalibur: 0.27.0-alpha.506
+      excalibur: 0.27.0
       fast-xml-parser: 3.21.1
       pako: 1.0.11
       zstddec: 0.0.2
@@ -911,6 +921,10 @@ packages:
   /@tweakpane/core/1.0.8:
     resolution: {integrity: sha512-q7BQrqM4NYiaSoErRgRY0EBxxC8AzsZJoz52K8SNJ/IfYu9lTzfFTwW7ouYqgElSOx+3ybXBcMlkCPZdOBZg6Q==}
     dev: true
+
+  /@tweakpane/core/1.1.0:
+    resolution: {integrity: sha512-vbbiQb+aoFI13lIbE7DJvhHZVE1YlUpGoaAamSpU6wLp2jA3VowS1wfRJBBB8IBCYm7nF6ULl7zfJKxl1XdyfA==}
+    dev: false
 
   /@types/eslint-scope/3.7.3:
     resolution: {integrity: sha512-PB3ldyrcnAicT35TWPs5IcwKD8S333HMaa2VVv4+wdvebJkjWuW/xESoB8IwRcog8HYVYamb1g/R31Qv5Bx03g==}
@@ -1668,9 +1682,8 @@ packages:
       is-what: 3.14.1
     dev: true
 
-  /core-js/3.23.1:
-    resolution: {integrity: sha512-wfMYHWi1WQjpgZNC9kAlN4ut04TM9fUTdi7CqIoTVM7yaiOUQTklOzfb+oWH3r9edQcT3F887swuVmxrV+CC8w==}
-    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+  /core-js/3.23.3:
+    resolution: {integrity: sha512-oAKwkj9xcWNBAvGbT//WiCdOMpb9XQG92/Fe3ABFM/R16BsHgePG00mFOgKf7IsCtfj8tA1kHtf/VwErhriz5Q==}
     requiresBuild: true
 
   /core-util-is/1.0.2:
@@ -2195,10 +2208,10 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /excalibur/0.27.0-alpha.506:
-    resolution: {integrity: sha512-z5tWxBeCRNJOepOPyfp3TDcn2q4kiKsxs4yHKzV3eFxLmLO6FtfuVTdGR4fHlBs9e4Vjs+mdoJnOsx8/hXhoVw==}
+  /excalibur/0.27.0:
+    resolution: {integrity: sha512-stbjNb3HD0ZEG3KKt1D8x558l4JNKFux1B5KlLoe+9SqxWTod/pYJqR/Nn6teB1vtCDnU3oYCnLo4FNQk6eJFA==}
     dependencies:
-      core-js: 3.23.1
+      core-js: 3.23.3
 
   /extend/3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
@@ -3776,6 +3789,10 @@ packages:
   /tweakpane/3.0.7:
     resolution: {integrity: sha512-rgxqoo6T10atYoKHVif6aYlAMIAlHJ84hi5LXqi6ZgVEPcmnzPI34C88y6HquarBY0ZKE/ZCXVaZm8NibhQRtA==}
     dev: true
+
+  /tweakpane/3.1.0:
+    resolution: {integrity: sha512-PGAp/LPQdHwzL7/iAW4lV1p9iPQTti7YMjMWO48CoYjvZRS59RmgQnhEGzKzqST1JnmOYmQUjTe8bdhlZRJs5A==}
+    dev: false
 
   /tweetnacl/0.14.5:
     resolution: {integrity: sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=}

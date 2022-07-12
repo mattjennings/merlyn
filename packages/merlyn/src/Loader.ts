@@ -1,4 +1,5 @@
-import { Loadable, Class } from 'excalibur'
+import type { Loadable } from 'excalibur'
+import { Class } from 'excalibur'
 
 /**
  * The loader responsible for loading all resources for the game. It does

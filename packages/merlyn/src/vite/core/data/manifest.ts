@@ -7,11 +7,12 @@ import { walk } from '../utils/fs.js'
 import { format } from 'prettier'
 
 export interface Manifest {
+  title: string
   game: Engine
   transition?: Transition
   bootScene: string
   scenes: Record<string, SceneData>
-  devtool?: boolean
+  devtool?: { enabled?: boolean }
   loadingSceneResources: Loadable<any>[]
 }
 
@@ -98,6 +99,7 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
     export const devtool = ${JSON.stringify(config.devtool)};
     export const game = _game.default;
     export const transition = _game.transition;
+    export const title = ${JSON.stringify(config.title)}
 
 		export const scenes = {
       ${Object.entries(scenes)

@@ -23,10 +23,11 @@ export class FadeTransition extends Transition {
       x: -buffer,
       y: -buffer,
       z: this.z,
-      width: engine.currentScene.camera.viewport.width + buffer * 2,
-      height: engine.currentScene.camera.viewport.height + buffer * 2,
+      width: engine.canvasWidth + buffer * 2,
+      height: engine.canvasHeight + buffer * 2,
       color: Color.Black,
     })
+
     this.el.graphics.opacity = this.isOutro ? 0 : 1
     this.addChild(this.el)
   }

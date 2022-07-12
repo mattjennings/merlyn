@@ -1,10 +1,11 @@
 declare module '$game' {
   // import type { Devtool } from '@excaliburjs/dev-tools'
   import type { Engine, Loadable, Scene } from 'excalibur'
-  import { Loader } from 'merlyn'
+  import type { Loader } from 'merlyn'
 
   export const engine: Engine
   export const loader: Loader
+  export const title: string
 
   export const isBooting: boolean
   export const isTransitioning: boolean

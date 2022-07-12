@@ -2,6 +2,7 @@ import type { Engine, Scene, Loadable } from 'excalibur'
 import type { Transition } from '../../transitions/Transition.js'
 
 export interface MerlynConfig {
+  title: string
   game: string
   scenes: {
     path: string

@@ -14,6 +14,7 @@ function entry() {
     import * as manifest from './manifest.js' 
     import { start }from 'merlyn/runtime'
     
+    document.title = manifest.title || 'Merlyn'
     start(manifest)
   `
 }
