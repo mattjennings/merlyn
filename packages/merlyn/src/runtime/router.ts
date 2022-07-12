@@ -66,8 +66,6 @@ export class Router {
     if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
       // if initial loading screen uses resources, load them
       if (initial && this.manifest.loadingSceneResources.length) {
-        // create new loader so we don't include resources from other preloaded scenes
-        const loader = new Loader()
         loader.addResources(this.manifest.loadingSceneResources)
         await loader.load()
       }
@@ -130,11 +128,20 @@ export class Router {
       }
 
       const newResources = getResources().filter((r) => !r.isLoaded())
-      if (newResources.length > 0) {
-        loader.addResources(newResources)
 
+      if (newResources.length > 0) {
         const currentScene = this.engine.currentScene
 
+        const deferPromise = new Promise((resolve) => {
+          // @ts-ignore
+          if (currentScene.defer) {
+            currentScene.once('continue', resolve)
+          } else {
+            resolve(undefined)
+          }
+        })
+
+        loader.addResources(newResources)
         currentScene.onLoadStart?.()
 
         const onProgress = (progress) => {
@@ -144,9 +151,10 @@ export class Router {
         loader.on('progress', onProgress)
 
         await loader.load()
-
         currentScene.onLoadComplete?.()
         loader.off('progress', onProgress)
+
+        await deferPromise
       }
     }
     return scene
