@@ -1,6 +1,6 @@
 import { goToScene } from '$game'
 import { Player } from '$lib/Player'
-import { FadeTransition } from 'merlyn/transitions'
+import { CrossFade, Fade } from 'merlyn/transitions'
 import type { ActorArgs } from 'excalibur'
 
 export interface TeleporterArgs extends ActorArgs {
@@ -45,6 +45,10 @@ export class Teleporter extends ex.Actor {
           this.isNavigating = true
 
           goToScene(this._scene, {
+            transition: new CrossFade({
+              duration: 300,
+              persistOnLoading: { delay: 200 },
+            }),
             onActivate: (scene) => {
               this.isNavigating = false
 
@@ -67,7 +71,6 @@ export class Teleporter extends ex.Actor {
                 player.updateFacing(this.facing)
               }
             },
-            transition: new FadeTransition(),
           })
         }
       }

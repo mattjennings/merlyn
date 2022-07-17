@@ -1,2 +1,3 @@
 export * from './Transition.js'
-export * from './FadeTransition.js'
+export * from './Fade.js'
+export * from './CrossFade.js'

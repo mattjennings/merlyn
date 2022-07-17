@@ -3,13 +3,13 @@ import { Color, ScreenElement } from 'excalibur'
 import type { TransitionArgs } from './Transition.js'
 import { Transition } from './Transition.js'
 
-export class FadeTransition extends Transition {
+export class Fade extends Transition {
   el: ScreenElement
 
   constructor(args: TransitionArgs = {}) {
     super({
       duration: 300,
-      z: 999999,
+      z: Infinity,
       ...args,
     })
   }

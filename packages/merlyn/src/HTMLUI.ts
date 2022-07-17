@@ -60,8 +60,9 @@ export class HTMLUI extends Actor {
     this.engine.currentScene.on('activate', () => {
       this.parentElement.appendChild(this.element)
     })
+
     this.engine.currentScene.on('deactivate', () => {
-      this.parentElement.removeChild(this.element)
+      this.element.parentElement?.removeChild(this.element)
     })
   }
 

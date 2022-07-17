@@ -2,7 +2,6 @@ import type { Transition } from '../transitions/Transition.js'
 import type { Manifest, SceneData } from '../vite/core/data/manifest.js'
 import { loader, getResources } from './resources.js'
 import type { Scene } from 'excalibur'
-import { Loader } from 'merlyn'
 
 export let isTransitioning = false
 export let isBooting = true
@@ -26,105 +25,89 @@ export class Router {
     })
 
     this.engine.start(loader as any).then(() => {
-      this.goToScene(
-        manifest.bootScene,
-        { transition: manifest.transition },
-        true
-      )
+      this.goToScene(manifest.bootScene, {
+        transition: manifest.transition,
+      }).then(() => {
+        isBooting = false
+      })
     })
-  }
-
-  async goToScene<Data = any>(
-    name: string,
-    options: {
-      data?: Data | Promise<Data>
-      transition?: Transition
-      onActivate?: (scene: Scene) => void
-    } = {},
-    initial = false
-  ) {
-    const sceneData = this.scenes[name]
-    let scene = this.engine.scenes[name] as Scene
-
-    const isDataPromise = (data: any): data is () => Promise<any> =>
-      typeof data === 'function'
-
-    // check if scene exists
-    if (!sceneData) {
-      throw new Error(`No scene named ${name}`)
-    }
-
-    // play outro transition
-    const transition = await this.executeTransition({
-      isOutro: true,
-      transition: options.transition,
-      // if this is the initial loading screen, start transition
-      // at the completed state of outro
-      progress: initial ? 1 : 0,
-    })
-
-    if (this.sceneNeedsLoading(name) || isDataPromise(options.data)) {
-      // if initial loading screen uses resources, load them
-      if (initial && this.manifest.loadingSceneResources.length) {
-        loader.addResources(this.manifest.loadingSceneResources)
-        await loader.load()
-      }
-
-      this.engine.goToScene(this.getLoadingSceneKeyForScene(name))
-
-      // carry transition instance into loading scene
-      if (transition) {
-        this.engine.add(transition)
-      }
-    }
-
-    const data = isDataPromise(options.data)
-      ? await options.data()
-      : options.data
-
-    scene = await this.preloadScene(name)
-    isBooting = false
-
-    scene.once('activate', () => {
-      options.onActivate?.(scene)
-    })
-    this.engine.goToScene(name, data)
-
-    // play intro transition
-    await this.executeTransition({
-      isOutro: false,
-      transition: options.transition,
-    })
-
-    return scene
   }
 
   get currentScene() {
     return this.engine.currentScene
   }
 
-  getSceneByName(key: string) {
-    return this.engine.scenes[key]
+  getSceneByName(name: string) {
+    return this.engine.scenes[name]
   }
 
-  getLoadingSceneKeyForScene(key: string) {
-    const loadingScenes = Object.entries(this.scenes).find(
-      ([loadingKey, value]) => {
-        return (
-          value.isLoadingScene &&
-          key.split('/').length === loadingKey.split('/').length
-        )
-      }
-    )
+  async goToScene<Data = any>(name: string, options: GoToSceneOptions<Data>) {
+    const { transition } = options
+    let scene = this.engine.scenes[name] as Scene
 
-    return loadingScenes?.[0] ?? '_loading'
+    // check if scene exists
+    if (!this.scenes[name]) {
+      throw new Error(`No scene named ${name}`)
+    }
+
+    // // play outro transition
+    // if (!isBooting || transition?.persistOnLoading) {
+    //   // if initial scene and persistOnLoading, start transition at completed state of outro
+    //   await this.executeTransition({
+    //     type: 'outro',
+    //     transition,
+    //     progress: isBooting ? 1 : 0,
+    //   })
+    // }
+
+    if (this.sceneNeedsLoading(name)) {
+      scene = await this.loadScene(name, options)
+    } else {
+      await this.executeTransition({
+        type: 'outro',
+        transition,
+      })
+    }
+
+    scene.once('activate', () => {
+      options.onActivate?.(scene)
+    })
+    this.engine.goToScene(name, options.data)
+
+    // play intro transition
+    await this.executeTransition({
+      type: 'intro',
+      transition: options.transition,
+    })
+
+    return scene
   }
 
+  /**
+   * Starts loading all files and assets required for the scene
+   */
   async preloadScene(name: string) {
     let scene = this.engine.scenes[name]
     if (this.sceneNeedsLoading(name)) {
+      // import scene
       if (!scene) {
-        scene = await this.loadSceneFile(name)
+        const sceneData = this.scenes[name]
+
+        const Scene =
+          sceneData.isPreloaded === false
+            ? await sceneData.scene().then((r) => r.default)
+            : sceneData.scene
+
+        if (Scene) {
+          scene = new Scene()
+
+          // @ts-ignore
+          scene.name = name
+          // scene.params = params
+          this.engine.add(name, scene)
+        } else {
+          throw new Error(`"${name}" does not export default a Scene class`)
+        }
       }
 
       const newResources = getResources().filter((r) => !r.isLoaded())
@@ -144,7 +127,7 @@ export class Router {
         loader.addResources(newResources)
         currentScene.onLoadStart?.()
 
-        const onProgress = (progress) => {
+        const onProgress = ({ progress }) => {
           this.engine.currentScene.onLoad?.(progress)
         }
 
@@ -160,6 +143,86 @@ export class Router {
     return scene
   }
 
+  private async loadScene<Data = any>(
+    name: string,
+    { transition, ...options }: GoToSceneOptions<Data>
+  ) {
+    if (this.sceneNeedsLoading(name)) {
+      if (!isBooting) {
+        await this.executeTransition({
+          type: 'outro',
+          transition,
+        })
+      }
+
+      // if initial loading screen uses resources, load them
+      if (isBooting && this.manifest.loadingSceneResources.length) {
+        loader.addResources(this.manifest.loadingSceneResources)
+        await loader.load()
+      }
+
+      // go to loading scene
+      this.engine.goToScene(this.getLoadingScene(name))
+
+      let delayedIntro: NodeJS.Timeout
+      let didIntro = false
+
+      // play intro into loading scene
+      if (transition) {
+        if (!isBooting) {
+          if (typeof transition.persistOnLoading === 'boolean') {
+            if (!transition.persistOnLoading) {
+              // carry transition instance into loading scene
+              this.engine.add(transition)
+              await this.executeTransition({
+                type: 'intro',
+                transition,
+              })
+              didIntro = true
+            }
+          } else if (transition.persistOnLoading.delay) {
+            // carry transition instance into loading scene
+            this.engine.add(transition)
+            delayedIntro = setTimeout(() => {
+              this.executeTransition({
+                type: 'intro',
+                transition,
+              })
+              didIntro = true
+            }, transition.persistOnLoading.delay)
+          }
+        }
+      }
+
+      // load assets for scene
+      await this.preloadScene(name)
+
+      if (isBooting || didIntro) {
+        await this.executeTransition({
+          type: 'outro',
+          transition,
+        })
+      }
+
+      clearTimeout(delayedIntro)
+    }
+
+    return this.engine.scenes[name]
+  }
+
+  private getLoadingScene(name: string) {
+    const loadingScenes = Object.entries(this.scenes).find(
+      ([sceneName, value]) => {
+        return (
+          value.isLoadingScene &&
+          name.split('/').length === sceneName.split('/').length
+        )
+      }
+    )
+
+    return loadingScenes?.[0] ?? '_loading'
+  }
+
   private sceneNeedsLoading(name: string) {
     if (!this.engine.scenes[name]) {
       return true
@@ -172,36 +235,12 @@ export class Router {
     return getResources().filter((r) => !r.isLoaded()).length > 0
   }
 
-  /**
-   * Imports the scene file, instantiates the scene and adds it to the engine
-   */
-  private async loadSceneFile(name: string) {
-    const sceneData = this.scenes[name]
-
-    const Scene =
-      sceneData.isPreloaded === false
-        ? await sceneData.scene().then((r) => r.default)
-        : sceneData.scene
-
-    if (Scene) {
-      const scene = new Scene()
-
-      // @ts-ignore
-      scene.name = name
-      // scene.params = params
-      this.engine.add(name, scene)
-      return scene
-    } else {
-      throw new Error(`"${name}" does not export default a Scene class`)
-    }
-  }
-
   private async executeTransition({
-    isOutro,
+    type,
     transition,
     progress = 0,
   }: {
-    isOutro: boolean
+    type: 'intro' | 'outro'
     transition?: Transition
     progress?: number
   }) {
@@ -213,7 +252,7 @@ export class Router {
 
       scene.engine.add(transition)
 
-      if (isOutro) {
+      if (type === 'outro') {
         scene.onOutroStart?.()
       } else {
         scene.onIntroStart?.()
@@ -227,10 +266,9 @@ export class Router {
         scene.onIntro?.(progress as unknown as number)
       })
 
-      // @ts-ignore
-      await transition._execute(isOutro, progress)
+      await transition._execute(type === 'outro', progress)
 
-      if (!isOutro) {
+      if (type === 'intro') {
         scene.onIntroComplete?.()
 
         // transition is complete, remove it
@@ -245,4 +283,10 @@ export class Router {
 
     return transition
   }
+}
+
+interface GoToSceneOptions<Data = any> {
+  data?: Data
+  transition?: Transition
+  onActivate?: (scene: Scene) => void
 }

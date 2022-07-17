@@ -2,31 +2,54 @@ import type { ActorArgs } from 'excalibur'
 import { Actor } from 'excalibur'
 
 export interface TransitionArgs extends ActorArgs {
-  duration?: number
+  duration?: number | { outro: number; intro: number }
   easing?: (t: number) => number
+
+  /**
+   * Carries the outro state of the transition to the loading scene. Be wary
+   * of the z-indexes you use, as the transition might overlay (or get overlayed by) the loading scene
+   * entities.
+   *
+   * If a delay is provided, it will only persist for that length of time before introing
+   * to the loading scene. It will outro when loading scene completes and intro again
+   * on the following scene.
+   */
+  persistOnLoading?:
+    | boolean
+    | {
+        delay: number
+      }
 }
 
 export class Transition extends Actor {
-  duration: number
+  duration: { outro: number; intro: number }
   easing: (t: number) => number
-  isOutro = false
+  persistOnLoading: boolean | { delay: number }
 
-  private progress = 0
-  private started = false
+  isOutro = false
+  progress = 0
+  started = false
 
   constructor({
     duration = 300,
     easing = (t) => t,
+    persistOnLoading = {
+      delay: 1000,
+    },
     ...args
   }: TransitionArgs = {}) {
     super(args)
 
-    this.duration = duration
+    this.duration =
+      typeof duration === 'number'
+        ? { outro: duration, intro: duration }
+        : duration
     this.easing = easing
+    this.persistOnLoading = persistOnLoading
 
     this.on('preupdate', (ev) => {
       if (this.started) {
-        this.progress += Math.min(ev.delta / this.duration, 1)
+        this.progress += Math.min(ev.delta / this.getDuration(), 1)
         this.emit(this.isOutro ? 'outro' : 'intro', this.easing(this.progress))
 
         if (this.progress >= 1) {
@@ -43,6 +66,10 @@ export class Transition extends Actor {
     this.on('outrostart', this.onOutroStart.bind(this))
     this.on('outro', this.onOutro.bind(this))
     this.on('outrocomplete', this.onOutroComplete.bind(this))
+  }
+
+  private getDuration() {
+    return this.isOutro ? this.duration.outro : this.duration.intro
   }
 
   onIntroStart() {}

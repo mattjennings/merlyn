@@ -3,8 +3,9 @@ export default class Loading extends ex.Scene {
 
   labels: ex.Label[] = []
   progressBar: ProgressBar
+  elapsedTime = 0
+  complete = false
 
-  initial = true
   onInitialize(engine: ex.Engine) {
     const fontSize = {
       sm: Math.max(engine.drawHeight, engine.drawWidth) / 28,
@@ -16,28 +17,26 @@ export default class Loading extends ex.Scene {
         text: '🧙‍♂️',
         x: engine.drawWidth / 2,
         y: engine.drawHeight / 2,
-        z: Infinity,
         font: new ex.Font({
           textAlign: ex.TextAlign.Center,
           family: 'Helvetica',
           size: fontSize.lg,
           unit: ex.FontUnit.Px,
           color: ex.Color.White,
-          quality: window.devicePixelRatio,
+          quality: window.devicePixelRatio * 2,
         }),
       }),
       new ex.Label({
         text: 'made with merlyn',
         x: engine.drawWidth / 2,
         y: engine.drawHeight / 2 + fontSize.sm * 2,
-        z: Infinity,
         font: new ex.Font({
           textAlign: ex.TextAlign.Center,
           family: 'Luminari',
           size: fontSize.sm,
           unit: ex.FontUnit.Px,
           color: ex.Color.White,
-          quality: window.devicePixelRatio,
+          quality: window.devicePixelRatio * 2,
         }),
       })
     )
@@ -49,7 +48,6 @@ export default class Loading extends ex.Scene {
         width: engine.drawWidth,
         height: engine.drawHeight,
         color: ex.Color.fromHex('#334155'),
-        z: Infinity,
       })
     )
     this.labels.forEach((l) => engine.add(l))
@@ -59,25 +57,24 @@ export default class Loading extends ex.Scene {
       y: engine.drawHeight - fontSize.sm * 4,
       width: engine.drawWidth * 0.75,
       height: Math.round(fontSize.sm),
-      z: Infinity,
     })
     engine.add(this.progressBar)
   }
 
   onActivate() {
+    this.progressBar.progress = 0
     this.progressBar.graphics.opacity = 0
-    this.labels.forEach((l) => {
-      l.graphics.opacity = 0
-    })
+    this.complete = false
 
     setTimeout(() => {
-      this.labels.forEach((l) => {
-        l.actions.fade(1, 500)
-      })
-      if (this.progressBar.progress < 100) {
-        this.progressBar.actions.fade(1, 500)
+      if (!this.complete) {
+        this.progressBar.actions.fade(1, 250)
       }
-    }, 500)
+    }, 1000)
+
+    this.labels.forEach((l) => {
+      l.graphics.opacity = 1
+    })
   }
 
   onLoad(progress: number) {
@@ -85,16 +82,17 @@ export default class Loading extends ex.Scene {
   }
 
   onLoadComplete() {
+    this.complete = true
     this.progressBar.actions.clearActions()
     this.progressBar.actions.fade(0, 250)
 
-    if (this.initial) {
-      setTimeout(() => {
-        this.emit('continue', undefined)
-      }, 2000)
-    }
+    setTimeout(() => {
+      this.emit('continue', undefined)
+    }, Math.max(0, 1500 - this.elapsedTime))
+  }
 
-    this.initial = false
+  onPreUpdate(_, delta) {
+    this.elapsedTime += delta
   }
 }
 

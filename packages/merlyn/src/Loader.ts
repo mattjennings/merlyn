@@ -1,4 +1,5 @@
 import type { Loadable } from 'excalibur'
+import { GameEvent } from 'excalibur'
 import { Class } from 'excalibur'
 
 /**
@@ -19,12 +20,16 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     const resources = this.data.filter((r) => !r.isLoaded())
 
     this.emit('start', resources)
+    this.emit('progress', new ProgressEvent(this, 0))
 
     const result = await Promise.all(
       resources.map((r) =>
         r.load().finally(() => {
           numLoaded++
-          this.emit('progress', (numLoaded / resources.length) * 100)
+          this.emit(
+            'progress',
+            new ProgressEvent(this, (numLoaded / resources.length) * 100)
+          )
         })
       )
     )
@@ -46,4 +51,14 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
   wireEngine() {}
   update() {}
   draw() {}
+}
+
+class ProgressEvent extends GameEvent<Loader> {
+  progress: number
+
+  constructor(target: Loader, progress: number) {
+    super()
+    this.target = target
+    this.progress = progress
+  }
 }
