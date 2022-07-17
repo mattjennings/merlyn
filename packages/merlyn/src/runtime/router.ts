@@ -50,16 +50,6 @@ export class Router {
       throw new Error(`No scene named ${name}`)
     }
 
-    // // play outro transition
-    // if (!isBooting || transition?.persistOnLoading) {
-    //   // if initial scene and persistOnLoading, start transition at completed state of outro
-    //   await this.executeTransition({
-    //     type: 'outro',
-    //     transition,
-    //     progress: isBooting ? 1 : 0,
-    //   })
-    // }
-
     if (this.sceneNeedsLoading(name)) {
       scene = await this.loadScene(name, options)
     } else {
@@ -145,9 +135,10 @@ export class Router {
 
   private async loadScene<Data = any>(
     name: string,
-    { transition, ...options }: GoToSceneOptions<Data>
+    { transition }: GoToSceneOptions<Data>
   ) {
     if (this.sceneNeedsLoading(name)) {
+      // skip outro if this is initial loading screen
       if (!isBooting) {
         await this.executeTransition({
           type: 'outro',
@@ -165,39 +156,41 @@ export class Router {
       this.engine.goToScene(this.getLoadingScene(name))
 
       let delayedIntro: NodeJS.Timeout
-      let didIntro = false
+      let shouldOutro = Boolean(transition && isBooting) // always outro if initial loading screen
 
       // play intro into loading scene
-      if (transition) {
-        if (!isBooting) {
-          if (typeof transition.persistOnLoading === 'boolean') {
-            if (!transition.persistOnLoading) {
-              // carry transition instance into loading scene
-              this.engine.add(transition)
-              await this.executeTransition({
-                type: 'intro',
-                transition,
-              })
-              didIntro = true
-            }
-          } else if (transition.persistOnLoading.delay) {
-            // carry transition instance into loading scene
-            this.engine.add(transition)
-            delayedIntro = setTimeout(() => {
-              this.executeTransition({
-                type: 'intro',
-                transition,
-              })
-              didIntro = true
-            }, transition.persistOnLoading.delay)
-          }
+      if (!isBooting && transition) {
+        // carry transition instance into loading scene
+        if (transition.persistOnLoading !== false) {
+          this.engine.add(transition)
+        }
+
+        if (typeof transition.persistOnLoading === 'number') {
+          delayedIntro = setTimeout(() => {
+            this.executeTransition({
+              type: 'intro',
+              transition,
+            })
+            shouldOutro = true
+          }, transition.persistOnLoading)
+        } else if (transition.persistOnLoading === false) {
+          await this.executeTransition({
+            type: 'intro',
+            transition,
+          })
+          shouldOutro = true
         }
       }
 
       // load assets for scene
       await this.preloadScene(name)
 
-      if (isBooting || didIntro) {
+      if (shouldOutro) {
+        // transition won't have been added yet if booting
+        if (isBooting) {
+          this.engine.add(transition)
+        }
+
         await this.executeTransition({
           type: 'outro',
           transition,

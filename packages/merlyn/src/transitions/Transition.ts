@@ -10,21 +10,17 @@ export interface TransitionArgs extends ActorArgs {
    * of the z-indexes you use, as the transition might overlay (or get overlayed by) the loading scene
    * entities.
    *
-   * If a delay is provided, it will only persist for that length of time before introing
+   * If a number is provided, it will only persist for that length of time in ms before introing
    * to the loading scene. It will outro when loading scene completes and intro again
    * on the following scene.
    */
-  persistOnLoading?:
-    | boolean
-    | {
-        delay: number
-      }
+  persistOnLoading?: boolean | number
 }
 
 export class Transition extends Actor {
   duration: { outro: number; intro: number }
   easing: (t: number) => number
-  persistOnLoading: boolean | { delay: number }
+  persistOnLoading: boolean | number
 
   isOutro = false
   progress = 0
@@ -33,9 +29,6 @@ export class Transition extends Actor {
   constructor({
     duration = 300,
     easing = (t) => t,
-    persistOnLoading = {
-      delay: 1000,
-    },
     ...args
   }: TransitionArgs = {}) {
     super(args)
@@ -45,7 +38,7 @@ export class Transition extends Actor {
         ? { outro: duration, intro: duration }
         : duration
     this.easing = easing
-    this.persistOnLoading = persistOnLoading
+    this.persistOnLoading = args.persistOnLoading
 
     this.on('preupdate', (ev) => {
       if (this.started) {

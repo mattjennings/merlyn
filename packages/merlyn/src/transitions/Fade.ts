@@ -10,6 +10,7 @@ export class Fade extends Transition {
     super({
       duration: 300,
       z: Infinity,
+      persistOnLoading: 200,
       ...args,
     })
   }

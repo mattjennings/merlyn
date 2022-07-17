@@ -1,6 +1,6 @@
 import { engine } from '$game'
 import type { Engine } from 'excalibur'
-import { ScreenElement, Color } from 'excalibur'
+import { ScreenElement } from 'excalibur'
 import type { TransitionArgs } from './Transition.js'
 import { Transition } from './Transition.js'
 
