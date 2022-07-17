@@ -8,6 +8,12 @@ export interface MerlynConfig {
     path: string
     boot: string
     preload?: boolean | string[]
+    loading?:
+      | string
+      | {
+          default?: string
+          boot?: string
+        }
   }
   devtool?: {
     enabled: boolean

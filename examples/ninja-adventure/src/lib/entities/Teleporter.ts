@@ -45,9 +45,8 @@ export class Teleporter extends ex.Actor {
           this.isNavigating = true
 
           goToScene(this._scene, {
-            transition: new CrossFade({
+            transition: new Fade({
               duration: 300,
-              persistOnLoading: { delay: 200 },
             }),
             onActivate: (scene) => {
               this.isNavigating = false

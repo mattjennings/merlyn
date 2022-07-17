@@ -77,7 +77,7 @@ export class Transition extends Actor {
 
   onOutroComplete() {}
 
-  async _execute(isOutro?: boolean, progress = 0) {
+  async execute(isOutro?: boolean, progress = 0) {
     this.isOutro = isOutro
     if (!this.isInitialized) {
       await new Promise((resolve) => {

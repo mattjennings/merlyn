@@ -29,6 +29,7 @@ export class BattleTransition extends Transition {
       ex.vec(this.scene.engine.drawWidth, this.scene.engine.drawHeight)
     )
     swirlShader.use()
+
     swirlShader.setUniformFloatVector(
       'u_resolution',
       ex.vec(this.scene.engine.drawWidth, this.scene.engine.drawHeight)
@@ -93,6 +94,7 @@ export class BattleTransition extends Transition {
       const adjusted = progress * 1.25 - 0.25
 
       swirlShader.setUniformFloat('u_time', adjusted * 2)
+      swirlShader.setUniform
     }
 
     this.fade.graphics.opacity = progress

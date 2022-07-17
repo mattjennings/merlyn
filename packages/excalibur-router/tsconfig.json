@@ -1,0 +1,23 @@
+{
+  "include": ["src", "types.d.ts"],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "lib": ["esnext"],
+    "types": ["vite/client"],
+    "target": "ES2015",
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "strict": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

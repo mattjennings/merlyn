@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/triple-slash-reference */
-/// <reference types="vite/client" />
-
 import type * as Excalibur from 'excalibur'
 
+// for some reason, this fixes module augmentation from replacing excalibur
+// instead of merging
 declare global {
-  export const ex: typeof Excalibur
+  export type ex = typeof Excalibur
 }
 
 declare module 'excalibur' {

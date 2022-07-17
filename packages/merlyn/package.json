@@ -25,7 +25,6 @@
     "./types": "./types.d.ts",
     "./package.json": "./package.json",
     "./runtime": "./dist/runtime/index.js",
-    "./runtime/DefaultLoading.js": "./dist/runtime/DefaultLoading.js",
     "./vite": "./dist/vite/index.js",
     "./transitions": "./dist/transitions/index.js",
     ".": "./dist/index.js"
@@ -64,7 +63,8 @@
   },
   "peerDependencies": {
     "excalibur": "^0.27.0",
-    "@excaliburjs/dev-tools": "^0.27.1"
+    "@excaliburjs/dev-tools": "^0.27.1",
+    "excalibur-router": "^0.0.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.38",

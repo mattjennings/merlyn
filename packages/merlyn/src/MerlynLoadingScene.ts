@@ -1,4 +1,8 @@
-export default class Loading extends ex.Scene {
+import { CrossFade } from 'excalibur-router/transitions'
+
+export class MerlynLoadingScene extends ex.Scene {
+  transition = new CrossFade()
+
   defer = import.meta.env.PROD
 
   labels: ex.Label[] = []

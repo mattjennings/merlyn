@@ -1,4 +1,3 @@
-import { engine } from '$game'
 import type { Engine } from 'excalibur'
 import { ScreenElement } from 'excalibur'
 import type { TransitionArgs } from './Transition.js'
@@ -75,7 +74,7 @@ export class CrossFade extends Transition {
   onOutroComplete() {}
 
   private takeScreenshot() {
-    engine.screenshot(true).then((el) => {
+    this.scene.engine.screenshot(true).then((el) => {
       this.screenshot = el
     })
   }
