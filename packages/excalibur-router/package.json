@@ -1,0 +1,41 @@
+{
+  "name": "excalibur-router",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "types.d.ts"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "release": "npm run build && npm publish --access public"
+  },
+  "exports": {
+    "./transitions": "./dist/transitions/index.js",
+    ".": "./dist/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "transitions": [
+        "dist/transitions/index.d.ts"
+      ]
+    }
+  },
+  "keywords": [],
+  "author": "mattjennings",
+  "license": "ISC",
+  "peerDependencies": {
+    "excalibur": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.38",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4",
+    "excalibur": "^0.27.0"
+  }
+}

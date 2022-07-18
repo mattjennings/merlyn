@@ -10,8 +10,8 @@ const engine = new ex.Engine({
   backgroundColor: ex.Color.Black,
   displayMode: ex.DisplayMode.FitContainer,
   resolution: ex.Resolution.GameBoyAdvance,
-  suppressConsoleBootMessage: import.meta.env.DEV,
   antialiasing: false,
+  suppressConsoleBootMessage: import.meta.env.DEV,
 })
 
 document.addEventListener('visibilitychange', () => {

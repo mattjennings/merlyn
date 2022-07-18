@@ -5,8 +5,6 @@ import { Loader } from '../Loader.js'
 
 export const loader = new Loader([])
 
-const resources: Loadable<any>[] = []
-
 const imgLoader = (url, options) =>
   new ImageSource(url, options.bustCache, options.filtering)
 
@@ -30,7 +28,7 @@ const resourceLoaders = {
 }
 
 export function getResources() {
-  return [...resources]
+  return [...loader.data]
 }
 
 export function addResource(url: string, options?: any) {
@@ -45,11 +43,11 @@ export function addResource(url: string, options?: any) {
   } else {
     type = url.split('?')[0].split('.').pop()
   }
-  const loader = resourceLoaders[type]
+  const loadResource = resourceLoaders[type]
 
   if (loader) {
-    const resource = loader(url, options ?? {})
-    resources.push(resource)
+    const resource = loadResource(url, options ?? {})
+    loader.addResources([resource])
     return resource
   }
 

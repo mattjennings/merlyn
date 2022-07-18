@@ -1,4 +1,4 @@
-import { goToScene } from '$game'
+import { router } from '$game'
 import Tilemap from '$lib/entities/Tilemap'
 import type { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
@@ -48,7 +48,7 @@ export default class World extends ex.Scene {
       },
     })
 
-    goToScene('battle', {
+    router.goto('battle', {
       data: async () => {
         const Cyclops = await import(
           '$lib/entities/battle/enemies/Cyclops'

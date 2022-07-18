@@ -38,6 +38,7 @@ function types(cwd: string) {
 
   return dedent(/* ts */ `
     import type { TiledMapResource } from '@excaliburjs/plugin-tiled'
+    import type { Router } from 'excalibur-router'
 
     interface Resource {
       ${files.map((file) => `'${file}': ${getResourceType(file)}`).join('\n')}
@@ -45,6 +46,10 @@ function types(cwd: string) {
     
     declare global {
       export function $res<T extends keyof Resource>(path: T): Resource[T]
+    }
+
+    declare module '$game' {
+      export let router: Router<any, any>
     }
   `)
 }

@@ -1,4 +1,4 @@
-import { goToScene } from '$game'
+import { router } from '$game'
 import { Player } from '$lib/Player'
 import { CrossFade, Fade } from 'merlyn/transitions'
 import type { ActorArgs } from 'excalibur'
@@ -44,10 +44,9 @@ export class Teleporter extends ex.Actor {
         ) {
           this.isNavigating = true
 
-          goToScene(this._scene, {
-            transition: new CrossFade({
+          router.goto(this._scene, {
+            transition: new Fade({
               duration: 300,
-              persistOnLoading: { delay: 200 },
             }),
             onActivate: (scene) => {
               this.isNavigating = false

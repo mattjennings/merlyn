@@ -10,6 +10,7 @@ declare global {
 declare module 'excalibur' {
   export interface Scene {
     isTransitioning?: boolean
+    transition?: Transition
 
     onIntroStart?(): void
     onIntro?(progress: number): void

@@ -1,8 +1,11 @@
-export default class Loading extends ex.Scene {
-  defer = import.meta.env.PROD
+import * as ex from 'excalibur'
 
-  labels: ex.Label[] = []
-  progressBar: ProgressBar
+export default class BootLoader extends ex.Scene {
+  // prevents navigation until this scene emits a 'complete' event
+  defer = true
+
+  label!: ex.Label
+  progressBar!: ProgressBar
   elapsedTime = 0
   complete = false
 
@@ -12,45 +15,19 @@ export default class Loading extends ex.Scene {
       lg: Math.max(engine.drawHeight, engine.drawWidth) / 10,
     }
 
-    this.labels.push(
-      new ex.Label({
-        text: '🧙‍♂️',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2,
-        font: new ex.Font({
-          textAlign: ex.TextAlign.Center,
-          family: 'Helvetica',
-          size: fontSize.lg,
-          unit: ex.FontUnit.Px,
-          color: ex.Color.White,
-          quality: window.devicePixelRatio * 2,
-        }),
+    this.label = new ex.Label({
+      text: 'Loading...',
+      x: engine.drawWidth / 2,
+      y: engine.drawHeight / 2,
+      font: new ex.Font({
+        textAlign: ex.TextAlign.Center,
+        family: 'Helvetica',
+        size: fontSize.lg,
+        unit: ex.FontUnit.Px,
+        color: ex.Color.White,
+        quality: window.devicePixelRatio * 2,
       }),
-      new ex.Label({
-        text: 'made with merlyn',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2 + fontSize.sm * 2,
-        font: new ex.Font({
-          textAlign: ex.TextAlign.Center,
-          family: 'Luminari',
-          size: fontSize.sm,
-          unit: ex.FontUnit.Px,
-          color: ex.Color.White,
-          quality: window.devicePixelRatio * 2,
-        }),
-      })
-    )
-
-    engine.add(
-      new ex.ScreenElement({
-        x: 0,
-        y: 0,
-        width: engine.drawWidth,
-        height: engine.drawHeight,
-        color: ex.Color.fromHex('#334155'),
-      })
-    )
-    this.labels.forEach((l) => engine.add(l))
+    })
 
     this.progressBar = new ProgressBar({
       x: engine.drawWidth / 2,
@@ -58,23 +35,15 @@ export default class Loading extends ex.Scene {
       width: engine.drawWidth * 0.75,
       height: Math.round(fontSize.sm),
     })
+
+    engine.add(this.label)
     engine.add(this.progressBar)
   }
 
   onActivate() {
-    this.progressBar.progress = 0
-    this.progressBar.graphics.opacity = 0
     this.complete = false
-
-    setTimeout(() => {
-      if (!this.complete) {
-        this.progressBar.actions.fade(1, 250)
-      }
-    }, 1000)
-
-    this.labels.forEach((l) => {
-      l.graphics.opacity = 1
-    })
+    this.label.text = 'Loading...'
+    this.label.graphics.opacity = 1
   }
 
   onLoad(progress: number) {
@@ -85,13 +54,14 @@ export default class Loading extends ex.Scene {
     this.complete = true
     this.progressBar.actions.clearActions()
     this.progressBar.actions.fade(0, 250)
+    this.label.text = 'Click to play'
 
-    setTimeout(() => {
+    this.engine.input.pointers.primary.once('down', () => {
       this.emit('continue', undefined)
-    }, Math.max(0, 1500 - this.elapsedTime))
+    })
   }
 
-  onPreUpdate(_, delta) {
+  onPreUpdate(engine: ex.Engine, delta: number) {
     this.elapsedTime += delta
   }
 }

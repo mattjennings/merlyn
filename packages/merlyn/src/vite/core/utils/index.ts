@@ -1,5 +1,5 @@
 import path from 'path'
-import { writeFileSync, readFileSync } from 'fs'
+import { existsSync, writeFileSync, readFileSync } from 'fs'
 import { mkdirp, posixify } from './fs.js'
 
 const previousContents = new Map<string, string>()
@@ -8,10 +8,12 @@ export function writeIfChanged(file: string, code: string, checkFs = false) {
   let previous = previousContents.get(file)
 
   if (!previous && checkFs) {
-    previous = readFileSync(file, 'utf8')
+    if (existsSync(file)) {
+      previous = readFileSync(file, 'utf8')
+    }
   }
 
-  if (code !== previous) {
+  if (!previous || code !== previous) {
     write(file, code)
   }
 }
