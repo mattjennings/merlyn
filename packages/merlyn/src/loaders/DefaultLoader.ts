@@ -1,6 +1,6 @@
 import { CrossFadeTransition } from 'excalibur-router'
 
-export class MerlynLoadingScene extends ex.Scene {
+export class DefaultLoader extends ex.Scene {
   transition = new CrossFadeTransition()
 
   defer = import.meta.env.PROD
@@ -126,7 +126,7 @@ class ProgressBar extends ex.Actor {
           ctx,
           0,
           0,
-          this.width * Math.max(0.05, Math.min(1, this.progress / 100)),
+          this.width * Math.max(0.01, Math.min(1, this.progress / 100)),
           this.height,
           this.height / 2,
           ex.Color.White,

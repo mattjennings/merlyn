@@ -15,26 +15,28 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     this.addResources(loadables ?? [])
   }
 
-  async load() {
+  async load(resources = this.data) {
     let numLoaded = 0
-    const resources = this.data.filter((r) => !r.isLoaded())
 
     this.emit('start', resources)
     this.emit('progress', new ProgressEvent(this, 0))
 
-    const result = await Promise.all(
-      resources.map((r) =>
-        r.load().finally(() => {
-          numLoaded++
-          this.emit(
-            'progress',
-            new ProgressEvent(this, (numLoaded / resources.length) * 100)
-          )
-        })
-      )
+    await Promise.all(
+      resources.map(async (r) => {
+        if (!r.isLoaded()) {
+          await r.load().finally(() => {
+            numLoaded++
+            this.emit(
+              'progress',
+              new ProgressEvent(this, (numLoaded / resources.length) * 100)
+            )
+          })
+        }
+      })
     )
     this.emit('complete', resources)
-    return result
+
+    return resources
   }
 
   addResources(loadables: any[]) {

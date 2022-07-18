@@ -34,7 +34,10 @@ export async function start(manifest: Manifest) {
   // @ts-ignore
   router.resourceLoader = loader
 
-  router.addResource(manifest.loaders.resources)
+  // load resources needed for loading scenes if necessary
+  if (manifest.loaders.resources.length) {
+    await loader.load(manifest.loaders.resources)
+  }
 
   router.start(engine).then(() => {
     const loader = 'boot' in manifest.loaders.files ? 'boot' : 'default'

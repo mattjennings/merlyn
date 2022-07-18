@@ -18,7 +18,10 @@ export async function dev(vite: ViteDevServer) {
 
   for (const event of ['add', 'unlink', 'unlinkDir']) {
     vite.watcher.on(event, (file) => {
-      if (file.includes(merlynConfig.scenes.path)) {
+      if (
+        file.includes(merlynConfig.scenes.path) ||
+        file.includes(merlynConfig.loaders.path)
+      ) {
         writeMerlynData(merlynConfig)
       }
     })

@@ -27,6 +27,7 @@
     "./runtime": "./dist/runtime/index.js",
     "./vite": "./dist/vite/index.js",
     "./transitions": "./dist/transitions/index.js",
+    "./loaders": "./dist/loaders/index.js",
     ".": "./dist/index.js"
   },
   "typesVersions": {
@@ -36,6 +37,9 @@
       ],
       "transitions": [
         "dist/transitions/index.d.ts"
+      ],
+      "loaders": [
+        "dist/loaders/index.d.ts"
       ]
     }
   },
