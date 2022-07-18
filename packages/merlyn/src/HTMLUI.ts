@@ -39,6 +39,8 @@ export class HTMLUI extends Actor {
     }
 
     this.parentElement = parent
+    this.parentElement.appendChild(this.element)
+
     this.resizeObserver = new ResizeObserver(() => {
       this.resizeToCanvas()
     })
@@ -54,11 +56,10 @@ export class HTMLUI extends Actor {
   onInitialize(engine: Engine): void {
     this.engine = engine
     this.resizeToCanvas()
-
-    this.parentElement.appendChild(this.element)
-
     this.engine.currentScene.on('activate', () => {
-      this.parentElement.appendChild(this.element)
+      if (!this.element.parentElement) {
+        this.parentElement.appendChild(this.element)
+      }
     })
 
     this.engine.currentScene.on('deactivate', () => {
