@@ -43,7 +43,7 @@
   "author": "mattjennings",
   "license": "ISC",
   "dependencies": {
-    "@excaliburjs/plugin-tiled": "^0.26.2",
+    "@excaliburjs/plugin-tiled": "^0.27.0",
     "abstract-syntax-tree": "^2.20.6",
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
