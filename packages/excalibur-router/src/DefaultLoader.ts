@@ -1,25 +1,10 @@
-import type { ActorArgs, Engine } from 'excalibur'
-import {
-  Actor,
-  Canvas,
-  Color,
-  Font,
-  FontUnit,
-  Label,
-  ScreenElement,
-  TextAlign,
-  Util,
-} from 'excalibur'
+import type { ActorArgs, Engine, Label } from 'excalibur'
+import { Actor, Canvas, Color, Util } from 'excalibur'
 import { Scene } from 'excalibur'
-import { CrossFade } from './transitions/CrossFade.js'
 
 export class DefaultLoader extends Scene {
-  transition = new CrossFade()
-
-  defer = true
-
   labels: Label[] = []
-  progressBar: ProgressBar
+  progressBar!: ProgressBar
   elapsedTime = 0
   complete = false
 
@@ -29,49 +14,9 @@ export class DefaultLoader extends Scene {
       lg: Math.max(engine.drawHeight, engine.drawWidth) / 10,
     }
 
-    this.labels.push(
-      new Label({
-        text: '🧙‍♂️',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2,
-        font: new Font({
-          textAlign: TextAlign.Center,
-          family: 'Helvetica',
-          size: fontSize.lg,
-          unit: FontUnit.Px,
-          color: Color.White,
-          quality: window.devicePixelRatio * 2,
-        }),
-      }),
-      new Label({
-        text: 'made with merlyn',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2 + fontSize.sm * 2,
-        font: new Font({
-          textAlign: TextAlign.Center,
-          family: 'Luminari',
-          size: fontSize.sm,
-          unit: FontUnit.Px,
-          color: Color.White,
-          quality: window.devicePixelRatio * 2,
-        }),
-      })
-    )
-
-    engine.add(
-      new ScreenElement({
-        x: 0,
-        y: 0,
-        width: engine.drawWidth,
-        height: engine.drawHeight,
-        color: Color.fromHex('#334155'),
-      })
-    )
-    this.labels.forEach((l) => engine.add(l))
-
     this.progressBar = new ProgressBar({
       x: engine.drawWidth / 2,
-      y: engine.drawHeight - fontSize.sm * 4,
+      y: engine.drawHeight / 2,
       width: engine.drawWidth * 0.75,
       height: Math.round(fontSize.sm),
     })
@@ -79,19 +24,7 @@ export class DefaultLoader extends Scene {
   }
 
   onActivate() {
-    this.progressBar.progress = 0
-    this.progressBar.graphics.opacity = 0
     this.complete = false
-
-    setTimeout(() => {
-      if (!this.complete) {
-        this.progressBar.actions.fade(1, 250)
-      }
-    }, 1000)
-
-    this.labels.forEach((l) => {
-      l.graphics.opacity = 1
-    })
   }
 
   onLoad(progress: number) {
@@ -101,14 +34,9 @@ export class DefaultLoader extends Scene {
   onLoadComplete() {
     this.complete = true
     this.progressBar.actions.clearActions()
-    this.progressBar.actions.fade(0, 250)
-
-    setTimeout(() => {
-      this.emit('continue', undefined)
-    }, Math.max(0, 1500 - this.elapsedTime))
   }
 
-  onPreUpdate(_, delta) {
+  onPreUpdate(engine: Engine, delta: number) {
     this.elapsedTime += delta
   }
 }
