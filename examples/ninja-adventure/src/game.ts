@@ -1,9 +1,9 @@
 /// <reference types="svelte" />
 
-import { Fade, CrossFade } from 'merlyn/transitions'
+import { CrossFadeTransition } from 'merlyn/transitions'
 import './styles.css'
 
-export const transition = new CrossFade()
+export const transition = new CrossFadeTransition()
 
 const engine = new ex.Engine({
   canvasElementId: 'game',

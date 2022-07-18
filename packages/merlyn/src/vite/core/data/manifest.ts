@@ -4,7 +4,7 @@ import type { MerlynConfig } from '../types.js'
 import { writeIfChanged, getRouteName } from '../utils/index.js'
 import { walk } from '../utils/fs.js'
 import { format } from 'prettier'
-import type { Transition } from 'excalibur-router/transitions'
+import type { Transition } from 'excalibur-router'
 import { existsSync } from 'fs'
 export interface Manifest {
   title: string

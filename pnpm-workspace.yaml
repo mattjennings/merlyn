@@ -2,4 +2,3 @@ packages:
   - packages/*
   - examples/*
   - packages/create-merlyn/templates/*
-  - packages/excalibur-router/examples/*

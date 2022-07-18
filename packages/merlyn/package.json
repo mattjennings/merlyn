@@ -48,7 +48,7 @@
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
     "excalibur": "^0.26.0",
-    "excalibur-router": "^0.0.0",
+    "excalibur-router": "^0.0.6",
     "fs-extra": "^10.1.0",
     "kleur": "^4.1.4",
     "magic-string": "^0.26.2",
@@ -65,7 +65,7 @@
   "peerDependencies": {
     "excalibur": "^0.27.0",
     "@excaliburjs/dev-tools": "^0.27.1",
-    "excalibur-router": "^0.0.0"
+    "excalibur-router": "^0.0.6"
   },
   "devDependencies": {
     "@types/node": "^17.0.38",

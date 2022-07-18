@@ -1,6 +1,6 @@
-import { CrossFade } from 'merlyn/transitions'
+import { CrossFadeTransition } from 'merlyn/transitions'
 
-export const transition = new CrossFade()
+export const transition = new CrossFadeTransition()
 
 const engine = new ex.Engine({
   backgroundColor: ex.Color.fromHex('#5fcde4'),
