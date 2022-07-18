@@ -2,7 +2,7 @@ import { BattleCharacter } from '$lib/entities/BattleCharacter'
 import Tilemap from '$lib/entities/Tilemap'
 import tilemap from '$res/Tilemaps/battle.tmx'
 import imgPlayer from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
-import { goToScene } from '$game'
+import { router } from '$game'
 import { Fade } from 'merlyn/transitions'
 import { SvelteUI } from '$lib/ui/SvelteUI'
 import BattleSvelte from '$lib/ui/Battle.svelte'
@@ -48,7 +48,7 @@ export default class Battle extends ex.Scene {
       await Promise.all(
         this.heros.map((hero) => hero.moveTo(ex.vec(32, 0), 300))
       )
-      goToScene('world', {
+      router.goto('world', {
         transition: new Fade(),
       })
     }

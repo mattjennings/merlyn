@@ -13,7 +13,9 @@ export async function loadConfig({
     scenes: {
       path: 'src/scenes',
       boot: 'index',
-      loading: 'loading',
+    },
+    loaders: {
+      path: 'src/loaders',
     },
     build: {
       outDir: 'dist',

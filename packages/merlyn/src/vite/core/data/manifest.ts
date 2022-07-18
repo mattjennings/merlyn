@@ -4,34 +4,26 @@ import type { MerlynConfig } from '../types.js'
 import { writeIfChanged, getRouteName } from '../utils/index.js'
 import { walk } from '../utils/fs.js'
 import { format } from 'prettier'
-
+import type { Transition } from 'excalibur-router/transitions'
+import { existsSync } from 'fs'
 export interface Manifest {
   title: string
   game: Engine
+  transition?: Transition
   devtool?: { enabled?: boolean }
   scenes: {
     boot: string
     files: Record<string, SceneData>
-    loading: {
-      default: string
-      boot: string
-      resources: Loadable<any>[]
-    }
+  }
+  loaders: {
+    files: Record<string, typeof Scene>
+    resources: Loadable<any>[]
   }
 }
 
-export type SceneData = {
-  path: string
-} & (
-  | {
-      isPreloaded: true
-      scene: typeof Scene
-    }
-  | {
-      isPreloaded: false | undefined
-      scene: () => Promise<{ default: typeof Scene }>
-    }
-)
+export type SceneData =
+  | typeof Scene
+  | (() => Promise<{ default: typeof Scene }>)
 
 export function writeManifest(
   cwd: string,
@@ -46,8 +38,9 @@ export function writeManifest(
 
 function manifest(cwd: string, outDir: string, config: MerlynConfig) {
   const sceneImports = new Set()
-  const loadingSceneImports = new Set()
+  const loaderImports = new Set()
 
+  let loaders: Record<string, string> = {}
   const scenes: Record<string, { isPreloaded?: boolean; path?: string }> = walk(
     config.scenes.path
   ).reduce((acc, name) => {
@@ -56,46 +49,30 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
     const scenePath = path.relative(outDir, path.join(config.scenes.path, name))
 
     if (isPreloaded) {
-      const isLoadingScene = isSceneLoadingScene(key)
-      const imports = isLoadingScene ? loadingSceneImports : sceneImports
-      imports.add(`import _scene_${toValidName(key)} from '${scenePath}'`)
+      sceneImports.add(
+        `import ${toVarName(key, '_scene_')} from '${scenePath}'`
+      )
     }
 
     acc[key] = {
       isPreloaded,
       path: scenePath,
     }
-
     return acc
   }, {})
 
-  // todo: correctly default loading scenes, but only if not defined in config
-  // todo: make sure boot/default differentiations work
-  const defaultLoadingScene =
-    typeof config.scenes.loading === 'string'
-      ? config.scenes.loading
-      : config.scenes.loading.default
-
-  const bootLoadingScene =
-    typeof config.scenes.loading === 'string'
-      ? config.scenes.loading
-      : config.scenes.loading.boot
-
-  // if loading scenes dont exist, use MerlynLoadingScene
-  if (!scenes[defaultLoadingScene] || !scenes[bootLoadingScene]) {
-    scenes[defaultLoadingScene] ??= {
-      isPreloaded: true,
-    }
-    scenes[bootLoadingScene] ??= {
-      isPreloaded: true,
-    }
-    ;[defaultLoadingScene, bootLoadingScene].forEach((key) => {
-      loadingSceneImports.add(
-        `import { MerlynLoadingScene as _scene_${toValidName(
-          key
-        )} } from 'merlyn'`
+  if (existsSync(config.loaders.path)) {
+    loaders = walk(config.loaders.path).reduce((acc, name) => {
+      const key = getRouteName(name, config.loaders.path)
+      const loaderPath = path.relative(
+        outDir,
+        path.join(config.loaders.path, name)
       )
-    })
+      const varName = toVarName(key, '_loader_')
+      loaderImports.add(`import ${varName} from '${loaderPath}'`)
+      acc[key] = varName
+      return acc
+    }, {})
   }
 
   return /* js */ `
@@ -103,8 +80,8 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
 
     // import loading scenes first, get any resources used by them
     import { getResources } from '$game'    
-    ${Array.from(loadingSceneImports).join('\n')}
-    const loadingResources = getResources()
+    ${Array.from(loaderImports).join('\n')}
+    const loaderResources = getResources()
     // end of loading scenes
     
     // import preloaded scenes
@@ -117,45 +94,37 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
 
     export const devtool = ${JSON.stringify(config.devtool)};
     export const game = _game.default;
+    export const transition = _game.transition
     export const title = ${JSON.stringify(config.title)}
 
 		export const scenes = {
-      boot: ${JSON.stringify(config.scenes.boot)},
-      loading: {
-        resources: loadingResources,
-        default: ${JSON.stringify(
-          typeof config.scenes.loading === 'string'
-            ? config.scenes.loading
-            : config.scenes.loading.default
-        )},
-        boot: ${JSON.stringify(
-          typeof config.scenes.loading === 'string'
-            ? config.scenes.loading
-            : config.scenes.loading.boot
-        )},
-      },      
+      boot: ${JSON.stringify(config.scenes.boot)},     
       files: {
         ${Object.entries(scenes)
           .map(([key, value]) => {
-            return `${JSON.stringify(key)}: {
-              isPreloaded: ${value.isPreloaded ? 'true' : 'false'},
-              scene: ${
-                value.isPreloaded
-                  ? `new _scene_${toValidName(key)}()`
-                  : `() => import("${value.path}")`
-              }
-          }`
+            return `${JSON.stringify(key)}: ${
+              value.isPreloaded
+                ? toVarName(key, '_scene_')
+                : `() => import("${value.path}")`
+            }
+          `
           })
           .join(',')}
+      }
+    }
+
+    export const loaders = {
+      resources: loaderResources,
+      files: {
+        ${Object.entries(loaders)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(',\n')}
       }
     }
   `
 }
 
 function isScenePreloaded(name: string, config: MerlynConfig) {
-  if (isSceneLoadingScene(name)) {
-    return true
-  }
   if (typeof config.scenes.preload === 'boolean' || !config.scenes.preload) {
     return !!config.scenes.preload
   }
@@ -163,10 +132,10 @@ function isScenePreloaded(name: string, config: MerlynConfig) {
   return config.scenes.preload.includes(name)
 }
 
-function isSceneLoadingScene(name: string) {
-  return name === 'loading' || name.startsWith('loading/')
+function isLoader(name: string) {
+  return name === 'loader' || name.startsWith('loader/')
 }
 
-function toValidName(name: string) {
-  return name.replace(/[^a-zA-Z0-9]/g, '_')
+function toVarName(name: string, prefix: string) {
+  return `${prefix}${name.replace(/[^a-zA-Z0-9]/g, '_')}`
 }

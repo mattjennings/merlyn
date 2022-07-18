@@ -26,43 +26,25 @@ export async function start(manifest: Manifest) {
     devtool = new DevTool(engine)
   }
 
-  const routes = Object.entries(manifest.scenes.files).reduce(
-    (acc, [key, { scene }]) => {
-      if (!key.startsWith('loading')) {
-        acc[key] = scene
-      }
-      return acc
-    },
-    {}
-  ) as any
-
-  const loaders = Object.entries(manifest.scenes.files).reduce(
-    (acc, [key, { scene }]) => {
-      if (key.startsWith('loading')) {
-        acc[key] = scene
-      }
-      return acc
-    },
-    {}
-  ) as any
-
-  router = new Router(engine, {
-    routes,
-    loaders,
-    defaultLoader: manifest.scenes.loading.default,
+  router = new Router({
+    routes: manifest.scenes.files,
+    loaders: manifest.loaders.files,
   })
 
   // @ts-ignore
-  router.loader = loader
+  router.resourceLoader = loader
 
-  router.addResources(manifest.scenes.loading.resources)
+  router.addResource(manifest.loaders.resources)
 
-  engine.start().then(() => {
-    router.goto(manifest.scenes.boot)
+  router.start(engine).then(() => {
+    const loader = 'boot' in manifest.loaders.files ? 'boot' : 'default'
+
+    router.goto(manifest.scenes.boot, {
+      loader,
+      transition: manifest.transition,
+    })
   })
 }
-
-export const goToScene = (...args) => router.goto.call(router, ...args)
 
 window.addEventListener('pointerdown', () => {
   WebAudio.unlock()

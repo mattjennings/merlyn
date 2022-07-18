@@ -64,7 +64,7 @@ export class Router<
       onActivate?: (scene: Scene) => void
     } = {}
   ) {
-    let transition = options.transition
+    const transition = options.transition
     let scene = this.engine.scenes[name] as Scene
 
     // check if scene exists
@@ -84,9 +84,6 @@ export class Router<
     scene.once('activate', () => {
       options.onActivate?.(scene)
     })
-    if (!transition) {
-      transition = this.engine.currentScene?.transition
-    }
 
     this.engine.goToScene(name, options.data)
 
@@ -164,7 +161,7 @@ export class Router<
       loader?: Extract<keyof Loaders, string>
     } = {}
   ) {
-    let transition = options.transition
+    const transition = options.transition
     const loader = options.loader ?? 'default'
 
     if (this.sceneNeedsLoading(name)) {
@@ -178,10 +175,6 @@ export class Router<
 
       // go to loading scene
       this.engine.goToScene(loader)
-
-      if (!transition) {
-        transition = this.engine.currentScene?.transition
-      }
 
       let delayedIntro: number
       let shouldOutro = Boolean(transition && this.isBooting) // always outro if initial loading screen

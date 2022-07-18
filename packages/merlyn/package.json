@@ -48,6 +48,7 @@
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
     "excalibur": "^0.26.0",
+    "excalibur-router": "^0.0.0",
     "fs-extra": "^10.1.0",
     "kleur": "^4.1.4",
     "magic-string": "^0.26.2",

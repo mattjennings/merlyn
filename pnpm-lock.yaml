@@ -20,6 +20,7 @@ importers:
       eslint: ^8.16.0
       eslint-plugin-svelte3: ^4.0.0
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -42,6 +43,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:packages/excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -79,6 +81,7 @@ importers:
       del: ^6.1.1
       events: ^3.3.0
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -106,6 +109,7 @@ importers:
       del: 6.1.1
       events: 3.3.0
       excalibur: 0.27.0
+      excalibur-router: link:../../packages/excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -139,6 +143,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       focus-trap: ^6.9.4
       fs-extra: ^10.1.0
       kleur: ^4.1.4
@@ -162,6 +167,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../../packages/excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -190,6 +196,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -210,6 +217,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../../packages/excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -232,6 +240,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -251,6 +260,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../../packages/excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -280,6 +290,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -299,6 +310,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../../../excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -320,6 +332,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -340,6 +353,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../../../excalibur-router
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -376,7 +390,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
-      excalibur-router: latest
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -397,6 +411,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../..
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -410,10 +425,9 @@ importers:
       vite: 2.9.9
       vite-plugin-full-reload: 1.0.0
     devDependencies:
-      excalibur-router: link:../..
       typescript: 4.7.4
 
-  packages/excalibur-router/examples/loaders:
+  packages/excalibur-router/examples/with-default-loader:
     specifiers:
       '@excaliburjs/plugin-tiled': ^0.26.2
       abstract-syntax-tree: ^2.20.6
@@ -421,7 +435,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
-      excalibur-router: latest
+      excalibur-router: ^0.0.0
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -442,6 +456,7 @@ importers:
       deepmerge: 4.2.2
       del: 6.1.1
       excalibur: 0.27.0
+      excalibur-router: link:../..
       fs-extra: 10.1.0
       kleur: 4.1.4
       magic-string: 0.26.2
@@ -455,7 +470,51 @@ importers:
       vite: 2.9.9
       vite-plugin-full-reload: 1.0.0
     devDependencies:
+      typescript: 4.7.4
+
+  packages/excalibur-router/examples/with-multiple-loaders:
+    specifiers:
+      '@excaliburjs/plugin-tiled': ^0.26.2
+      abstract-syntax-tree: ^2.20.6
+      dedent: ^0.7.0
+      deepmerge: ^4.2.2
+      del: ^6.1.1
+      excalibur: ^0.27.0
+      excalibur-router: ^0.0.0
+      fs-extra: ^10.1.0
+      kleur: ^4.1.4
+      magic-string: ^0.26.2
+      merlyn: workspace:*
+      mkdirp: ^1.0.4
+      prettier: ^2.6.2
+      query-string: ^7.1.1
+      sade: ^1.8.1
+      sirv: ^2.0.2
+      typescript: ^4.6.4
+      unplugin-auto-import: ^0.9.2
+      vite: ^2.9.9
+      vite-plugin-full-reload: ^1.0.0
+    dependencies:
+      '@excaliburjs/plugin-tiled': 0.26.2
+      abstract-syntax-tree: 2.20.6
+      dedent: 0.7.0
+      deepmerge: 4.2.2
+      del: 6.1.1
+      excalibur: 0.27.0
       excalibur-router: link:../..
+      fs-extra: 10.1.0
+      kleur: 4.1.4
+      magic-string: 0.26.2
+      merlyn: link:../../../merlyn
+      mkdirp: 1.0.4
+      prettier: 2.6.2
+      query-string: 7.1.1
+      sade: 1.8.1
+      sirv: 2.0.2
+      unplugin-auto-import: 0.9.2
+      vite: 2.9.9
+      vite-plugin-full-reload: 1.0.0
+    devDependencies:
       typescript: 4.7.4
 
   packages/merlyn:

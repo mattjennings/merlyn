@@ -1,5 +1,5 @@
 declare module '$game' {
-  // import type { Devtool } from '@excaliburjs/dev-tools'
+  import type { Devtool } from '@excaliburjs/dev-tools'
   import type { Engine, Loadable, Scene } from 'excalibur'
   import type { Loader } from 'merlyn'
 
@@ -19,19 +19,7 @@ declare module '$game' {
   )
   export function getResources(): Loadable<any>[]
 
-  export function goToScene<Data = any>(
-    key: string,
-    options?: {
-      data?: Data | Promise<Data>
-      transition?: Transition
-
-      /**
-       * Called when the target scene is activated
-       */
-      onActivate?: (scene: Scene) => void
-    }
-  ): Promise<Scene>
-  // export const devtool: Devtool
+  export const devtool: Devtool
 }
 
 /* -------------------------------------------------------------------------- */
