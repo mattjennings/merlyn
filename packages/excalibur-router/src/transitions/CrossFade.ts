@@ -1,4 +1,5 @@
 import type { Engine } from 'excalibur'
+import { Canvas } from 'excalibur'
 import { ScreenElement } from 'excalibur'
 import type { TransitionArgs } from './Transition.js'
 import { Transition } from './Transition.js'
@@ -33,7 +34,7 @@ export class CrossFade extends Transition {
     })
 
     this.el.graphics.use(
-      new ex.Canvas({
+      new Canvas({
         quality: window.devicePixelRatio,
         width: engine.canvasWidth,
         height: engine.canvasHeight,

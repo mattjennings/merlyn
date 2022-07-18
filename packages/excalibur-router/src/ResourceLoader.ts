@@ -3,11 +3,11 @@ import { GameEvent } from 'excalibur'
 import { Class } from 'excalibur'
 
 /**
- * The loader responsible for loading all resources for the game. It does
+ * The loader responsible for loading all resources for the router. It does
  * not render anything. Instead, it can be listened to for custom loading
  * scenes.
  */
-export class Loader extends Class implements Loadable<Loadable<any>[]> {
+export class ResourceLoader extends Class implements Loadable<Loadable<any>[]> {
   data: Loadable<any>[] = []
 
   constructor(loadables?: any[]) {
@@ -33,6 +33,7 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
         })
       )
     )
+    this.emit('progress', new ProgressEvent(this, 100))
     this.emit('complete', resources)
     return result
   }
@@ -53,10 +54,10 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
   draw() {}
 }
 
-class ProgressEvent extends GameEvent<Loader> {
+class ProgressEvent extends GameEvent<ResourceLoader> {
   progress: number
 
-  constructor(target: Loader, progress: number) {
+  constructor(target: ResourceLoader, progress: number) {
     super()
     this.target = target
     this.progress = progress

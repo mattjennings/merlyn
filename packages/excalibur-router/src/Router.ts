@@ -1,25 +1,24 @@
-import { Scene } from 'excalibur'
-import { Loader } from './Loader.js'
+import type { Scene } from 'excalibur'
+import { DefaultLoader } from './DefaultLoader.js'
+import { ResourceLoader } from './ResourceLoader.js'
 import type { Transition } from './transitions/Transition.js'
 
 export interface RouterArgs<
-  Routes extends Record<
-    string,
-    Scene | (() => Promise<{ default: typeof Scene }>)
-  >,
-  Loaders extends Record<string, Scene>
+  Routes extends Record<string, Route>,
+  Loaders extends Record<string, typeof Scene>
 > {
   routes: Routes
   loaders?: Loaders
-  defaultLoader?: Extract<keyof Loaders, string>
 }
 
+type Route =
+  | typeof Scene
+  | (() => Promise<{ default: typeof Scene }>)
+  | (() => Promise<typeof Scene>)
+
 export class Router<
-  Routes extends Record<
-    string,
-    Scene | (() => Promise<{ default: typeof Scene }>)
-  >,
-  Loaders extends Record<string, Scene>
+  Routes extends Record<string, Route>,
+  Loaders extends Record<string, typeof Scene>
 > {
   engine: ex.Engine
   routes: Routes
@@ -27,32 +26,40 @@ export class Router<
   isTransitioning = false
   isBooting = true
 
-  private loader = new Loader()
+  private resourceLoader = new ResourceLoader()
   private loaders: Loaders
   private defaultLoader: Extract<keyof Loaders, string> | undefined
 
-  constructor(engine: ex.Engine, args: RouterArgs<Routes, Loaders>) {
-    this.engine = engine
+  constructor(args: RouterArgs<Routes, Loaders>) {
     this.routes = args.routes
-    this.loaders = args.loaders || ({} as any)
-    this.defaultLoader = args.defaultLoader
+    this.loaders = {
+      default: DefaultLoader,
+      ...args.loaders,
+    }
+  }
+
+  start(engine: ex.Engine) {
+    this.engine = engine
+    this.isBooting = true
 
     Object.entries(this.routes).forEach(([key, value]) => {
-      if (value instanceof Scene) {
-        this.engine.add(key, value)
+      if (isScene(value)) {
+        this.engine.add(key, new value())
       }
     })
 
     Object.entries(this.loaders).forEach(([key, value]) => {
-      this.engine.add(key, value)
+      this.engine.add(key, new value())
     })
+
+    return engine.start(null)
   }
 
   async goto<Data = any>(
-    name: string,
+    name: Extract<keyof Routes, string>,
     options: {
       data?: Data
-      loading?: string
+      loader?: Extract<keyof Loaders, string>
       transition?: Transition
       onActivate?: (scene: Scene) => void
     } = {}
@@ -103,62 +110,62 @@ export class Router<
       if (!scene) {
         const sceneData = this.routes[name]
 
-        scene = isDynamicScene(sceneData)
-          ? await sceneData().then((r) => {
-              const mod = r.default
-
-              if (!mod) {
-                throw new Error(
-                  `"${name}" does not export default a Scene class`
-                )
+        const Scene = isScene(sceneData)
+          ? sceneData
+          : await sceneData().then((r) => {
+              if (r.default) {
+                return r.default
               }
-
-              return new mod()
+              return r
             })
-          : sceneData
 
-        // @ts-ignore
-        scene.name = name
-        // scene.params = params
-        this.engine.add(name, scene)
-      }
-
-      if (!this.loader.isLoaded()) {
-        const currentScene = this.engine.currentScene
-
-        const deferPromise = new Promise((resolve) => {
+        if (Scene) {
+          scene = new Scene()
           // @ts-ignore
-          if (currentScene.defer) {
-            currentScene.once('continue', resolve)
-          } else {
-            resolve(undefined)
-          }
-        })
-
-        currentScene.onLoadStart?.()
-
-        const onProgress = ({ progress }) => {
-          this.engine.currentScene.onLoad?.(progress)
+          scene.name = name
+          // scene.params = params
+          this.engine.add(name, scene)
+        } else {
+          throw new Error(`"${name}" did not return a Scene`)
         }
-
-        this.loader.on('progress', onProgress)
-
-        await this.loader.load()
-        currentScene.onLoadComplete?.()
-        this.loader.off('progress', onProgress)
-
-        await deferPromise
       }
+
+      const currentScene = this.engine.currentScene
+
+      const deferPromise = new Promise((resolve) => {
+        // @ts-ignore
+        if (currentScene.defer) {
+          currentScene.once('continue', resolve)
+        } else {
+          resolve(undefined)
+        }
+      })
+
+      currentScene.onLoadStart?.()
+
+      const onProgress = ({ progress }) => {
+        this.engine.currentScene.onLoad?.(progress)
+      }
+
+      this.resourceLoader.on('progress', onProgress)
+
+      await this.resourceLoader.load()
+      currentScene.onLoadComplete?.()
+      this.resourceLoader.off('progress', onProgress)
+      await deferPromise
     }
     return scene
   }
 
   private async loadScene(
     name: string,
-    options: { transition?: Transition; loader?: string } = {}
+    options: {
+      transition?: Transition
+      loader?: Extract<keyof Loaders, string>
+    } = {}
   ) {
     let transition = options.transition
-    const loader = options.loader ?? this.defaultLoader
+    const loader = options.loader ?? 'default'
 
     if (this.sceneNeedsLoading(name)) {
       // skip outro if this is initial loading screen
@@ -169,16 +176,8 @@ export class Router<
         })
       }
 
-      // if initial loading screen uses resources, load them
-      // if (isBooting && this.manifest.scenes.loading.resources.length) {
-      //   loader.addResources(this.manifest.scenes.loading.resources)
-      //   await loader.load()
-      // }
-
       // go to loading scene
-      if (loader) {
-        this.engine.goToScene(loader)
-      }
+      this.engine.goToScene(loader)
 
       if (!transition) {
         transition = this.engine.currentScene?.transition
@@ -232,8 +231,10 @@ export class Router<
     return this.engine.scenes[name]
   }
 
-  addResources(loadables: ex.Loadable<any>[]) {
-    return this.loader.addResources(loadables)
+  addResource(loadable: ex.Loadable<any> | ex.Loadable<any>[]) {
+    return this.resourceLoader.addResources(
+      Array.isArray(loadable) ? loadable : [loadable]
+    )
   }
 
   private sceneNeedsLoading(name: string) {
@@ -241,7 +242,7 @@ export class Router<
       return true
     }
 
-    return this.loader.isLoaded()
+    return !this.resourceLoader.isLoaded()
   }
 
   private async executeTransition({
@@ -293,8 +294,16 @@ export class Router<
   }
 }
 
-function isDynamicScene(
-  scene: Scene | (() => Promise<{ default: typeof Scene }>)
-): scene is () => Promise<{ default: typeof Scene }> {
-  return !(scene instanceof Scene)
+function isScene(route: Route): route is typeof Scene {
+  return isClass(route)
+}
+
+function isClass(obj) {
+  if (typeof obj !== 'function') return false
+
+  const descriptor = Object.getOwnPropertyDescriptor(obj, 'prototype')
+
+  if (!descriptor) return false
+
+  return !descriptor.writable
 }
