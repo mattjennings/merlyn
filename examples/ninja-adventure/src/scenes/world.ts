@@ -7,6 +7,8 @@ import sndBattleIntro from '$res/Musics/battle-intro.mp3'
 import sndBattleLoop from '$res/Musics/battle-loop.mp3'
 import sndVillage from '$res/Musics/village.mp3'
 import sndBattleStarted from '$res/Sounds/Game/Explosion4.wav'
+import { Cyclops } from '$lib/entities/battle/enemies/Cyclops'
+import { Slime } from '$lib/entities/battle/enemies/Slime'
 
 import { playSong } from '$lib/sound/audio-manager'
 
@@ -48,54 +50,45 @@ export default class World extends ex.Scene {
       },
     })
 
+    const groups = [
+      [
+        new Cyclops({
+          x: 16,
+          y: 16 * 3,
+        }),
+        new Cyclops({
+          x: 16,
+          y: 16 * 5,
+        }),
+      ],
+      [
+        new Cyclops({
+          x: 16,
+          y: 16 * 4,
+        }),
+      ],
+      [
+        new Slime({
+          x: 16,
+          y: 16 * 4,
+        }),
+      ],
+      [
+        new Slime({
+          x: 16,
+          y: 16 * 3,
+        }),
+        new Cyclops({
+          x: 16,
+          y: 16 * 5,
+        }),
+      ],
+    ]
+
     router.goto('battle', {
-      data: async () => {
-        const Cyclops = await import(
-          '$lib/entities/battle/enemies/Cyclops'
-        ).then((r) => r.Cyclops)
-        const Slime = await import('$lib/entities/battle/enemies/Slime').then(
-          (r) => r.Slime
-        )
-
-        const groups = [
-          [
-            new Cyclops({
-              x: 16,
-              y: 16 * 3,
-            }),
-            new Cyclops({
-              x: 16,
-              y: 16 * 5,
-            }),
-          ],
-          [
-            new Cyclops({
-              x: 16,
-              y: 16 * 4,
-            }),
-          ],
-          [
-            new Slime({
-              x: 16,
-              y: 16 * 4,
-            }),
-          ],
-          [
-            new Slime({
-              x: 16,
-              y: 16 * 3,
-            }),
-            new Cyclops({
-              x: 16,
-              y: 16 * 5,
-            }),
-          ],
-        ]
-
-        return {
-          // choose from groups at random
-          enemies: groups[Math.floor(Math.random() * groups.length)],
-        }
+      data: {
+        // choose from groups at random
+        enemies: groups[Math.floor(Math.random() * groups.length)],
       },
       transition: new BattleTransition(),
     })

@@ -3,9 +3,7 @@
  */
 export default ({ dev }) => ({
   scenes: {
-    // boot: dev ? 'battle' : 'world',
-    boot: 'world',
-    loading: 'loading',
+    boot: dev ? 'battle' : 'world',
     // preload: true,
   },
 })
