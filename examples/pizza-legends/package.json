@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "merlyn": "latest",
-    "vite": "^2.9.14"
+    "vite": "^3.0.0"
   },
   "dependencies": {
     "excalibur": "^0.26.0",
