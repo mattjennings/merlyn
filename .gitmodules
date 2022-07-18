@@ -1,0 +1,3 @@
+[submodule "packages/excalibur-router"]
+	path = packages/excalibur-router
+	url = git@github.com:mattjennings/excalibur-router.git

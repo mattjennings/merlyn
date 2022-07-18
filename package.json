@@ -22,7 +22,8 @@
   },
   "pnpm": {
     "overrides": {
-      "excalibur": "^0.27.0"
+      "excalibur": "^0.27.0",
+      "excalibur-router": "workspace:*"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -30,5 +31,26 @@
         "typedoc"
       ]
     }
+  },
+  "dependencies": {
+    "@excaliburjs/plugin-tiled": "^0.27.0",
+    "abstract-syntax-tree": "^2.20.6",
+    "dedent": "^0.7.0",
+    "deepmerge": "^4.2.2",
+    "del": "^6.1.1",
+    "excalibur": "^0.26.0",
+    "excalibur-router": "^0.0.6",
+    "fs-extra": "^10.1.0",
+    "kleur": "^4.1.4",
+    "magic-string": "^0.26.2",
+    "merlyn": "workspace:*",
+    "mkdirp": "^1.0.4",
+    "prettier": "^2.6.2",
+    "query-string": "^7.1.1",
+    "sade": "^1.8.1",
+    "sirv": "^2.0.2",
+    "unplugin-auto-import": "^0.9.2",
+    "vite": "^3.0.0",
+    "vite-plugin-full-reload": "^1.0.0"
   }
 }
