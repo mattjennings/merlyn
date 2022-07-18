@@ -83,6 +83,31 @@ router.goto('level1', {
 })
 ```
 
+## Dynamic Scene Loading
+
+Scenes can be imported dynamically as routes, which will then trigger a loading scene when navigated to. If these scenes contain any `router.addResource()` calls or import files that do, they will get loaded in the same loading screen.
+
+```js
+import * as ex from 'excalibur'
+import { Router } from 'excalibur-router'
+
+const engine = new ex.Engine({
+  width: 800,
+  height: 600,
+})
+
+const router = new Router({
+  routes: {
+    level1: () => import('./level1'), // contains default export of scene
+    level2: () => import('./level2'),
+  },
+})
+
+router.start(engine).then(() => {
+  router.goto('level1')
+})
+```
+
 ## Transitions
 
 Transitions are actors with lifecycle hooks for the transitioning of scenes. They typically will play the outro, be carried into the next scene, play their intro, and then be killed.
