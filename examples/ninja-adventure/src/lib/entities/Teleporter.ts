@@ -46,7 +46,7 @@ export class Teleporter extends ex.Actor {
 
           router.goto(this._scene, {
             transition: new FadeTransition({
-              duration: 300,
+              persistOnLoading: 200,
             }),
             onActivate: (scene) => {
               this.isNavigating = false

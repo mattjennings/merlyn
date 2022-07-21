@@ -12,6 +12,7 @@ const engine = new ex.Engine({
   resolution: ex.Resolution.GameBoyAdvance,
   antialiasing: false,
   suppressConsoleBootMessage: import.meta.env.DEV,
+  pixelRatio: window.devicePixelRatio * 4,
 })
 
 document.addEventListener('visibilitychange', () => {
