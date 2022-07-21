@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "postinstall": "cd packages/excalibur-router && npm run build"
+  },
   "keywords": [],
   "author": "mattjennings",
   "license": "ISC",
