@@ -24,8 +24,7 @@
   },
   "pnpm": {
     "overrides": {
-      "excalibur": "^0.27.0",
-      "excalibur-router": "workspace:*"
+      "excalibur": "^0.27.0"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

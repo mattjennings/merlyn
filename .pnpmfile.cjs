@@ -8,6 +8,12 @@ const merlynPkg = JSON.parse(
 )
 
 function readPackage(pkg, context) {
+  if (pkg.dependencies['excalibur-router']) {
+    pkg.dependencies['excalibur-router'] = path.resolve(
+      __dirname,
+      './packages/excalibur-router'
+    )
+  }
   if (pkg.peerDependencies) {
     pkg.dependencies = {
       ...pkg.peerDependencies,
