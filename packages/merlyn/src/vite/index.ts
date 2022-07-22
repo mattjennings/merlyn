@@ -43,9 +43,6 @@ function merlynPlugin(): Plugin {
         base: '', // keep paths to assets relative
         publicDir: 'res',
         optimizeDeps: {
-          // include: ['merlyn/runtime'],
-
-          // merlyn uses $game
           exclude: ['$game'],
         },
         build: {
