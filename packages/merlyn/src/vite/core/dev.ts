@@ -2,8 +2,10 @@ import type { ViteDevServer } from 'vite'
 import type { MerlynConfig } from './types.js'
 import { writeMerlynData } from './data/index.js'
 import { loadConfig } from './config.js'
+import path from 'path'
 
 const cwd = process.cwd()
+
 export async function dev(vite: ViteDevServer) {
   let merlynConfig: MerlynConfig
 
@@ -20,7 +22,8 @@ export async function dev(vite: ViteDevServer) {
     vite.watcher.on(event, (file) => {
       if (
         file.includes(merlynConfig.scenes.path) ||
-        file.includes(merlynConfig.loaders.path)
+        file.includes(merlynConfig.loaders.path) ||
+        file.includes(path.join(cwd, `res`))
       ) {
         writeMerlynData(merlynConfig)
       }
