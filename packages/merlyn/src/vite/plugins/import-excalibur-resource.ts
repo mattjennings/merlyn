@@ -1,7 +1,8 @@
 import type { Plugin } from 'vite'
 import qs from 'query-string'
-import { default as MagicString } from 'magic-string'
 import { format } from 'prettier'
+import recast from 'recast'
+import tsParser from 'recast/parsers/typescript.js'
 
 /**
  * Parses the import as an excalibur resource and adds
@@ -23,16 +24,21 @@ export function importExcaliburResource(): Plugin {
       }
     },
     load(id) {
-      const [, params] = id.split('?')
+      const [res, params] = id.split('?')
       const query = params ? qs.parse('?' + params) : {}
+
       if (isResource(id)) {
+        const options = query.options
+          ? JSON.parse(decodeURIComponent(query.options as string))
+          : {}
+
         return format(
           /* js */ `
           import { addResource } from '$game'
 
           const resource = addResource(${JSON.stringify(
-            id.replace('$res', '')
-          )}, ${JSON.stringify(query)})
+            res.replace('$res', '')
+          )}, ${JSON.stringify(options)})
 
           export default resource
           `,
@@ -42,42 +48,104 @@ export function importExcaliburResource(): Plugin {
     },
     // transform $res('/path/to/resource') to imports
     transform(code, id, options) {
-      if (options?.ssr || id.includes('node_modules')) return
-
-      const s = new MagicString(code)
-      const imports = []
-
-      // use regex to find any function calls of $res() and its arguments
-      const regex = /\$res\((['"])([^'"]+)\1\)/g
-      let match = regex.exec(code)
-
-      while (match != null) {
-        // get path of resource
-        if (match[2]) {
-          imports.push(match[2])
-        }
-
-        // replace string with variable
-        s.replace(
-          match[0].replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
-          `__$res_${imports.length - 1}`
-        )
-
-        match = regex.exec(code)
+      if (options?.ssr || id.includes('node_modules') || !id.includes('.ts')) {
+        return
       }
 
-      if (imports.length) {
-        // define variable with an import to the resource
-        imports.forEach((imp) => {
-          const path = `$res/${imp}`
-          s.prepend(`import __$res_${imports.indexOf(imp)} from "${path}";\n`)
-        })
+      const tsAst = recast.parse(code, {
+        parser: {
+          parse: tsParser.parse,
+        },
+      })
 
-        return {
-          code: s.toString(),
-          map: s.generateMap({ hires: true }),
-        }
+      let count = 0
+      recast.visit(tsAst, {
+        visitCallExpression(path) {
+          const name = (path.node.callee as any).name
+
+          if (name === '$res') {
+            const [importArg, optionsArg] = path.node.arguments
+
+            // validate first argument is a string
+            if (!recast.types.namedTypes.StringLiteral.check(importArg)) {
+              throw new InvalidResError('path must be a string')
+            }
+
+            let options = {}
+            // validate second argument is an object
+            if (optionsArg) {
+              if (!recast.types.namedTypes.ObjectExpression.check(optionsArg)) {
+                throw new InvalidResError('options must be an object')
+              }
+
+              options = parseObjectExpression(optionsArg)
+            }
+
+            const b = recast.types.builders
+
+            // sort keys so that import path has a consistent param order for caching reasons
+            options = sortObjectKeys(options)
+
+            const varName = `__res_${++count}`
+            const source = Object.keys(options).length
+              ? `$res/${importArg.value}?options=${encodeURIComponent(
+                  JSON.stringify(options)
+                )}`
+              : `$res/${importArg.value}`
+
+            // replace $res with variable
+            path.replace(b.identifier(varName))
+
+            // add import statement
+            tsAst.program.body.unshift(
+              b.importDeclaration(
+                [b.importDefaultSpecifier(b.identifier(varName))],
+                b.literal(source)
+              )
+            )
+          }
+          this.traverse(path)
+        },
+      })
+
+      if (count > 0) {
+        return recast.print(tsAst)
       }
     },
   }
+}
+
+function parseObjectExpression(node: any) {
+  const obj = {}
+  for (const prop of node.properties) {
+    const name = (prop as any).key.name
+    recast.visit(prop, {
+      visitObjectExpression(path) {
+        obj[name] = parseObjectExpression(path.node)
+        return false
+      },
+      visitLiteral(path) {
+        obj[name] = path.value.value
+        return false
+      },
+    })
+  }
+  return obj
+}
+
+class InvalidResError extends Error {
+  constructor(message: string) {
+    message = `Invalid $res: ${message}`
+    super(message)
+    this.name = 'InvalidResError'
+  }
+}
+
+function sortObjectKeys(obj: any) {
+  const keys = Object.keys(obj)
+  keys.sort()
+  return keys.reduce((acc, key) => {
+    acc[key] = obj[key]
+    return acc
+  }, {})
 }

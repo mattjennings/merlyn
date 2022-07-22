@@ -5,33 +5,33 @@ import { Loader } from '../Loader.js'
 
 export const loader = new Loader([])
 
-const imgLoader = (url, options) =>
-  new ImageSource(url, options.bustCache, options.filtering)
-
-const sndLoader = (url, options) => new Sound(url)
-
 const resourceLoaders = {
-  tmx: (url, options) => {
-    const resource = new TiledMapResource(url, {
-      mapFormatOverride: options.mapFormatOverride,
-      startingLayerZIndex: options.startingLayerZIndex,
-    })
-    return resource
+  image: {
+    load: (url, options) =>
+      new ImageSource(url, options.bustCache, options.filtering),
+    extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp'],
   },
-  png: imgLoader,
-  jpeg: imgLoader,
-  jpg: imgLoader,
-  gif: imgLoader,
-  mp3: sndLoader,
-  ogg: sndLoader,
-  wav: sndLoader,
+  sound: {
+    load: (url) => new Sound(url),
+    extensions: ['mp3', 'ogg', 'wav'],
+  },
+  tiled: {
+    load: (url, options) => {
+      const resource = new TiledMapResource(url, {
+        mapFormatOverride: options.mapFormatOverride,
+        startingLayerZIndex: options.startingLayerZIndex,
+      })
+      return resource
+    },
+    extensions: ['tmx'],
+  },
 }
 
 export function getResources() {
   return [...loader.data]
 }
 
-export function addResource(url: string, options?: any) {
+export function addResource(url: string, options?: { as?: string }) {
   let type
   if (url.startsWith('data:')) {
     const [, _type] = url.match(/^data:([^;]+);(base64)?,(.*)$/) || []
@@ -43,15 +43,19 @@ export function addResource(url: string, options?: any) {
   } else {
     type = url.split('?')[0].split('.').pop()
   }
-  const loadResource = resourceLoaders[type]
+  const resourceLoader = options?.as
+    ? resourceLoaders[options.as]
+    : Object.values(resourceLoaders).find((loader) =>
+        loader.extensions.includes(type)
+      )
 
-  if (loader) {
-    const resource = loadResource(url, options ?? {})
+  if (resourceLoader) {
+    const resource = resourceLoader.load(url, options ?? {})
     loader.addResources([resource])
     return resource
   }
 
-  throw new Error(`No loader found for ${type}`)
+  throw new Error(`No loader found for .${type} file`)
 }
 
 export function addResourceLoaders(
