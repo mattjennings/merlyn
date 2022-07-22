@@ -1,6 +1,6 @@
 import type { Engine, Scene, Loadable } from 'excalibur'
 import path from 'path'
-import type { MerlynConfig } from '../types.js'
+import type { MerlynConfig } from '../config.js'
 import { writeIfChanged, getRouteName } from '../utils/index.js'
 import { walk } from '../utils/fs.js'
 import { format } from 'prettier'

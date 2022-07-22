@@ -1,4 +1,4 @@
-import type { MerlynConfig } from '../types.js'
+import type { MerlynConfig } from '../config.js'
 import { writeIfChanged } from '../utils/index.js'
 import { format } from 'prettier'
 import path from 'path'

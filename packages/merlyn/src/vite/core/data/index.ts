@@ -1,4 +1,4 @@
-import type { MerlynConfig } from '../types.js'
+import type { MerlynConfig } from '../config.js'
 import { writeEntry } from './entry.js'
 import { writeManifest } from './manifest.js'
 import { writeTsconfig } from './tsconfig.js'

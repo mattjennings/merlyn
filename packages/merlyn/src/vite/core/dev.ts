@@ -1,5 +1,5 @@
 import type { ViteDevServer } from 'vite'
-import type { MerlynConfig } from './types.js'
+import type { MerlynConfig } from './config.js'
 import { writeMerlynData } from './data/index.js'
 import { loadConfig } from './config.js'
 import path from 'path'

@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 import dedent from 'dedent'
 import path from 'path'
-import type { MerlynConfig } from '../types.js'
+import type { MerlynConfig } from '../config.js'
 import { writeIfChanged } from '../utils/index.js'
 import { posixify, walk } from '../utils/fs.js'
 import { format } from 'prettier'

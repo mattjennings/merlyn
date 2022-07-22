@@ -1,6 +1,39 @@
 import deepmerge from 'deepmerge'
 import path from 'path'
-import type { MerlynConfig } from './types.js'
+
+export interface MerlynConfig {
+  title: string
+  game: string
+  scenes: {
+    path: string
+    boot: string
+    preload?: boolean | string[]
+  }
+  loaders: {
+    path: string
+  }
+  devtool?: {
+    enabled: boolean
+  }
+  build: {
+    outDir: string
+  }
+}
+
+export type UserMerlynConfig =
+  | ((args: {
+      /**
+       * If we're running as a development server
+       */
+      dev?: boolean
+    }) => DeepPartial<MerlynConfig>)
+  | DeepPartial<MerlynConfig>
+
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>
+    }
+  : T
 
 export async function loadConfig({
   dev,

@@ -23,6 +23,7 @@ const resourceLoaders: Record<
         mapFormatOverride: options.mapFormatOverride,
         startingLayerZIndex: options.startingLayerZIndex,
       })
+
       return resource
     },
     extensions: ['tmx'],
