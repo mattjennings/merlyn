@@ -47,11 +47,13 @@
   "author": "mattjennings",
   "license": "ISC",
   "dependencies": {
+    "@excaliburjs/dev-tools": "^0.27.1",
+    "@excaliburjs/plugin-aseprite": "^0.27.0",
     "@excaliburjs/plugin-tiled": "^0.27.0",
     "dedent": "^0.7.0",
     "deepmerge": "^4.2.2",
     "del": "^6.1.1",
-    "excalibur": "^0.26.0",
+    "excalibur": "^0.27.0",
     "excalibur-router": "^0.0.6",
     "fs-extra": "^10.1.0",
     "kleur": "^4.1.4",
@@ -64,12 +66,6 @@
     "unplugin-auto-import": "^0.9.2",
     "vite": "^3.0.0",
     "vite-plugin-full-reload": "^1.0.0"
-  },
-  "peerDependencies": {
-    "@excaliburjs/dev-tools": "^0.27.1",
-    "@excaliburjs/plugin-aseprite": "^0.27.0",
-    "excalibur": "^0.27.0",
-    "excalibur-router": "^0.0.6"
   },
   "devDependencies": {
     "@babel/parser": "^7.18.9",
