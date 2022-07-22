@@ -1,11 +1,13 @@
+import { AsepriteResource } from '@excaliburjs/plugin-aseprite'
 import { TiledMapResource } from '@excaliburjs/plugin-tiled'
 import type { Loadable } from 'excalibur'
 import { ImageSource, Sound } from 'excalibur'
-import { Loader } from '../Loader.js'
+import { router } from './index.js'
 
-export const loader = new Loader([])
-
-const resourceLoaders = {
+const resourceLoaders: Record<
+  string,
+  { load: (url, options) => ex.Loadable<any>; extensions?: string[] }
+> = {
   image: {
     load: (url, options) =>
       new ImageSource(url, options.bustCache, options.filtering),
@@ -25,13 +27,15 @@ const resourceLoaders = {
     },
     extensions: ['tmx'],
   },
+  aseprite: {
+    load: (url, options) => new AsepriteResource(url, options.bustCache),
+  },
 }
 
-export function getResources() {
-  return [...loader.data]
-}
+// resources loaded by $res before router started
+export const queuedResources = []
 
-export function addResource(url: string, options?: { as?: string }) {
+export function addResourceByUrl(url: string, options?: { as?: string }) {
   let type
   if (url.startsWith('data:')) {
     const [, _type] = url.match(/^data:([^;]+);(base64)?,(.*)$/) || []
@@ -51,15 +55,27 @@ export function addResource(url: string, options?: { as?: string }) {
 
   if (resourceLoader) {
     const resource = resourceLoader.load(url, options ?? {})
-    loader.addResources([resource])
+    if (router) {
+      router.addResource(resource)
+    } else {
+      if (!queuedResources.includes(resource)) {
+        queuedResources.push(resource)
+      }
+    }
     return resource
   }
 
   throw new Error(`No loader found for .${type} file`)
 }
 
-export function addResourceLoaders(
-  loaders: Record<string, (url: string) => Loadable<any>>
+export function addResourceLoader<Options extends { as?: string }>(
+  type: string,
+  args: {
+    load: (url: string, options?: Options) => Loadable<unknown>
+    extensions?: string[]
+  }
 ) {
-  Object.assign(resourceLoaders, loaders)
+  Object.assign(resourceLoaders, {
+    [type]: args,
+  })
 }

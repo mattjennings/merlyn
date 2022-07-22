@@ -34,9 +34,9 @@ export function importExcaliburResource(): Plugin {
 
         return format(
           /* js */ `
-          import { addResource } from '$game'
+          import { addResourceByUrl } from '$game'
 
-          const resource = addResource(${JSON.stringify(
+          const resource = addResourceByUrl(${JSON.stringify(
             res.replace('$res', '')
           )}, ${JSON.stringify(options)})
 
@@ -87,11 +87,15 @@ export function importExcaliburResource(): Plugin {
             options = sortObjectKeys(options)
 
             const varName = `__res_${++count}`
-            const source = Object.keys(options).length
+            let source = Object.keys(options).length
               ? `$res/${importArg.value}?options=${encodeURIComponent(
                   JSON.stringify(options)
                 )}`
               : `$res/${importArg.value}`
+
+            if (source.includes('.json?')) {
+              source = source.replace('.json?', '.json?raw&')
+            }
 
             // replace $res with variable
             path.replace(b.identifier(varName))

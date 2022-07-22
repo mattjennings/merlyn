@@ -2,21 +2,18 @@ import type { Engine } from 'excalibur'
 import { WebAudio } from 'excalibur'
 import type { Manifest } from '../vite/core/data/manifest.js'
 import { Router } from 'excalibur-router'
-import { loader } from './resources.js'
-export {
-  addResource,
-  addResourceLoaders,
-  getResources,
-  loader,
-} from './resources.js'
-
 import { DevTool } from '@excaliburjs/dev-tools'
+
 export let devtool: DevTool
-
 export let router: Router<any, any>
-
 export let engine: Engine
 export let title
+
+export {
+  queuedResources,
+  addResourceByUrl,
+  addResourceLoader,
+} from './resources.js'
 
 export async function start(manifest: Manifest) {
   engine = manifest.game
@@ -31,12 +28,11 @@ export async function start(manifest: Manifest) {
     loaders: manifest.loaders.files,
   })
 
-  // @ts-ignore
-  router.resourceLoader = loader
-
   // load resources needed for loading scenes if necessary
   if (manifest.loaders.resources.length) {
-    await loader.load(manifest.loaders.resources)
+    router.addResource(manifest.loaders.resources)
+    // @ts-ignore
+    await router.resourceLoader.load()
   }
 
   router.start(engine).then(() => {
