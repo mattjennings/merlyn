@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "scripts": {
-    "postinstall": "cd packages/excalibur-router && npm run build"
-  },
   "keywords": [],
   "author": "mattjennings",
   "license": "ISC",
@@ -25,8 +22,7 @@
   "pnpm": {
     "overrides": {
       "excalibur": "^0.27.0",
-      "merlyn": "workspace:*",
-      "excalibur-router": "workspace:*"
+      "merlyn": "workspace:*"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
