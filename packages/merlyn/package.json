@@ -1,6 +1,6 @@
 {
   "name": "merlyn",
-  "version": "0.0.0-20",
+  "version": "0.0.0-21",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
@@ -11,7 +11,8 @@
     "dist",
     "app.d.ts",
     "modules.d.ts",
-    "types.d.ts"
+    "types.d.ts",
+    "ex.d.ts"
   ],
   "bin": {
     "merlyn": "bin/index.js"
