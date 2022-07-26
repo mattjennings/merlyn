@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 overrides:
   excalibur: ^0.27.0
   merlyn: workspace:*
-  '@excaliburjs/plugin-tiled': ~/dev/excalibur-tiled
 
 importers:
 
@@ -12,7 +11,7 @@ importers:
       '@babel/parser': ^7.18.9
       '@excaliburjs/dev-tools': ^0.27.1
       '@excaliburjs/plugin-aseprite': ^0.27.0
-      '@excaliburjs/plugin-tiled': ~/dev/excalibur-tiled
+      '@excaliburjs/plugin-tiled': ^0.27.0
       '@types/node': ^17.0.38
       dedent: ^0.7.0
       deepmerge: ^4.2.2
@@ -35,7 +34,7 @@ importers:
       '@babel/parser': 7.18.9
       '@excaliburjs/dev-tools': 0.27.1_excalibur@0.27.0
       '@excaliburjs/plugin-aseprite': 0.27.0_excalibur@0.27.0
-      '@excaliburjs/plugin-tiled': link:../../../excalibur-tiled
+      '@excaliburjs/plugin-tiled': 0.27.0_excalibur@0.27.0
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
@@ -84,6 +83,17 @@ packages:
       excalibur: 0.27.0
     dependencies:
       excalibur: 0.27.0
+    dev: false
+
+  /@excaliburjs/plugin-tiled/0.27.0_excalibur@0.27.0:
+    resolution: {integrity: sha512-69tcE3r7ye2VjHqsv9UztQCQK3jZP/puzA2AqYoFDQuFenMlx4/3YynlkwGlm45l4OF3QTbd2QZ1rAlqvUROLw==}
+    peerDependencies:
+      excalibur: 0.27.0
+    dependencies:
+      excalibur: 0.27.0
+      fast-xml-parser: 3.21.1
+      pako: 1.0.11
+      zstddec: 0.0.2
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:
@@ -496,6 +506,13 @@ packages:
       micromatch: 4.0.5
     dev: false
 
+  /fast-xml-parser/3.21.1:
+    resolution: {integrity: sha512-FTFVjYoBOZTJekiUsawGsSYV9QL0A+zDYCRj7y34IO6Jg+2IMYEtQa+bbictpdpV8dHxXywqU7C0gRDEOFtBFg==}
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: false
+
   /fastq/1.13.0:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
     dependencies:
@@ -736,6 +753,10 @@ packages:
       aggregate-error: 3.1.0
     dev: false
 
+  /pako/1.0.11:
+    resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
+    dev: false
+
   /path-is-absolute/1.0.1:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
     engines: {node: '>=0.10.0'}
@@ -907,6 +928,10 @@ packages:
       acorn: 8.8.0
     dev: false
 
+  /strnum/1.0.5:
+    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+    dev: false
+
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -1050,4 +1075,8 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+    dev: false
+
+  /zstddec/0.0.2:
+    resolution: {integrity: sha512-DCo0oxvcvOTGP/f5FA6tz2Z6wF+FIcEApSTu0zV5sQgn9hoT5lZ9YRAKUraxt9oP7l4e8TnNdi8IZTCX6WCkwA==}
     dev: false

@@ -7,8 +7,8 @@
   "author": "mattjennings",
   "license": "ISC",
   "devDependencies": {
-    "@excaliburjs/dev-tools": "^0.25.3",
-    "@sveltejs/vite-plugin-svelte": "1.0.0-next.46",
+    "@excaliburjs/dev-tools": "^0.27.1",
+    "@sveltejs/vite-plugin-svelte": "1.0.1",
     "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
@@ -22,8 +22,7 @@
   "pnpm": {
     "overrides": {
       "excalibur": "^0.27.0",
-      "merlyn": "workspace:*",
-      "@excaliburjs/plugin-tiled": "~/dev/excalibur-tiled"
+      "merlyn": "workspace:*"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
