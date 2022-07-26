@@ -1,4 +1,6 @@
-export class ProgressBar extends ex.Actor {
+import { Actor } from 'excalibur'
+
+export class ProgressBar extends Actor {
   progress = 0
 
   constructor(args: ex.ActorArgs) {

@@ -22,7 +22,8 @@
   "pnpm": {
     "overrides": {
       "excalibur": "^0.27.0",
-      "merlyn": "workspace:*"
+      "merlyn": "workspace:*",
+      "@excaliburjs/plugin-tiled": "~/dev/excalibur-tiled"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

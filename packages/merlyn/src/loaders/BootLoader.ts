@@ -1,55 +1,65 @@
+import type { Engine } from 'excalibur'
+import {
+  Scene,
+  Label,
+  Font,
+  TextAlign,
+  FontUnit,
+  Color,
+  ScreenElement,
+} from 'excalibur'
 import { ProgressBar } from './ProgressBar.js'
 
-export class BootLoader extends ex.Scene {
+export class BootLoader extends Scene {
   defer = import.meta.env.PROD
 
-  labels: ex.Label[] = []
+  labels: Label[] = []
   progressBar: ProgressBar
   elapsedTime = 0
   complete = false
 
-  onInitialize(engine: ex.Engine) {
+  onInitialize(engine: Engine) {
     const fontSize = {
       sm: Math.max(engine.drawHeight, engine.drawWidth) / 28,
       lg: Math.max(engine.drawHeight, engine.drawWidth) / 10,
     }
 
     this.labels.push(
-      new ex.Label({
+      new Label({
         text: '🧙‍♂️',
         x: engine.drawWidth / 2,
         y: engine.drawHeight / 2,
-        font: new ex.Font({
-          textAlign: ex.TextAlign.Center,
+        font: new Font({
+          textAlign: TextAlign.Center,
           family: 'Helvetica',
           size: fontSize.lg,
-          unit: ex.FontUnit.Px,
-          color: ex.Color.White,
+          unit: FontUnit.Px,
+          color: Color.White,
           quality: window.devicePixelRatio * 2,
         }),
       }),
-      new ex.Label({
+      new Label({
         text: 'made with merlyn',
         x: engine.drawWidth / 2,
         y: engine.drawHeight / 2 + fontSize.sm * 2,
-        font: new ex.Font({
-          textAlign: ex.TextAlign.Center,
+        font: new Font({
+          textAlign: TextAlign.Center,
           family: 'Luminari',
           size: fontSize.sm,
-          unit: ex.FontUnit.Px,
-          color: ex.Color.White,
+          unit: FontUnit.Px,
+          color: Color.White,
           quality: window.devicePixelRatio * 2,
         }),
       })
     )
 
     engine.add(
-      new ex.ScreenElement({
+      new ScreenElement({
         x: 0,
         y: 0,
         width: engine.drawWidth,
         height: engine.drawHeight,
-        color: ex.Color.fromHex('#334155'),
+        color: Color.fromHex('#334155'),
       })
     )
     this.labels.forEach((l) => engine.add(l))

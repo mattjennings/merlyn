@@ -1,23 +1,25 @@
+import type { Engine } from 'excalibur'
+import { Color, Scene, ScreenElement } from 'excalibur'
 import { ProgressBar } from './ProgressBar.js'
 
-export class DefaultLoader extends ex.Scene {
+export class DefaultLoader extends Scene {
   progressBar: ProgressBar
   elapsedTime = 0
   complete = false
 
-  onInitialize(engine: ex.Engine) {
+  onInitialize(engine: Engine) {
     const fontSize = {
       sm: Math.max(engine.drawHeight, engine.drawWidth) / 28,
       lg: Math.max(engine.drawHeight, engine.drawWidth) / 10,
     }
 
     engine.add(
-      new ex.ScreenElement({
+      new ScreenElement({
         x: 0,
         y: 0,
         width: engine.drawWidth,
         height: engine.drawHeight,
-        color: ex.Color.fromHex('#334155'),
+        color: Color.fromHex('#334155'),
       })
     )
 
