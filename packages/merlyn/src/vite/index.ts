@@ -46,7 +46,6 @@ function merlynPlugin(): Plugin {
           exclude: ['$game'],
         },
         build: {
-          minify: 'terser',
           sourcemap: true,
           assetsDir: '',
           outDir: merlynConfig.build.outDir,
