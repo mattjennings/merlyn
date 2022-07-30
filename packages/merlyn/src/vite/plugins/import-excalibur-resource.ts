@@ -56,6 +56,7 @@ export function importExcaliburResource(): Plugin {
         parser: {
           parse: tsParser.parse,
         },
+        sourceFileName: id,
       })
 
       let count = 0
@@ -113,7 +114,9 @@ export function importExcaliburResource(): Plugin {
       })
 
       if (count > 0) {
-        return recast.print(tsAst)
+        return recast.print(tsAst, {
+          sourceMapName: `${id}.map`,
+        })
       }
     },
   }
