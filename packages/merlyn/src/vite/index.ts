@@ -7,7 +7,6 @@ import path from 'path'
 import type { MerlynConfig } from './core/config.js'
 import { dev } from './core/dev.js'
 import { writeMerlynData } from './core/data/index.js'
-import fs from 'fs'
 
 export default function merlyn(): Plugin[] {
   return [

@@ -6,6 +6,7 @@ import { walk } from '../utils/fs.js'
 import { format } from 'prettier'
 import type { Transition } from 'excalibur-router'
 import { existsSync } from 'fs'
+
 export interface Manifest {
   title: string
   game: Engine
@@ -141,10 +142,6 @@ function isScenePreloaded(name: string, config: MerlynConfig) {
   }
 
   return config.scenes.preload.includes(name)
-}
-
-function isLoader(name: string) {
-  return name === 'loader' || name.startsWith('loader/')
 }
 
 function toVarName(name: string, prefix: string) {

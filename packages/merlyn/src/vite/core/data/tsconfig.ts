@@ -33,7 +33,7 @@ function tsconfig() {
           "$lib/*": [
             "src/lib/*"
           ],
-          "$res/*": ["./res/*"]
+          "$res/*": ["./res/*"],
         },
         "rootDirs": [
           "..",
