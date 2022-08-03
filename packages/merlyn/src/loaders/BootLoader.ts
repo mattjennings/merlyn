@@ -11,7 +11,7 @@ import {
 import { ProgressBar } from './ProgressBar.js'
 
 export class BootLoader extends Scene {
-  defer = true //import.meta.env.PROD
+  defer = import.meta.env.PROD
 
   labels: Label[] = []
   progressBar: ProgressBar
@@ -76,9 +76,10 @@ export class BootLoader extends Scene {
   onDeactivate() {
     this.engine.backgroundColor = this.ogBackgroundColor
   }
+
   onActivate() {
-    // this.progressBar.progress = 0
-    // this.progressBar.graphics.opacity = 0
+    this.progressBar.progress = 0
+    this.progressBar.graphics.opacity = 0
     this.complete = false
 
     setTimeout(() => {
@@ -98,11 +99,11 @@ export class BootLoader extends Scene {
 
   onLoadComplete() {
     this.complete = true
-    // this.progressBar.actions.clearActions()
-    // this.progressBar.actions.fade(0, 250)
+    this.progressBar.actions.clearActions()
+    this.progressBar.actions.fade(0, 250)
 
     setTimeout(() => {
-      // this.emit('continue', undefined)
+      this.emit('continue', undefined)
     }, Math.max(0, 1500 - this.elapsedTime))
   }
 
