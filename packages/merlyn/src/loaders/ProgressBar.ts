@@ -4,10 +4,6 @@ import { Actor, Canvas, Color, Util } from 'excalibur'
 export class ProgressBar extends Actor {
   progress = 0
 
-  constructor(args: ActorArgs) {
-    super(args)
-  }
-
   onInitialize() {
     const canvas = new Canvas({
       width: this.width,

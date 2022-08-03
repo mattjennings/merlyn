@@ -11,24 +11,33 @@ import {
 import { ProgressBar } from './ProgressBar.js'
 
 export class BootLoader extends Scene {
-  defer = import.meta.env.PROD
+  defer = true //import.meta.env.PROD
 
   labels: Label[] = []
   progressBar: ProgressBar
   elapsedTime = 0
   complete = false
 
+  ogBackgroundColor!: ex.Color
+
   onInitialize(engine: Engine) {
+    const width = this.camera.viewport.width
+    const height = this.camera.viewport.height
+    const { center } = engine.screen
+
     const fontSize = {
-      sm: Math.max(engine.drawHeight, engine.drawWidth) / 28,
-      lg: Math.max(engine.drawHeight, engine.drawWidth) / 10,
+      sm: Math.min(width, height) / 28,
+      lg: Math.min(width, height) / 10,
     }
+
+    this.ogBackgroundColor = engine.backgroundColor
+    engine.backgroundColor = Color.fromHex('#334155')
 
     this.labels.push(
       new Label({
         text: '🧙‍♂️',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2,
+        x: center.x,
+        y: center.y,
         font: new Font({
           textAlign: TextAlign.Center,
           family: 'Helvetica',
@@ -40,8 +49,8 @@ export class BootLoader extends Scene {
       }),
       new Label({
         text: 'made with merlyn',
-        x: engine.drawWidth / 2,
-        y: engine.drawHeight / 2 + fontSize.sm * 2,
+        x: center.x,
+        y: center.y + fontSize.sm * 2,
         font: new Font({
           textAlign: TextAlign.Center,
           family: 'Luminari',
@@ -53,29 +62,23 @@ export class BootLoader extends Scene {
       })
     )
 
-    engine.add(
-      new ScreenElement({
-        x: 0,
-        y: 0,
-        width: engine.drawWidth,
-        height: engine.drawHeight,
-        color: Color.fromHex('#334155'),
-      })
-    )
     this.labels.forEach((l) => engine.add(l))
 
     this.progressBar = new ProgressBar({
-      x: engine.drawWidth / 2,
-      y: engine.drawHeight - fontSize.sm * 4,
-      width: engine.drawWidth * 0.5,
-      height: Math.round(fontSize.sm),
+      x: center.x,
+      y: center.y + fontSize.sm * 8,
+      width: height * 0.5,
+      height: Math.round(fontSize.sm / 2),
     })
     engine.add(this.progressBar)
   }
 
+  onDeactivate() {
+    this.engine.backgroundColor = this.ogBackgroundColor
+  }
   onActivate() {
-    this.progressBar.progress = 0
-    this.progressBar.graphics.opacity = 0
+    // this.progressBar.progress = 0
+    // this.progressBar.graphics.opacity = 0
     this.complete = false
 
     setTimeout(() => {
@@ -95,11 +98,11 @@ export class BootLoader extends Scene {
 
   onLoadComplete() {
     this.complete = true
-    this.progressBar.actions.clearActions()
-    this.progressBar.actions.fade(0, 250)
+    // this.progressBar.actions.clearActions()
+    // this.progressBar.actions.fade(0, 250)
 
     setTimeout(() => {
-      this.emit('continue', undefined)
+      // this.emit('continue', undefined)
     }, Math.max(0, 1500 - this.elapsedTime))
   }
 
