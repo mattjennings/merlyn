@@ -19,8 +19,13 @@ export async function start(manifest: Manifest) {
   engine = manifest.game
   title = manifest.title
 
-  if (manifest.devtool?.enabled) {
-    devtool = new DevTool(engine)
+  if (manifest.debug) {
+    if (manifest.debug.show) {
+      engine.showDebug(true)
+    }
+    if (manifest.debug.devtool) {
+      devtool = new DevTool(engine)
+    }
   }
 
   router = new Router({
@@ -42,6 +47,27 @@ export async function start(manifest: Manifest) {
       loader,
       transition: manifest.transition,
     })
+
+    if (manifest.pauseWhenBackgrounded) {
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          engine.stop()
+        } else {
+          /**
+           * wrapping in raf fixes(?) an issue with 120hz displays where
+           * update loops would seem to get doubled up on each resume.
+           *
+           * - observed on a macbook with promotion display
+           * - Chrome/FF only (safari is locked to 60hz for whatever reason)
+           * - on FF, would only happen if promotion was enabled.
+           * - on Chrome, would happen regardless if promotion was enabled.
+           */
+          requestAnimationFrame(() => {
+            engine.start()
+          })
+        }
+      })
+    }
   })
 }
 

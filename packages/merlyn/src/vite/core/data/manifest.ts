@@ -11,7 +11,11 @@ export interface Manifest {
   title: string
   game: Engine
   transition?: Transition
-  devtool?: { enabled?: boolean }
+  pauseWhenBackgrounded?: boolean
+  debug: {
+    show?: boolean
+    devtool?: boolean
+  }
   scenes: {
     boot: string
     files: Record<string, SceneData>
@@ -104,7 +108,10 @@ function manifest(cwd: string, outDir: string, config: MerlynConfig) {
       path.relative(outDir, path.join(cwd, config.game))
     )};
 
-    export const devtool = ${JSON.stringify(config.devtool)};
+    export const debug = ${JSON.stringify(config.debug)};
+    export const pauseWhenBackgrounded = ${JSON.stringify(
+      config.pauseWhenBackgrounded
+    )};
     export const game = _game.default;
     export const transition = _game.transition
     export const title = ${JSON.stringify(config.title)}

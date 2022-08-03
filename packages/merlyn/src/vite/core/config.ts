@@ -12,9 +12,11 @@ export interface MerlynConfig {
   loaders: {
     path: string
   }
-  devtool?: {
-    enabled: boolean
+  debug: {
+    show: boolean
+    devtool: boolean
   }
+  pauseWhenBackgrounded: boolean
   build: {
     outDir: string
   }
@@ -52,6 +54,11 @@ export async function loadConfig({
     },
     build: {
       outDir: 'dist',
+    },
+    pauseWhenBackgrounded: true,
+    debug: {
+      show: false,
+      devtool: false,
     },
   }
 
