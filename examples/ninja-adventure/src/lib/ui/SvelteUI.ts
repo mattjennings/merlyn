@@ -9,9 +9,12 @@ export class SvelteUI<
 > extends HTMLUI {
   svelteComponent: SvelteComponentTyped<Props, Events, Slots>
 
-  constructor(args: { component: typeof SvelteComponentTyped<Props, Events, Slots>; props?: Props }) {
+  constructor(args: {
+    component: typeof SvelteComponentTyped<Props, Events, Slots>
+    props?: Props
+  }) {
     super({
-      resolution: 'native'
+      resolution: 'native',
     })
 
     this.svelteComponent = new args.component({

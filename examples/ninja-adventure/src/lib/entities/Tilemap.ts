@@ -72,7 +72,7 @@ export default class Tilemap extends ex.Entity {
     layer: TiledObjectGroup,
     props?: any
   ): ex.Entity | undefined {
-    switch (object.type) {
+    switch (object.class) {
       case 'spawn':
         if (object.name === 'Player') {
           const player = new Player({

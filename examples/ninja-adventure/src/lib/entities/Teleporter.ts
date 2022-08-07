@@ -39,7 +39,7 @@ export class Teleporter extends ex.Actor {
       if (ev.other.name === 'player') {
         // trigger if player is halfway into the collider
         if (
-          Math.abs(ev.intersection.x) > this.height / 2 ||
+          Math.abs(ev.intersection.x) > this.width / 2 ||
           Math.abs(ev.intersection.y) > this.height / 2
         ) {
           this.isNavigating = true
