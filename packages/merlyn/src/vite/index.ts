@@ -35,7 +35,7 @@ function merlynPlugin(): Plugin {
     async config(config, _env) {
       env = _env
       merlynConfig = await loadConfig({ dev: env.mode === 'development' })
-
+      writeMerlynData(merlynConfig)
       isBuild = env.command === 'build'
 
       return {
