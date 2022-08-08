@@ -7,8 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "prepare": "merlyn sync"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "^4.7.4",

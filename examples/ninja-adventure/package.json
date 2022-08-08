@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview",
-    "prepare": "merlyn sync"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@excaliburjs/plugin-tiled": "^0.27.0",

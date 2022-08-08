@@ -14,9 +14,6 @@
     "types.d.ts",
     "ex.d.ts"
   ],
-  "bin": {
-    "merlyn": "bin/index.js"
-  },
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
