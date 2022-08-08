@@ -1,4 +1,3 @@
-import image from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
 import type { Engine } from 'excalibur'
 import { Character, type CharacterArgs } from './entities/Character'
 import { getHeldDirections } from './util/input'
@@ -7,7 +6,7 @@ export class Player extends Character {
   constructor(args: Partial<CharacterArgs>) {
     super({
       name: 'player',
-      image,
+      image: $res('Actor/Characters/GreenNinja/SpriteSheet.png'),
       anchor: new ex.Vector(0, 0),
       collisionType: ex.CollisionType.Active,
       collider: ex.Shape.Box(16, 8, ex.Vector.Zero, ex.vec(0, 10)),
@@ -44,6 +43,8 @@ export class Player extends Character {
   }
 
   onPreUpdate(engine: Engine, delta: number): void {
+    console.log(13)
+
     if (this.scene.isTransitioning) {
       this.idle()
       return

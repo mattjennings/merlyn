@@ -1,53 +1,92 @@
-// import { Plugin } from 'vite'
-// import MagicString from 'magic-string'
-// import { MerlynConfig } from '../config'
-// import { getSceneName } from '../util/get-scene-name'
+import type { Plugin } from 'vite'
+import { default as MagicString } from 'magic-string'
+import type { MerlynConfig } from '../core/config.js'
+import { loadConfig } from '../core/config.js'
+import { getRouteName } from '../core/utils/index.js'
 
-// // todo: build custom scene router before revisiting this
-// // also would be nice to proper hmr resources
-// // ideas: use handleHotUpdate to invalidate url resource
-// // otherwise, find some way to use true asset imports again
+/**
+ * A very bare-bones HMR plugin for scenes. Will HMR scenes that aren't the currentScene.
+ * If it is the currentScene, the game will nagivate to the boot scene but keep resources
+ * loaded, so time is saved there.
+ */
+export function sceneHmr(): Plugin {
+  let merlynConfig: MerlynConfig
+  return {
+    name: 'vite-plugin-scene-hmr',
+    apply: 'serve',
+    async config(config, env) {
+      merlynConfig = await loadConfig({ dev: env.mode === 'development' })
+    },
+    transform(code, id, options) {
+      if (options?.ssr || id.includes('node_modules')) return
 
-// export function sceneHmr(config: MerlynConfig): Plugin {
-//   const isScene = (id) => {
-//     return id.includes(config.scenes.path) && id.match(/\.(t|j)s$/)
-//   }
-//   return {
-//     name: 'vite-plugin-scene-hmr',
-//     apply: 'serve',
-//     transform(code, id, options) {
-//       if (options?.ssr || id.includes('node_modules')) return
+      const isScene = (id) => {
+        return id.includes(merlynConfig.scenes.path) && id.match(/\.(t|j)s$/)
+      }
 
-//       if (isScene(id)) {
-//         const name = getSceneName(id, config.scenes.path)
-//         const s = new MagicString(code)
-//         // this plugin gets compiled by vite, so we need to
-//         // bypass its auto-replacement of "import.meta.hot"
-//         const meta = ['import', 'meta', 'hot'].join('.')
+      if (isScene(id)) {
+        const name = getRouteName(id, merlynConfig.scenes.path)
+        const s = new MagicString(code)
 
-//         s.append(`
-// import { resources, engine, goToScene } from '$game'
-// import { SimpleLoader } from 'merlyn'
+        s.append(/* js */ `
+          import { router as __router } from '$game'
+          import { Scene as __Scene } from 'excalibur'
 
-// if (${meta}) {
-//   ${meta}.accept((mod) => {
-//     const name = engine.currentScene.__merlyn?.name
-//     console.log(name)
+          if (import.meta.hot) {
+            let warned = {
+              onActivate: false,
+              data: false,
+            }
+            import.meta.hot.accept((mod) => {
+              if (mod) {
+                const currentRoute = __router.location.name
+                const name = ${JSON.stringify(name)}
 
-//     engine.addScene('${name}', new mod.default())
-//     if (name === '${name}') {
-//       engine.start(new SimpleLoader(resources)).then(() => {
-//         goToScene('${name}')
-//       })
-//     }
-//   })
-// }`)
-//         return {
-//           code: s.toString(),
-//           map: s.generateMap(),
-//         }
-//       }
-//     },
-//   }
-// }
+                __router.removeRoute(name)
+                __router.addRoute(name, mod.default)
+
+                if (currentRoute === name) {
+                  __router.addRoute('__hmr__', ex.Scene)
+                  __router.goto('__hmr__').then(() => {
+                      __router.removeRoute('__hmr__')
+
+                      if (gotoOptions.onActivate) {
+                        if (!warned.onActivate) {
+                          console.warn('Current scene "${name}" was navigated to with "onActivate" in router.goto(). HMR currently does not support this, navigating back to boot scene')
+                          warned.onActivate = true
+                        }
+                        __router.goto(${JSON.stringify(
+                          merlynConfig.scenes.boot
+                        )})
+                      } else {
+                        if (gotoOptions.data && !warned.data) {
+                          console.warn('Current scene "${name}" was navigated to with "data" in router.goto(). If it contains any non-serializable data, such as a class instance, it will be stale.')
+                          warned.data = true
+                        }
+                        __router.removeRoute('__hmr__')
+                        __router.goto(name, {
+                          data: gotoOptions.data
+                        })
+                    }
+                  })
+                }             
+              }
+            })
+          }
+        `)
+
+        return {
+          code: s.toString(),
+          map: s
+            .generateMap({
+              source: id,
+              file: id + '.map',
+              includeContent: true,
+            })
+            .toString(),
+        }
+      }
+    },
+  }
+}
 export {}

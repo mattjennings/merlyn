@@ -7,6 +7,7 @@ import path from 'path'
 import type { MerlynConfig } from './core/config.js'
 import { dev } from './core/dev.js'
 import { writeMerlynData } from './core/data/index.js'
+import { sceneHmr } from './plugins/scene-hmr.js'
 
 export default function merlyn(): Plugin[] {
   return [
@@ -20,6 +21,7 @@ export default function merlyn(): Plugin[] {
     }),
     importExcaliburResource(),
     merlynPlugin(),
+    sceneHmr(),
   ]
 }
 

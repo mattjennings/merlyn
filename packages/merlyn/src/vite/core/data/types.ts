@@ -61,7 +61,7 @@ function types(cwd: string, config: MerlynConfig) {
   function getResourceType(file) {
     const images = ['png', 'jpg', 'jpeg', 'gif']
     const audio = ['mp3', 'ogg', 'wav']
-    const tilesets = ['.tmx']
+    const tilesets = ['tmx']
 
     if (images.some((ext) => file.endsWith(ext))) {
       return 'image'
@@ -71,7 +71,7 @@ function types(cwd: string, config: MerlynConfig) {
       return 'sound'
     }
 
-    if (plugins.tiled && tilesets.some((ext) => file.endsWith(ext))) {
+    if (tilesets.some((ext) => file.endsWith(ext))) {
       return 'tiled'
     }
   }
