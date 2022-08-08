@@ -1,6 +1,6 @@
 {
   "name": "merlyn",
-  "version": "0.0.0-28",
+  "version": "0.0.0-30",
   "description": "",
   "type": "module",
   "main": "dist/index.js",
