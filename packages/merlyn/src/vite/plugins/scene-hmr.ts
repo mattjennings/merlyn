@@ -32,11 +32,16 @@ export function sceneHmr(): Plugin {
           import { router as __router } from '$game'
           import { Scene as __Scene } from 'excalibur'
 
-          if (import.meta.hot) {
-            let warned = {
-              onActivate: false,
-              data: false,
-            }
+          if (import.meta.hot) {            
+            let gotoOptions = {}
+
+            __router.on('navigation', ({ to, ...options }) => {
+              if (to === ${JSON.stringify(name)}) {
+                gotoOptions = { ...options }
+                delete gotoOptions.transition
+              }
+            })
+
             import.meta.hot.accept((mod) => {
               if (mod) {
                 const currentRoute = __router.location.name
@@ -48,26 +53,13 @@ export function sceneHmr(): Plugin {
                 if (currentRoute === name) {
                   __router.addRoute('__hmr__', ex.Scene)
                   __router.goto('__hmr__').then(() => {
-                      __router.removeRoute('__hmr__')
+                      if (!import.meta.hot.warned && (gotoOptions.data || gotoOptions.onActivate)) {
+                        console.warn('[HMR] Current scene "${name}" was navigated to with "data" or "onActivate" in router.goto(). If it contains any non-serializable data, such as a class instance, it may be stale.')
+                        import.meta.hot.warned = true
+                      }
 
-                      if (gotoOptions.onActivate) {
-                        if (!warned.onActivate) {
-                          console.warn('Current scene "${name}" was navigated to with "onActivate" in router.goto(). HMR currently does not support this, navigating back to boot scene')
-                          warned.onActivate = true
-                        }
-                        __router.goto(${JSON.stringify(
-                          merlynConfig.scenes.boot
-                        )})
-                      } else {
-                        if (gotoOptions.data && !warned.data) {
-                          console.warn('Current scene "${name}" was navigated to with "data" in router.goto(). If it contains any non-serializable data, such as a class instance, it will be stale.')
-                          warned.data = true
-                        }
-                        __router.removeRoute('__hmr__')
-                        __router.goto(name, {
-                          data: gotoOptions.data
-                        })
-                    }
+                      __router.removeRoute('__hmr__')
+                      __router.goto(name, gotoOptions)                    
                   })
                 }             
               }
