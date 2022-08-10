@@ -2,11 +2,6 @@ import { router } from '$game'
 import Tilemap from '$lib/entities/Tilemap'
 import type { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
-import tilemap from '$res/Tilemaps/world.tmx'
-import sndBattleIntro from '$res/Musics/battle-intro.mp3'
-import sndBattleLoop from '$res/Musics/battle-loop.mp3'
-import sndVillage from '$res/Musics/village.mp3'
-import sndBattleStarted from '$res/Sounds/Game/Explosion4.wav'
 import { Cyclops } from '$lib/entities/battle/enemies/Cyclops'
 import { Slime } from '$lib/entities/battle/enemies/Slime'
 
@@ -17,7 +12,7 @@ export default class World extends ex.Scene {
   battleCounter = -1
 
   onInitialize(engine: ex.Engine) {
-    const map = new Tilemap(tilemap, this)
+    const map = new Tilemap($res('Tilemaps/world.tmx'), this)
     engine.add(map)
 
     this.resetBattleCounter()
@@ -34,19 +29,20 @@ export default class World extends ex.Scene {
   }
 
   onActivate() {
-    playSong(sndVillage)
+    playSong($res('Musics/village.mp3'))
   }
 
   startBattle() {
-    sndBattleStarted.volume = 0.25
-    sndBattleStarted.playbackRate = 0.4
-    sndBattleStarted.play()
+    const sndBattleStarted = $res('Sounds/Game/Explosion4.wav')
 
-    playSong(sndBattleIntro, {
+    sndBattleStarted.playbackRate = 0.4
+    sndBattleStarted.play(0.25)
+
+    playSong($res('Musics/battle-intro.mp3'), {
       pauseCurrent: true,
       loop: false,
       onComplete: () => {
-        playSong(sndBattleLoop)
+        playSong($res('Musics/battle-loop.mp3'))
       },
     })
 
