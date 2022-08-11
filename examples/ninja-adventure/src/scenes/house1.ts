@@ -1,8 +1,9 @@
-import Tilemap from '$lib/entities/Tilemap'
-import tilemap from '$res/Tilemaps/house1.tmx'
+import Overworld from '$lib/scenes/Overworld'
 
-export default class House1 extends ex.Scene {
-  onInitialize(engine: ex.Engine) {
-    engine.add(new Tilemap(tilemap, this))
+export default class House1 extends Overworld {
+  constructor() {
+    super({
+      map: $res('Tilemaps/house1.tmx'),
+    })
   }
 }

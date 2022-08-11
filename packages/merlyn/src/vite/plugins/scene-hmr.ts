@@ -1,53 +1,87 @@
-// import { Plugin } from 'vite'
-// import MagicString from 'magic-string'
-// import { MerlynConfig } from '../config'
-// import { getSceneName } from '../util/get-scene-name'
+import type { Plugin } from 'vite'
+import { default as MagicString } from 'magic-string'
+import type { MerlynConfig } from '../core/config.js'
+import { loadConfig } from '../core/config.js'
+import { getRouteName } from '../core/utils/index.js'
 
-// // todo: build custom scene router before revisiting this
-// // also would be nice to proper hmr resources
-// // ideas: use handleHotUpdate to invalidate url resource
-// // otherwise, find some way to use true asset imports again
+/**
+ * A very bare-bones HMR plugin for scenes. Will HMR scenes that aren't the currentScene.
+ * If it is the currentScene, the game will nagivate to the boot scene but keep resources
+ * loaded, so time is saved there.
+ */
+export function sceneHmr(): Plugin {
+  let merlynConfig: MerlynConfig
+  return {
+    name: 'vite-plugin-scene-hmr',
+    apply: 'serve',
 
-// export function sceneHmr(config: MerlynConfig): Plugin {
-//   const isScene = (id) => {
-//     return id.includes(config.scenes.path) && id.match(/\.(t|j)s$/)
-//   }
-//   return {
-//     name: 'vite-plugin-scene-hmr',
-//     apply: 'serve',
-//     transform(code, id, options) {
-//       if (options?.ssr || id.includes('node_modules')) return
+    async config(config, env) {
+      merlynConfig = await loadConfig({ dev: env.mode === 'development' })
+    },
+    transform(code, id, options) {
+      if (options?.ssr || id.includes('node_modules') || !merlynConfig.hmr)
+        return
 
-//       if (isScene(id)) {
-//         const name = getSceneName(id, config.scenes.path)
-//         const s = new MagicString(code)
-//         // this plugin gets compiled by vite, so we need to
-//         // bypass its auto-replacement of "import.meta.hot"
-//         const meta = ['import', 'meta', 'hot'].join('.')
+      const isScene = (id) => {
+        return id.includes(merlynConfig.scenes.path) && id.match(/\.(t|j)s$/)
+      }
 
-//         s.append(`
-// import { resources, engine, goToScene } from '$game'
-// import { SimpleLoader } from 'merlyn'
+      if (isScene(id)) {
+        const name = getRouteName(id, merlynConfig.scenes.path)
+        const s = new MagicString(code)
 
-// if (${meta}) {
-//   ${meta}.accept((mod) => {
-//     const name = engine.currentScene.__merlyn?.name
-//     console.log(name)
+        s.append(/* js */ `
+          import { router as __router } from '$game'
+          import { Scene as __Scene } from 'excalibur'
 
-//     engine.addScene('${name}', new mod.default())
-//     if (name === '${name}') {
-//       engine.start(new SimpleLoader(resources)).then(() => {
-//         goToScene('${name}')
-//       })
-//     }
-//   })
-// }`)
-//         return {
-//           code: s.toString(),
-//           map: s.generateMap(),
-//         }
-//       }
-//     },
-//   }
-// }
+          if (import.meta.hot) {            
+            let gotoOptions = {}
+
+            __router.on('navigation', ({ to, ...options }) => {
+              if (to === ${JSON.stringify(name)}) {
+                gotoOptions = { ...options }
+                delete gotoOptions.transition
+              }
+            })
+
+            import.meta.hot.accept((mod) => {
+              if (mod) {
+                const currentRoute = __router.location.name
+                const name = ${JSON.stringify(name)}
+
+                __router.removeRoute(name)
+                __router.addRoute(name, mod.default)
+
+                if (currentRoute === name) {
+                  __router.addRoute('__hmr__', ex.Scene)
+                  __router.goto('__hmr__').then(() => {
+                      console.info('[HMR] Restarting current scene')
+                      if (!import.meta.hot.warned && (gotoOptions.data || gotoOptions.onActivate)) {
+                        console.warn('[HMR] "${name}" uses onActivate data and is not yet supported by HMR. onActivate may have stale data and will require a manual page refresh to reflect your changes.')
+                        import.meta.hot.warned = true
+                      }
+
+                      __router.removeRoute('__hmr__')
+                      __router.goto(name, gotoOptions)                    
+                  })
+                }             
+              }
+            })
+          }
+        `)
+
+        return {
+          code: s.toString(),
+          map: s
+            .generateMap({
+              source: id,
+              file: id + '.map',
+              includeContent: true,
+            })
+            .toString(),
+        }
+      }
+    },
+  }
+}
 export {}

@@ -7,24 +7,18 @@ import type {
 import { Player } from '$lib/Player'
 import { Teleporter } from './Teleporter'
 
-export default class Tilemap extends ex.Entity {
+export default class TilemapObjects extends ex.Entity {
   scene: ex.Scene
-  resource: TiledMapResource
+  map: TiledMapResource
 
-  constructor(resource: TiledMapResource, scene: ex.Scene) {
+  constructor(map: TiledMapResource, scene: ex.Scene) {
     super()
-    this.resource = resource
+    this.map = map
     this.scene = scene
   }
 
   onInitialize(engine: Engine): void {
-    this.resource.addTiledMapToScene(this.scene)
-
-    const tilemapWidth = this.resource.data.width * this.resource.data.tileWidth
-    const tilemapHeight =
-      this.resource.data.height * this.resource.data.tileHeight
-
-    const objectLayers = this.resource.data.getExcaliburObjects()
+    const objectLayers = this.map.data.getExcaliburObjects()
 
     for (const layer of objectLayers) {
       for (const object of layer.objects) {
@@ -40,31 +34,6 @@ export default class Tilemap extends ex.Entity {
         }
       }
     }
-
-    // create world bounds
-    engine.add(
-      new ex.Actor({
-        collisionType: ex.CollisionType.Fixed,
-        collider: new ex.CompositeCollider([
-          new ex.EdgeCollider({
-            begin: ex.vec(0, 0),
-            end: ex.vec(0, tilemapHeight),
-          }),
-          new ex.EdgeCollider({
-            begin: ex.vec(0, tilemapHeight),
-            end: ex.vec(tilemapWidth, tilemapHeight),
-          }),
-          new ex.EdgeCollider({
-            begin: ex.vec(tilemapWidth, tilemapHeight),
-            end: ex.vec(tilemapWidth, 0),
-          }),
-          new ex.EdgeCollider({
-            begin: ex.vec(tilemapWidth, 0),
-            end: ex.vec(0, 0),
-          }),
-        ]),
-      })
-    )
   }
 
   createObject(

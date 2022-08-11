@@ -1,4 +1,3 @@
-import imgHero from '$res/characters/people/hero.png'
 import { Character } from './Character'
 import { Input } from './Input'
 import { snapToGrid } from '$lib/util'
@@ -8,7 +7,7 @@ export class Hero extends Character {
 
   constructor(args: ex.ActorArgs) {
     super({
-      image: imgHero,
+      image: $res('characters/people/hero.png'),
       ...args,
     })
   }

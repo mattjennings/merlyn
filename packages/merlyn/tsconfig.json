@@ -12,6 +12,7 @@
     "rootDir": "./src",
     "outDir": "dist",
     "strict": false,
+    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": false,

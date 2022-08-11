@@ -1,7 +1,4 @@
 import { BattleCharacter } from '$lib/entities/BattleCharacter'
-import Tilemap from '$lib/entities/Tilemap'
-import tilemap from '$res/Tilemaps/battle.tmx'
-import imgPlayer from '$res/Actor/Characters/GreenNinja/SpriteSheet.png'
 import { router } from '$game'
 import { FadeTransition } from 'merlyn/transitions'
 import { SvelteUI } from '$lib/ui/SvelteUI'
@@ -17,8 +14,7 @@ export default class Battle extends ex.Scene {
   enemies: BattleCharacter[] = []
 
   onInitialize(engine: ex.Engine) {
-    const map = new Tilemap(tilemap, this)
-    engine.add(map)
+    $res('Tilemaps/battle.tmx').addTiledMapToScene(this)
   }
 
   onActivate(ctx: ex.SceneActivationContext<{ enemies: BattleCharacter[] }>) {
@@ -31,7 +27,7 @@ export default class Battle extends ex.Scene {
         x: 16 * 15,
         y: 16 * 3.5,
         facing: 'left',
-        image: imgPlayer,
+        image: $res('Actor/Characters/GreenNinja/SpriteSheet.png'),
       }),
     ]
 
@@ -39,8 +35,8 @@ export default class Battle extends ex.Scene {
       this.enemies = ctx.data.enemies
     }
 
-    this.heros.forEach((actor) => this.engine.add(actor))
-    this.enemies.forEach((actor) => this.engine.add(actor))
+    this.heros.forEach((actor) => this.add(actor))
+    this.enemies.forEach((actor) => this.add(actor))
   }
 
   async runAway() {

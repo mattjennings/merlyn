@@ -41,7 +41,6 @@
     "excalibur-router": "^0.0.6",
     "fs-extra": "^10.1.0",
     "kleur": "^4.1.4",
-    "magic-string": "^0.26.2",
     "merlyn": "workspace:*",
     "mkdirp": "^1.0.4",
     "prettier": "^2.6.2",
