@@ -20,6 +20,7 @@ export interface MerlynConfig {
   build: {
     outDir: string
   }
+  hmr?: boolean
 }
 
 export type UserMerlynConfig =
@@ -60,6 +61,7 @@ export async function loadConfig({
       show: false,
       devtool: false,
     },
+    hmr: true,
   }
 
   try {

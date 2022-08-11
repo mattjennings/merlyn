@@ -14,11 +14,13 @@ export function sceneHmr(): Plugin {
   return {
     name: 'vite-plugin-scene-hmr',
     apply: 'serve',
+
     async config(config, env) {
       merlynConfig = await loadConfig({ dev: env.mode === 'development' })
     },
     transform(code, id, options) {
-      if (options?.ssr || id.includes('node_modules')) return
+      if (options?.ssr || id.includes('node_modules') || !merlynConfig.hmr)
+        return
 
       const isScene = (id) => {
         return id.includes(merlynConfig.scenes.path) && id.match(/\.(t|j)s$/)
