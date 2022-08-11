@@ -43,8 +43,6 @@ export class Player extends Character {
   }
 
   onPreUpdate(engine: Engine, delta: number): void {
-    console.log(13)
-
     if (this.scene.isTransitioning) {
       this.idle()
       return

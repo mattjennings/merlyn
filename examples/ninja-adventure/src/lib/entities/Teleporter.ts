@@ -31,6 +31,10 @@ export class Teleporter extends ex.Actor {
   onInitialize(engine: ex.Engine) {
     super.onInitialize(engine)
 
+    this.scene.on('deactivate', () => {
+      this.isNavigating = false
+    })
+
     this.on('precollision', (ev) => {
       if (this.isNavigating) {
         return
@@ -45,31 +49,16 @@ export class Teleporter extends ex.Actor {
           this.isNavigating = true
 
           router.goto(this._scene, {
+            data: {
+              player: {
+                x: this.coordinates.x,
+                y: this.coordinates.y,
+                facing: this.facing,
+              },
+            },
             transition: new FadeTransition({
               persistOnLoading: 200,
             }),
-            onActivate: (scene) => {
-              this.isNavigating = false
-
-              let player = scene.actors.find(
-                (actor) => actor.name === 'player'
-              ) as Player
-
-              if (!player) {
-                player = new Player({
-                  x: this.coordinates.x,
-                  y: this.coordinates.y,
-                  facing: this.facing,
-                })
-                scene.engine.add(player)
-              } else {
-                player.pos = new ex.Vector(
-                  this.coordinates.x,
-                  this.coordinates.y
-                )
-                player.updateFacing(this.facing)
-              }
-            },
           })
         }
       }

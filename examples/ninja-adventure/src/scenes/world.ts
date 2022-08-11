@@ -1,22 +1,25 @@
 import { router } from '$game'
-import Tilemap from '$lib/entities/Tilemap'
 import type { Player } from '$lib/Player'
 import { BattleTransition } from '$lib/transitions/BattleTransition'
 import { Cyclops } from '$lib/entities/battle/enemies/Cyclops'
 import { Slime } from '$lib/entities/battle/enemies/Slime'
 
 import { playSong } from '$lib/sound/audio-manager'
+import Overworld from '$lib/scenes/Overworld'
 
-export default class World extends ex.Scene {
+export default class World extends Overworld {
   player!: Player
   battleCounter = -1
 
-  onInitialize(engine: ex.Engine) {
-    const map = new Tilemap($res('Tilemaps/world.tmx'), this)
-    engine.add(map)
+  constructor() {
+    super({
+      map: $res('Tilemaps/world.tmx'),
+    })
+  }
 
+  onInitialize() {
     this.resetBattleCounter()
-    map.once('initialize', () => {
+    this.on('tilemap-initialized', () => {
       this.player = this.actors.find((p) => p.name === 'player') as Player
 
       this.player.on('move', () => {
