@@ -53,8 +53,9 @@ export function sceneHmr(): Plugin {
                 if (currentRoute === name) {
                   __router.addRoute('__hmr__', ex.Scene)
                   __router.goto('__hmr__').then(() => {
+                      console.info('[HMR] Restarting current scene')
                       if (!import.meta.hot.warned && (gotoOptions.data || gotoOptions.onActivate)) {
-                        console.warn('[HMR] Current scene "${name}" was navigated to with "data" or "onActivate" in router.goto(). If it contains any non-serializable data, such as a class instance, it may be stale.')
+                        console.warn('[HMR] "${name}" was navigated to with "data" or "onActivate" which cannot be hot reloaded. Data/onActivate may be stale.')
                         import.meta.hot.warned = true
                       }
 
