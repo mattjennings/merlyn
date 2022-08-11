@@ -55,7 +55,7 @@ export function sceneHmr(): Plugin {
                   __router.goto('__hmr__').then(() => {
                       console.info('[HMR] Restarting current scene')
                       if (!import.meta.hot.warned && (gotoOptions.data || gotoOptions.onActivate)) {
-                        console.warn('[HMR] "${name}" was navigated to with "data" or "onActivate" which cannot be hot reloaded. Data/onActivate may be stale.')
+                        console.warn('[HMR] "${name}" uses onActivate data and is not yet supported by HMR. onActivate may have stale data and will require a manual page refresh to reflect your changes.')
                         import.meta.hot.warned = true
                       }
 
