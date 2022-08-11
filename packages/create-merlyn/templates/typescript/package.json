@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "merlyn": "latest",
-    "excalibur": "^0.26.0"
+    "excalibur": "latest"
   }
 }
