@@ -53,11 +53,6 @@ function types(cwd: string, config: MerlynConfig) {
       : [],
   }
 
-  const plugins: Record<'tiled' | 'aseprite', boolean> = {
-    tiled: false,
-    aseprite: false,
-  }
-
   function getResourceType(file) {
     const images = ['png', 'jpg', 'jpeg', 'gif']
     const audio = ['mp3', 'ogg', 'wav']
@@ -93,12 +88,8 @@ function types(cwd: string, config: MerlynConfig) {
         bustCache?: boolean
         filtering?: ex.ImageFiltering
       }
-      ${
-        plugins.tiled
-          ? 'tiled: import("@excaliburjs/plugin-tiled").TiledMapOptions'
-          : ''
-      }
-      ${plugins.aseprite ? 'aseprite: { bustCache?: boolean }' : ''}
+      tiled: import("${packagePaths.pluginTiled}").TiledMapOptions    
+      aseprite: { bustCache?: boolean }
     }
 
     interface Resource {
