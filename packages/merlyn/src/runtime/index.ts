@@ -1,7 +1,7 @@
 import type { Engine } from 'excalibur'
 import { WebAudio } from 'excalibur'
 import type { Manifest } from '../vite/core/data/manifest.js'
-import { Router } from 'excalibur-router'
+import { FadeTransition, Router } from 'excalibur-router'
 import { DevTool } from '@excaliburjs/dev-tools'
 
 export let devtool: DevTool
@@ -45,7 +45,7 @@ export async function start(manifest: Manifest) {
 
     router.goto(manifest.scenes.boot, {
       loader,
-      transition: manifest.transition,
+      transition: manifest.transition ?? new FadeTransition(),
     })
 
     if (manifest.pauseWhenBackgrounded) {
