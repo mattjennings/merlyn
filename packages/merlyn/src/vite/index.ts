@@ -37,8 +37,13 @@ function merlynPlugin(): Plugin {
     async config(config, _env) {
       env = _env
       merlynConfig = await loadConfig({ dev: env.mode === 'development' })
-      writeMerlynData(merlynConfig)
       isBuild = env.command === 'build'
+
+      if (isBuild) {
+        rimraf('.merlyn')
+        mkdirp('.merlyn')
+        writeMerlynData(merlynConfig)
+      }
 
       return {
         base: '', // keep paths to assets relative
@@ -65,10 +70,9 @@ function merlynPlugin(): Plugin {
       }
     },
 
-    buildStart() {
+    async buildStart() {
       if (isBuild) {
-        rimraf('.merlyn')
-        mkdirp('.merlyn')
+        // write so tsconfig can be resolved right away
         writeMerlynData(merlynConfig)
       }
     },
