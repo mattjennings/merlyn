@@ -22,7 +22,7 @@ export function writeTypes(cwd: string, outDir: string, config: MerlynConfig) {
 function getPackagePaths() {
   const getEntry = (name: string) => {
     const p = require.resolve(name)
-    return p.substring(0, p.lastIndexOf(name) + name.length)
+    return p.substring(0, p.lastIndexOf(name + '/') + name.length)
   }
 
   return {
