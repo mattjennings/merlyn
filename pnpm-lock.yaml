@@ -192,7 +192,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
-      excalibur-router: ^0.0.9
+      excalibur-router: ^0.0.10
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -214,7 +214,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur-router: 0.0.9_excalibur@0.27.0
+      excalibur-router: 0.0.10_excalibur@0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.5
       magic-string: 0.26.2
@@ -1184,16 +1184,16 @@ packages:
     engines: {node: '>=0.8.x'}
     dev: false
 
-  /excalibur-router/0.0.6_excalibur@0.27.0:
-    resolution: {integrity: sha512-RdOq4HBXHSUvWbjIarOHiuATm/ZGUKAForKOSiR34O0vWCjoAKhBkqF7M9Lmp1wlLv9TNzi0i/khuEg3X4lN2Q==}
+  /excalibur-router/0.0.10_excalibur@0.27.0:
+    resolution: {integrity: sha512-/aafOq1i1DZI+0gwfFJBc5OBAEREPE90C+tjZ+K0DwZQuIICq5i6tHWaOy/xp4/9crO64PmG9dUxAaBTdfLA9A==}
     peerDependencies:
       excalibur: ^0.27.0
     dependencies:
       excalibur: 0.27.0
     dev: false
 
-  /excalibur-router/0.0.9_excalibur@0.27.0:
-    resolution: {integrity: sha512-owTun3+4TkhY5iSgkTTVu8wekqEMjerK4pTTuM7CIj+k5bXZuSpxaLYihErWtfftwP02NEaSNTr0zF2ybdSjFw==}
+  /excalibur-router/0.0.6_excalibur@0.27.0:
+    resolution: {integrity: sha512-RdOq4HBXHSUvWbjIarOHiuATm/ZGUKAForKOSiR34O0vWCjoAKhBkqF7M9Lmp1wlLv9TNzi0i/khuEg3X4lN2Q==}
     peerDependencies:
       excalibur: ^0.27.0
     dependencies:
