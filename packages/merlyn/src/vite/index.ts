@@ -62,6 +62,7 @@ function merlynPlugin(): Plugin {
           chunkSizeWarningLimit: 99999999,
         },
         resolve: {
+          dedupe: ['excalibur'],
           alias: {
             $lib: '/src/lib',
             $game: path.join('merlyn/runtime'),
