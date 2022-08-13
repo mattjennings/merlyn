@@ -214,7 +214,6 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur: 0.27.0
       excalibur-router: 0.0.8_excalibur@0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.5
@@ -225,12 +224,13 @@ importers:
       recast: 0.21.1
       sade: 1.8.1
       sirv: 2.0.2
+      tslib: 2.4.0
       unplugin-auto-import: 0.9.5_vite@3.0.2
       vite: 3.0.2
       vite-plugin-full-reload: 1.0.3_vite@3.0.2
     devDependencies:
       '@types/node': 17.0.45
-      tslib: 2.4.0
+      excalibur: 0.27.0
 
 packages:
 
@@ -2212,6 +2212,7 @@ packages:
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: false
 
   /tsutils/3.21.0_typescript@4.7.4:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
