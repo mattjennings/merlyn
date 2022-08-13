@@ -192,7 +192,7 @@ importers:
       deepmerge: ^4.2.2
       del: ^6.1.1
       excalibur: ^0.27.0
-      excalibur-router: ^0.0.8
+      excalibur-router: ^0.0.9
       fs-extra: ^10.1.0
       kleur: ^4.1.4
       magic-string: ^0.26.2
@@ -214,7 +214,7 @@ importers:
       dedent: 0.7.0
       deepmerge: 4.2.2
       del: 6.1.1
-      excalibur-router: 0.0.8_excalibur@0.27.0
+      excalibur-router: 0.0.9_excalibur@0.27.0
       fs-extra: 10.1.0
       kleur: 4.1.5
       magic-string: 0.26.2
@@ -665,7 +665,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001375
-      electron-to-chromium: 1.4.217
+      electron-to-chromium: 1.4.218
       node-releases: 2.0.6
       update-browserslist-db: 1.0.5_browserslist@4.21.3
     dev: true
@@ -830,8 +830,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /electron-to-chromium/1.4.217:
-    resolution: {integrity: sha512-iX8GbAMij7cOtJPZo02CClpaPMWjvN5meqXiJXkBgwvraNWTNH0Z7F9tkznI34JRPtWASoPM/xWamq3oNb49GA==}
+  /electron-to-chromium/1.4.218:
+    resolution: {integrity: sha512-INDylKH//YIf2w67D+IjkfVnGVrZ/D94DAU/FPPm6T4jEPbEDQvo9r2wTj0ncFdtJH8+V8BggZTaN8Rzk5wkgw==}
     dev: true
 
   /es6-promise/3.3.1:
@@ -1192,8 +1192,8 @@ packages:
       excalibur: 0.27.0
     dev: false
 
-  /excalibur-router/0.0.8_excalibur@0.27.0:
-    resolution: {integrity: sha512-iPMdavm9vZ8tzEsfyVxFkK+SzslyA5dR7pJ/WAic/rpuy0zzDHL+O2zjBwHZWxWtIKD9qxEkv+0ZQf8ODfM8QA==}
+  /excalibur-router/0.0.9_excalibur@0.27.0:
+    resolution: {integrity: sha512-owTun3+4TkhY5iSgkTTVu8wekqEMjerK4pTTuM7CIj+k5bXZuSpxaLYihErWtfftwP02NEaSNTr0zF2ybdSjFw==}
     peerDependencies:
       excalibur: ^0.27.0
     dependencies:
